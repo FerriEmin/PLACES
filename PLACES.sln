@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlacesFrontEnd", "PlacesFrontEnd\PlacesFrontEnd.csproj", "{7AD8936C-3284-4CC8-BD74-B2E7EC1F95C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlacesFrontEnd", "PlacesFrontEnd\PlacesFrontEnd.csproj", "{7AD8936C-3284-4CC8-BD74-B2E7EC1F95C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlacesBackEnd", "PlacesBackEnd\PlacesBackEnd.csproj", "{2FDF9B97-FF8C-4CE9-A218-4DA6F859A5A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlacesBackEnd", "PlacesBackEnd\PlacesBackEnd.csproj", "{2FDF9B97-FF8C-4CE9-A218-4DA6F859A5A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlacesDB", "..\Backend\PlacesDB.csproj", "{CC0E6F33-4AF4-4781-9B80-AC1D12A5E139}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{2FDF9B97-FF8C-4CE9-A218-4DA6F859A5A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FDF9B97-FF8C-4CE9-A218-4DA6F859A5A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FDF9B97-FF8C-4CE9-A218-4DA6F859A5A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC0E6F33-4AF4-4781-9B80-AC1D12A5E139}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC0E6F33-4AF4-4781-9B80-AC1D12A5E139}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC0E6F33-4AF4-4781-9B80-AC1D12A5E139}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC0E6F33-4AF4-4781-9B80-AC1D12A5E139}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
