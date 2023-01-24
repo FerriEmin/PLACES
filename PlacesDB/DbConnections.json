@@ -1,0 +1,6 @@
+{
+  "ConnectionStrings": {
+    "SQLServer": "Server=tcp:zlatan.database.windows.net,1433;Initial Catalog=supermegadb;Persist Security Info=False;User ID=zlatan;Password=super%Mega%Secret%Password;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  }
+
+}
