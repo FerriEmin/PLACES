@@ -18,6 +18,7 @@ namespace PlacesDB.Models
 
         // Relations
         public virtual Country Country { get; set; }
+        public virtual City City { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
 
 
