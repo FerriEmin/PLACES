@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppTEST.View.ProfilePage"
+             xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
+             x:DataType="viewmodel:ProfileViewModel"
+             
+             Title="PartyTime Profile">
+    <ScrollView>
+
+        <ScrollView.Background>
+            <LinearGradientBrush>
+                <GradientStop Color="Orange"
+                          Offset="0.1" />
+                <GradientStop Color="Purple"
+                          Offset="1.0" />
+            </LinearGradientBrush>
+
+        </ScrollView.Background>
+
+        <VerticalStackLayout>
+
+            <Border StrokeShape="RoundRectangle 100"
+                    Stroke="pink"
+                    StrokeThickness="5"
+                    HeightRequest="160"
+                    WidthRequest="160"
+                    Margin="10,10,10,10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+
+                <Image Aspect="AspectFill"
+                        HeightRequest="155"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Source="monalisa.png"
+                        WidthRequest="155"/>
+
+            </Border>
+            <Label Text="Click one to expand" Style="{StaticResource LargeLabel}"/>
+            <Button Text="Profile information" Clicked="OnProfileInfoButtonClicked"></Button>
+            <Frame x:Name="ManageProfile" IsVisible="False">
+            </Frame>
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
