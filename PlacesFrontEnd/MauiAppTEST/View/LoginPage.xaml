@@ -45,7 +45,7 @@
         <Grid>
             <Frame Style="{StaticResource entryWrapper}">
                 <Grid ColumnDefinitions="*" ColumnSpacing="10">
-                    <Entry Placeholder="Email" x:Name="LoginEmail" Text="{Binding LoginEmail}"
+                    <Entry Placeholder="Email" x:Name="LoginEmail" TextChanged="LoginEmail_TextChanged"
                     Grid.Column="2" />
                 </Grid>
             </Frame>

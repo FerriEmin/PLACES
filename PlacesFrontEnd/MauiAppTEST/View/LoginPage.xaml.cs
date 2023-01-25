@@ -15,5 +15,8 @@ public partial class LoginPage : ContentPage
         base.OnNavigatedTo(args);
     }
 
-
+    private void LoginEmail_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        //Static user == e.New
+    }
 }

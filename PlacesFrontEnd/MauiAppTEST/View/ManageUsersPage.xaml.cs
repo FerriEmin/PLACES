@@ -10,17 +10,12 @@ public partial class ManageUsersPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = vm;
-
-        SetUserList(UserServices.GetUsers());
     }
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
     }
-    private void SetUserList(List<User> users)
-    {
-        UserView.ItemsSource = users;
-    }
+
     private void ManageUserComments(object sender, EventArgs e)
     {
         var animation = new Animation();
@@ -37,6 +32,4 @@ public partial class ManageUsersPage : ContentPage
         //ManageUsersFrame.Animate("Opacity", animation, length: 200);
         ManageUsersFrame.Animate("HeightRequest", animation, length: 100);
     }
-
- 
 }

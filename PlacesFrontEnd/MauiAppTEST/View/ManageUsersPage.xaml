@@ -9,70 +9,40 @@
              Title="ManageUsersPage">
 
     <VerticalStackLayout>
+
         <Label Text="Click one to expand" Style="{StaticResource LargeLabel}"/>
         <Label Text="{Binding User.UserName}" Style="{StaticResource LargeLabel}"/>
         <Button Text="See user comments" Clicked="ManageUserComments"></Button>
+
         <Frame x:Name="ManageUsersFrame" IsVisible="False">
             <ScrollView>
-
                 <VerticalStackLayout Style="{StaticResource VerticalLayoutStyle1}">
                     <!--<Button Text="Remove User" Style="{StaticResource SmallButton}"></Button>-->
                     <!--<Button Text="Remove User Comment" Style="{StaticResource SmallButton}"></Button>-->
 
                     <CollectionView BackgroundColor="Transparent"
-                                Grid.ColumnSpan="2"
-                                x:Name="UserView"
-                                ItemsSource="{Binding User}"
-                                SelectionMode="None">
-                        
-                        
-                        <CollectionView.GroupHeaderTemplate>
-                            <DataTemplate>
-                                <Label Text="{Binding User.UserName}"/>
-                            </DataTemplate>
-                        </CollectionView.GroupHeaderTemplate>
+                                    Grid.ColumnSpan="2"
+                                    ItemsSource="{Binding User.CommentList}"
+                                    SelectionMode="None">
 
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="TestData:User">
+                                <SwipeView>
+                                    <SwipeView.RightItems>
+                                        <SwipeItems>
+                                            <SwipeItem Text="Delete"
+                                                       BackgroundColor="OrangeRed">
 
-                                <VerticalStackLayout 
-                                   Padding="0">
+                                            </SwipeItem>
+                                        </SwipeItems>
 
-                                    <Label Text="{Binding UserName}" Style="{StaticResource LargeLabel}" FontAttributes="Bold"/>
+                                    </SwipeView.RightItems>
+                                    <VerticalStackLayout Padding="10">
 
-                                    <CollectionView BackgroundColor="Transparent"
-                                x:Name="userview2"
-                                ItemsSource="{Binding CommentList}"
-                                SelectionMode="None">
-                                        <!--<CollectionView.EmptyView>
-                                            <Label Text="No comments to show" Style="{StaticResource LargeLabel}"/>
-                                        </CollectionView.EmptyView>-->
-                                        <CollectionView.ItemTemplate>
-                                            <DataTemplate x:DataType="{x:Type x:String}">
+                                        <Label Text="{Binding .}" Style="{StaticResource LargeLabel}" FontAttributes="Bold"/>
+                                    </VerticalStackLayout>
 
-                                                <SwipeView>
-                                                    <SwipeView.RightItems>
-                                                        <SwipeItems>
-                                                            <SwipeItem
-                                                                        Text="Delete"
-                                                                        BackgroundColor="Red"
-                                                                        >
-                                                            </SwipeItem>
-                                                        </SwipeItems>
-                                                    </SwipeView.RightItems>
-
-                                                    <VerticalStackLayout>
-                                                        <Frame>
-                                                            <Label Text="{Binding .}" Style="{StaticResource MediumLabel}"/>
-                                                        </Frame>
-                                                    </VerticalStackLayout>
-                                                </SwipeView>
-
-                                            </DataTemplate>
-                                        </CollectionView.ItemTemplate>
-                                    </CollectionView>
-
-                                </VerticalStackLayout>
+                                </SwipeView>
 
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -84,3 +54,33 @@
         </Frame>
     </VerticalStackLayout>
 </ContentPage>
+
+<!--<CollectionView BackgroundColor="Transparent"
+                                                    x:Name="userview2"
+                                                    ItemsSource="{Binding CommentList}"
+                                                    SelectionMode="None">
+    -->
+<!--<CollectionView.EmptyView>
+                                            <Label Text="No comments to show" Style="{StaticResource LargeLabel}"/>
+                                        </CollectionView.EmptyView>-->
+<!--
+    <CollectionView.ItemTemplate>
+        <DataTemplate x:DataType="{x:Type x:String}">
+            <SwipeView>
+                <SwipeView.RightItems>
+                    <SwipeItems>
+                        <SwipeItem Text="Delete"
+                                                                       BackgroundColor="Red">
+                        </SwipeItem>
+                    </SwipeItems>
+                </SwipeView.RightItems>
+                <VerticalStackLayout>
+                    <Frame>
+                        <Label Text="{Binding .}" Style="{StaticResource MediumLabel}"/>
+                    </Frame>
+                </VerticalStackLayout>
+            </SwipeView>
+
+        </DataTemplate>
+    </CollectionView.ItemTemplate>
+</CollectionView>-->
