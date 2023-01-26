@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppTEST.View.ManageUsersPage"
-             xmlns:TestData="clr-namespace:MauiAppTEST.TestData"
+             xmlns:Models="clr-namespace:MauiAppTEST.Models"
              xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
              x:DataType="viewmodel:ManageUsersViewModel"
              Shell.PresentationMode="ModalAnimated"
@@ -15,28 +15,24 @@
                     <Button Text="Yes" Style="{StaticResource SmallButton}"></Button>
                     <Button Text="No" Style="{StaticResource SmallButton}"></Button>
                 </HorizontalStackLayout>
-
             </VerticalStackLayout>
             
         </Frame>
     <VerticalStackLayout Grid.Row="1">
 
         <Label Text="Click one to expand" Style="{StaticResource LargeLabel}"/>
-        <Label Text="{Binding User.UserName}" Style="{StaticResource LargeLabel}"/>
+        <Label Text="{Binding User.Username}" Style="{StaticResource LargeLabel}"/>
 
         <Button Text="See User Info" Clicked="OnSeeUserInfoClicked" Style="{StaticResource SmallButton}"></Button>
 
         <Frame x:Name="UserInfoFrame" IsVisible="False">
             <VerticalStackLayout>
-                <Label Text="{Binding User.UserName}"/>
+                <Label Text="{Binding User.Username}"/>
                 <Label Text="{Binding User.FirstName}"/>
                 <Label Text="{Binding User.LastName}"/>
                 <Label Text="{Binding User.DateOfBirth}"/>
             </VerticalStackLayout>
         </Frame>
-        
-        
-
 
             <Button Text="See user comments" Clicked="ManageUserComments" Style="{StaticResource SmallButton}"></Button>
 
@@ -52,7 +48,7 @@
                                     SelectionMode="None">
 
                         <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="TestData:User">
+                                <DataTemplate x:DataType="Models:User">
                                 <SwipeView>
                                     <SwipeView.RightItems>
                                         <SwipeItems>

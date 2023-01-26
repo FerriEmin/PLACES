@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MauiAppTEST.Services;
-using MauiAppTEST.TestData;
+using MauiAppTEST.Models;
 using MauiAppTEST.View;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace MauiAppTEST.ViewModel
 {
     public partial class AdminViewModel : BaseViewModel
     {
-        public ObservableCollection<City> Cities { get; } = new();
+        public ObservableCollection<Country> Cities { get; } = new();
         public ObservableCollection<User> Users { get; } = new();
 
         public AdminViewModel()
@@ -24,7 +24,7 @@ namespace MauiAppTEST.ViewModel
   
         public void LoadCities()
         {
-            List<City> cities = CityServices.GetCities();
+            List<Country> cities = CityServices.GetCities();
 
             foreach (var city in cities)
                 Cities.Add(city);

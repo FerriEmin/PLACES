@@ -1,4 +1,6 @@
+using DocumentFormat.OpenXml.Spreadsheet;
 using MauiAppTEST.ViewModel;
+using MauiAppTEST.Services;
 
 namespace MauiAppTEST.View;
 
@@ -8,7 +10,12 @@ public partial class ActivityPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = vm;
+   
 	}
+    void LoadRating()
+    {
+
+    }
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
