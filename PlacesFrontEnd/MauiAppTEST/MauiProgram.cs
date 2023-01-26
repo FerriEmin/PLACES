@@ -25,6 +25,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<SignUpViewModel>();
         builder.Services.AddSingleton<ActivityViewModel>();
         builder.Services.AddSingleton<ProfileViewModel>();
+        builder.Services.AddSingleton<MapViewModel>();
         builder.Services.AddTransient<AdminViewModel>();
         builder.Services.AddTransient<ManageUsersViewModel>();
 
@@ -35,6 +36,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<SignUpPage>();
         builder.Services.AddSingleton<ActivityPage>();
         builder.Services.AddSingleton<ProfilePage>();
+        builder.Services.AddSingleton<MapPage>();
         builder.Services.AddTransient<AdminPage>();
         builder.Services.AddTransient<ManageUsersPage>();
 
