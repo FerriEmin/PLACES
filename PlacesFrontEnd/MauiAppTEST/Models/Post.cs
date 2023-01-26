@@ -18,7 +18,7 @@ namespace MauiAppTEST.Models
         public string Name { get; set; }
         public string Location { get; set; }
         public string Details { get; set; }
-        public Country city { get; set; }
+        public Country Country { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
     }
 }

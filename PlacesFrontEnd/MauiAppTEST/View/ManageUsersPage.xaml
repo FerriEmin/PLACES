@@ -33,9 +33,6 @@
                 <Label Text="{Binding User.DateOfBirth}"/>
             </VerticalStackLayout>
         </Frame>
-        
-        
-
 
             <Button Text="See user comments" Clicked="ManageUserComments" Style="{StaticResource SmallButton}"></Button>
 

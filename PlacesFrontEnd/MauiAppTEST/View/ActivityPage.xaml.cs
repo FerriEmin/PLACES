@@ -10,9 +10,7 @@ public partial class ActivityPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = vm;
-        ReviewServices.GetReviewList();
-        UserServices.GetUsers();
-        PostServices.GetPosts();
+   
 	}
     void LoadRating()
     {

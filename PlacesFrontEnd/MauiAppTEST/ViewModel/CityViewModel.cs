@@ -34,14 +34,14 @@ namespace MauiAppTEST.ViewModel
         }
 
         [RelayCommand]
-        async Task GoToActivityPageAsync(Country city)
+        async Task GoToActivityPageAsync(Country Country)
         {
-            if (city is null)
+            if (Country is null)
                 return;
 
             await Shell.Current.GoToAsync($"{nameof(ActivityPage)}", true, new Dictionary<string, object>
             {
-            {"City", city }
+            {"Country", Country }
             });
         }
     }
