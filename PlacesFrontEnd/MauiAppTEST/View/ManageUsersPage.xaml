@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppTEST.View.ManageUsersPage"
+             xmlns:TestData="clr-namespace:MauiAppTEST.TestData"
+             xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
+             x:DataType="viewmodel:ManageUsersViewModel"
+             Shell.PresentationMode="ModalAnimated"
+             Title="ManageUsersPage">
+    <Grid>
+        <Frame Grid.Row="1" Style="{StaticResource PopUpFrame}" x:Name="RemoveUserPopUp" IsVisible="false">
+            <VerticalStackLayout VerticalOptions="Center">
+                <Label Text="Are you sure you want to remove this user?" Style="{StaticResource MediumLabel}" TextColor="White"/>
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                    <Button Text="Yes" Style="{StaticResource SmallButton}"></Button>
+                    <Button Text="No" Style="{StaticResource SmallButton}"></Button>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+            
+        </Frame>
+    <VerticalStackLayout Grid.Row="1">
+
+        <Label Text="Click one to expand" Style="{StaticResource LargeLabel}"/>
+        <Label Text="{Binding User.UserName}" Style="{StaticResource LargeLabel}"/>
+
+        <Button Text="See User Info" Clicked="OnSeeUserInfoClicked" Style="{StaticResource SmallButton}"></Button>
+
+        <Frame x:Name="UserInfoFrame" IsVisible="False">
+            <VerticalStackLayout>
+                <Label Text="{Binding User.UserName}"/>
+                <Label Text="{Binding User.FirstName}"/>
+                <Label Text="{Binding User.LastName}"/>
+                <Label Text="{Binding User.DateOfBirth}"/>
+            </VerticalStackLayout>
+        </Frame>
+        
+        
+
+
+            <Button Text="See user comments" Clicked="ManageUserComments" Style="{StaticResource SmallButton}"></Button>
+
+        <Frame x:Name="ManageUsersFrame" IsVisible="False">
+            <ScrollView>
+                <VerticalStackLayout Style="{StaticResource VerticalLayoutStyle1}">
+                    <!--<Button Text="Remove User" Style="{StaticResource SmallButton}"></Button>-->
+                    <!--<Button Text="Remove User Comment" Style="{StaticResource SmallButton}"></Button>-->
+
+                    <CollectionView BackgroundColor="Transparent"
+                                    Grid.ColumnSpan="2"
+                                    ItemsSource="{Binding User.CommentList}"
+                                    SelectionMode="None">
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="TestData:User">
+                                <SwipeView>
+                                    <SwipeView.RightItems>
+                                        <SwipeItems>
+                                            <SwipeItem Text="Delete"
+                                                       BackgroundColor="OrangeRed">
+
+                                            </SwipeItem>
+                                        </SwipeItems>
+
+                                    </SwipeView.RightItems>
+                                    <VerticalStackLayout Padding="10">
+
+                                        <Label Text="{Binding .}" Style="{StaticResource LargeLabel}" FontAttributes="Bold"/>
+                                    </VerticalStackLayout>
+
+                                </SwipeView>
+
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Frame>
+
+        <Button Text="RemoveUser" Clicked="OnRemoveUserClicked" Style="{StaticResource SmallButton}"></Button>
+
+    </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>
+
+<!--<CollectionView BackgroundColor="Transparent"
+                                                    x:Name="userview2"
+                                                    ItemsSource="{Binding CommentList}"
+                                                    SelectionMode="None">
+    -->
+<!--<CollectionView.EmptyView>
+                                            <Label Text="No comments to show" Style="{StaticResource LargeLabel}"/>
+                                        </CollectionView.EmptyView>-->
+<!--
+    <CollectionView.ItemTemplate>
+        <DataTemplate x:DataType="{x:Type x:String}">
+            <SwipeView>
+                <SwipeView.RightItems>
+                    <SwipeItems>
+                        <SwipeItem Text="Delete"
+                                                                       BackgroundColor="Red">
+                        </SwipeItem>
+                    </SwipeItems>
+                </SwipeView.RightItems>
+                <VerticalStackLayout>
+                    <Frame>
+                        <Label Text="{Binding .}" Style="{StaticResource MediumLabel}"/>
+                    </Frame>
+                </VerticalStackLayout>
+            </SwipeView>
+
+        </DataTemplate>
+    </CollectionView.ItemTemplate>
+</CollectionView>-->

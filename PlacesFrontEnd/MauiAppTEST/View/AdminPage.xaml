@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppTEST.View.AdminPage"
+             xmlns:TestData="clr-namespace:MauiAppTEST.TestData"
+             xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
+             x:DataType="viewmodel:AdminViewModel"
+             Shell.PresentationMode="ModalAnimated"
+             Title="AdminPage">
+
+    <ScrollView>
+
+        <VerticalStackLayout Padding="10" Spacing="10">
+
+            <Label Text="Click one to expand" Style="{StaticResource LargeLabel}"/>
+            <Button Text="Manage Users" Clicked="OnManageUsersButtonClicked"></Button>
+            <Frame x:Name="ManageUsersFrame" IsVisible="False">
+                <ScrollView>
+                    
+                <VerticalStackLayout>
+                    <SearchBar Placeholder="Username.." x:Name="UserSearch" TextChanged="UserSearch_TextChanged"></SearchBar>
+                    <!--<Button Text="Remove User" Style="{StaticResource SmallButton}"></Button>-->
+                    <!--<Button Text="Remove User Comment" Style="{StaticResource SmallButton}"></Button>-->
+
+                    <CollectionView BackgroundColor="Transparent"
+                                Grid.ColumnSpan="2"
+                                x:Name="UserView"
+                                ItemsSource="{Binding Users}"
+                                SelectionMode="Single">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="TestData:User">
+                                    <Frame>
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                                  Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AdminViewModel}}, Path=GoToManageUsersPageCommand}"/>
+                                        </Frame.GestureRecognizers>
+
+                                        <Label Text="{Binding UserName}"
+                                                   Style="{StaticResource MediumLabel}" />
+                                    </Frame>
+
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </VerticalStackLayout>
+                </ScrollView>
+
+            </Frame>
+
+            <Button Text="Manage Activities" Clicked="OnManageActivitesClicked"/>
+            <Frame Padding="0" x:Name="ManageActivitiesFrame" IsVisible="False">
+                <ScrollView>
+                    
+                <VerticalStackLayout>
+                    <SearchBar Placeholder="City.." x:Name="CitySearch" TextChanged="CitySearch_TextChanged" ></SearchBar>
+                    <!--<Button Text="Remove Activity" Style="{StaticResource SmallButton}"></Button>
+                <Button Text="Remove User Comment" Style="{StaticResource SmallButton}"></Button>-->
+
+                    <CollectionView BackgroundColor="Transparent"
+                                Grid.ColumnSpan="2"
+                                x:Name="CityView"
+                                ItemsSource="{Binding Cities}"
+                                SelectionMode="Single">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="TestData:City">
+                                <VerticalStackLayout 
+                                   Padding="0">
+                                    <Label Text="{Binding Name}"
+                                               Padding="10"
+                                       Style="{StaticResource MediumLabel}"
+                                           />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </VerticalStackLayout>
+                </ScrollView>
+
+            </Frame>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>

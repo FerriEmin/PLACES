@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppTEST.View.LoginPage"
+             xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
+             x:DataType="viewmodel:LoginViewModel"
+             Shell.PresentationMode="ModalAnimated"
+             Title="Sign in and let's party!">
+    
+    <!--<ContentPage.Resources>
+        <Style TargetType="Entry">
+            <Setter Property="HorizontalOptions" Value="Fill" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="FontAttributes" Value="None" />
+            <Setter Property="TextColor" Value="Blue" />
+        </Style>
+        <Style x:Key="entryWrapper"
+               TargetType="Frame">
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="BorderColor" Value="Gray" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="CornerRadius" Value="10" />
+        </Style>
+    </ContentPage.Resources>-->
+
+    <VerticalStackLayout>
+        <Border StrokeShape="RoundRectangle 80"
+                    Stroke="pink"
+                    StrokeThickness="6"
+                    HeightRequest="160"
+                    WidthRequest="160"
+                    Margin="0,8,0,0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+
+            <Image Aspect="AspectFill"
+                        HeightRequest="160"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Source="la.png"
+                        WidthRequest="160"/>
+        </Border>
+        <Grid>
+            <Frame Style="{StaticResource entryWrapper}">
+                <Grid ColumnDefinitions="*" ColumnSpacing="10">
+                    <Entry Placeholder="Email" x:Name="LoginEmail" Text="{Binding user.UserName}"
+                    Grid.Column="2" />
+                </Grid>
+            </Frame>
+        </Grid>
+        
+        <Grid>
+            <Frame Style="{StaticResource entryWrapper}">
+                <Grid ColumnDefinitions="*" ColumnSpacing="10">
+                    <Entry Placeholder="Password" IsPassword="true" x:Name="LoginPassword" Text="{Binding user.UserName}"
+                    Grid.Column="2" />
+                </Grid>
+            </Frame>
+        </Grid>
+        <Grid>
+
+            <Button BackgroundColor="Blue" BorderColor="Transparent"
+                HeightRequest="50"
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="8"
+            Text="Sign in" FontSize="Medium"
+                    Command="{Binding AuthenticateUserCommand}"
+            IsEnabled="{Binding IsNotBusy}"
+             />
+
+
+        </Grid>
+
+        <Label FontAttributes="Bold" Text="Forgot Password?" TextColor="Gray" HorizontalTextAlignment="Center" />
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+            <Label  FontAttributes="Bold" TextColor="Gray" Text="Don't have account?" VerticalTextAlignment="Center" />
+            <Label  Text="SIGN UP" FontSize="18" 
+                           FontAttributes="Bold"
+                           TextColor="Blue"/>
+            
+            
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>
+    
+    

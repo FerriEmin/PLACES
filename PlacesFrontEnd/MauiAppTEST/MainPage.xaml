@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
+             xmlns:viewmodel2="clr-namespace:MauiAppTEST.View"
+             xmlns:viewmodel3="clr-namespace:MauiAppTEST"
+             x:DataType="viewmodel:MainViewModel"
+             x:Class="MauiAppTEST.MainPage">
+
+    <VerticalStackLayout
+        Spacing="25"
+        Margin="10"
+        Padding="30,0"
+        HorizontalOptions="Center">
+        <!--Command="{Binding NavigationCommand}"-->
+
+        <Button Text="CityPage"
+                Command="{Binding NavigationCommand}"/>
+
+        <Button Text="DetailPage"
+                Command="{Binding NavigateToDetailPageCommand}"/>
+
+        <Button Text="LoginPage"
+                Command="{Binding NavigateToLoginPageCommand}"/>
+
+        <Button Text="SignUpPage"
+                Command="{Binding NavigateToSignUpPageCommand}"/>
+
+        <Button Text="ProfilePage"
+                Command="{Binding NavigateToProfilePageCommand}"/>
+
+        <Button Text="AdminPage"
+                Command="{Binding NavigateToAdminPageCommand}"/>
+
+        <Button Text="ManageUsersPage"
+                Command="{Binding NavigateToManageUsersPageCommand}"/>
+
+    </VerticalStackLayout>
+
+</ContentPage>
+
+<!--<CollectionView ItemsSource="{Binding Items}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+                    <Frame>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapCommand}"
+                        CommandParameter="{Binding .}"
+                    />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+
+
+                </VerticalStackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>-->
