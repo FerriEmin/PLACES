@@ -36,8 +36,10 @@
                                     <Label Text="{Binding Name}"
                                        FontAttributes="Bold"
                                        Style="{StaticResource MediumLabel}"/>
+                                    <Label Text="{Binding Details}"
+                                       FontAttributes="Bold"
+                                       Style="{StaticResource MediumLabel}"/>
 
-                                    <CheckBox></CheckBox>
                                 </HorizontalStackLayout>
 
                                 <CollectionView BackgroundColor="Transparent"
@@ -54,11 +56,10 @@
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate x:DataType="Models:Review">
                                             <VerticalStackLayout>
-
+                                                <CheckBox></CheckBox>
                                                 <Label Text="{Binding Rating}"/>
+                                                <Label Text="{Binding Comment}"/>
                                             </VerticalStackLayout>
-
-
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
