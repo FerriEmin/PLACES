@@ -7,16 +7,15 @@ using System.Threading.Tasks;
 namespace PlacesDB.Models
 {
     // Event
-    public class Post
+    public class Event
     {
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public string ImgPath { get; set; }
+        public byte[] Image { get; set; }
         public float? Rating { get; set; }
         public DateTime Created { get; set; }
-
-        // BLOB column
+        public DateTime Planned { get; set; }
 
         // Relations
         public virtual User User { get; set; }

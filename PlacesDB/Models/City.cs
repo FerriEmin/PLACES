@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace PlacesDB.Models
 {
-    public class Category
+    public class City
     {
         public int Id { get; set; }
         public string Name { get; set; }
 
-        // Relations
-        public virtual ICollection<Event> Events { get; set; }
+        public ICollection<Location> Locations { get; set; }
     }
 }

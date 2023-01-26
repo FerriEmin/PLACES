@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
+#nullable disable
+
 namespace PlacesDB.Models
 {
     public class Context : DbContext
@@ -8,10 +10,12 @@ namespace PlacesDB.Models
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<City> Cities { get; set; }
         public DbSet<Location> Locations { get; set; }
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<Event> Events { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Token> Tokens { get; set; }
 
 
         public Context() { }
@@ -36,9 +40,31 @@ namespace PlacesDB.Models
             // Most settings are implicit thanks to the types, nullability and references (length and requirement still need guidance)
             // Foreign keys and constrains are implicitly generated if not stated otherwise
 
+            modelBuilder.Entity<Token>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                .UseIdentityColumn();
+
+                entity.Property(e => e.Value)
+                .HasMaxLength(255)
+                .IsRequired();
+
+                entity.Property(e => e.Expires)
+                .HasColumnType("datetime")
+                .IsRequired();
+
+                entity.HasOne(e => e.User)
+                .WithMany(e => e.Tokens);
+            });
+
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                .UseIdentityColumn();
 
                 entity.Property(e => e.UserGroup)
                 .IsRequired();
@@ -51,6 +77,10 @@ namespace PlacesDB.Models
                 .HasMaxLength(32)
                 .IsRequired();
 
+                entity.Property(e => e.Email)
+                .HasMaxLength(64)
+                .IsRequired();
+
                 // Must be unique
                 entity.Property(e => e.Username)
                 .HasMaxLength(32)
@@ -61,14 +91,21 @@ namespace PlacesDB.Models
                 .HasMaxLength(256)
                 .IsRequired();
 
+                entity.Property(e => e.DateOfBirth)
+                .HasColumnType("datetime")
+                .IsRequired();
+
                 entity.Property(e => e.Created)
                 .HasColumnType("datetime")
                 .IsRequired();
             });
 
-            modelBuilder.Entity<Post>(entity =>
+            modelBuilder.Entity<Event>(entity =>
             {
                 entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                .UseIdentityColumn();
 
                 entity.Property(e => e.Title)
                 .HasMaxLength(32)
@@ -78,31 +115,33 @@ namespace PlacesDB.Models
                 .HasMaxLength(255)
                 .IsRequired();
 
-                entity.Property(e => e.ImgPath)
-                .HasMaxLength(32)
-                .IsRequired()
-                .IsUnicode(false);
+                entity.Property(e => e.Image)
+                .HasColumnType("image")
+                .IsRequired();
 
                 entity.Property(e => e.Created)
                 .HasColumnType("datetime")
                 .IsRequired();
 
                 entity.HasOne(e => e.User)
-                .WithMany(e => e.Posts)
+                .WithMany(e => e.Events)
                 .IsRequired();
 
                 entity.HasOne(e => e.Category)
-                .WithMany(e => e.Posts)
+                .WithMany(e => e.Events)
                 .IsRequired();
 
                 entity.HasOne(e => e.Location)
-                .WithMany(e => e.Posts)
+                .WithMany(e => e.Events)
                 .IsRequired();
             });
 
             modelBuilder.Entity<Review>(entity =>
             {
                 entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                .UseIdentityColumn();
 
                 entity.Property(e => e.Rating)
                 .IsRequired();
@@ -114,7 +153,7 @@ namespace PlacesDB.Models
                 .HasColumnType("datetime")
                 .IsRequired();
 
-                entity.HasOne(e => e.Post)
+                entity.HasOne(e => e.Event)
                 .WithMany(e => e.Reviews)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
@@ -129,19 +168,20 @@ namespace PlacesDB.Models
             {
                 entity.HasKey(e => e.Id);
 
+                entity.Property(e => e.Id)
+                .UseIdentityColumn();
+
                 entity.Property(e => e.Name)
                 .HasMaxLength(32)
                 .IsRequired();
-
-                entity.Property(e => e.ImgPath)
-                .HasMaxLength(32)
-                .IsRequired()
-                .IsUnicode(false);
             });
 
             modelBuilder.Entity<Location>(entity =>
             {
                 entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                .UseIdentityColumn();
 
                 entity.Property(e => e.Name)
                 .HasMaxLength(32)
@@ -162,11 +202,18 @@ namespace PlacesDB.Models
                 entity.HasOne(e => e.Country)
                 .WithMany(e => e.Locations)
                 .IsRequired();
+
+                entity.HasOne(e => e.City)
+                .WithMany(e => e.Locations)
+                .IsRequired();
             });
 
             modelBuilder.Entity<Country>(entity =>
             {
                 entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                .UseIdentityColumn();
 
                 entity.Property(e => e.Name)
                 .HasMaxLength(32)
@@ -176,6 +223,18 @@ namespace PlacesDB.Models
                 entity.Property(e => e.CountryCode)
                 .HasMaxLength(2)
                 .IsUnicode(false)
+                .IsRequired();
+            });
+
+            modelBuilder.Entity<City>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                .UseIdentityColumn();
+
+                entity.Property(e => e.Name)
+                .HasMaxLength(32)
                 .IsRequired();
             });
         }
