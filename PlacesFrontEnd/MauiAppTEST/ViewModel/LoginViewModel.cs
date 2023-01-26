@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MauiAppTEST.View;
+using MauiAppTEST.TestData;
+using MauiAppTEST.Services;
 
 namespace MauiAppTEST.ViewModel
 {
@@ -7,18 +9,17 @@ namespace MauiAppTEST.ViewModel
     {
         public string LoginPassword { get; set; }
         public string LoginEmail { get; set; }
-
+        public User user { get; set; }
         public LoginViewModel()
         {
-
+            user = GlobalService.user;
         }
-
         [RelayCommand]
         async Task AuthenticateUser()
         {
             Console.WriteLine("Testar att logga in");
-            Console.WriteLine(LoginEmail);
-            Console.WriteLine(LoginPassword);
+            Console.WriteLine(user.UserName);
+            Console.WriteLine(user.FirstName);
 
             // Gör ett api-call
 
@@ -26,10 +27,15 @@ namespace MauiAppTEST.ViewModel
 
             // if (loggedIn)
             // {
-                // sätta cookie eller session lr något
-                // gå till profilsidan
-                await Shell.Current.GoToAsync(nameof(ProfilePage));
+            // sätta cookie eller session lr något
+            // gå till profilsidan
+            await Shell.Current.GoToAsync(nameof(ProfilePage));
             // }
         }
+
     }
-}
+
+       
+    }
+
+
