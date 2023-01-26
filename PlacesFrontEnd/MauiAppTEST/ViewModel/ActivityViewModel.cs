@@ -11,6 +11,8 @@ namespace MauiAppTEST.ViewModel
     {
         [ObservableProperty]
         Country country;
+
+        float rating;
         public ObservableCollection<Post> Activities { get; } = new();
 
         public ActivityViewModel()
@@ -23,9 +25,19 @@ namespace MauiAppTEST.ViewModel
 
         void LoadAllPosts()
         {
-            var posts = PostServices.GetPosts();
+            var Posts = PostServices.GetPosts();
+            var Reviews = PostServices.GetPosts();
 
+            Dictionary<int, List<Review>> ReviewDictionary = new Dictionary<int, List<Review>>();
 
+            foreach (var key in ReviewDictionary.Keys)
+            {
+                foreach (var review in ReviewDictionary[key])
+                {
+                    if(review.Rating = 1)
+                        
+                }
+            }
         }
     }
 }

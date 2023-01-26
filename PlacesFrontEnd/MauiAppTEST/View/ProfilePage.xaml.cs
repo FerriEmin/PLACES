@@ -1,3 +1,4 @@
+using MauiAppTEST.Models;
 using MauiAppTEST.ViewModel;
 
 namespace MauiAppTEST.View;
@@ -15,5 +16,11 @@ public partial class ProfilePage : ContentPage
 		Console.WriteLine("hej");
 	}
 
-        
+	void LoadUserActivities()
+	{
+        Dictionary<int, ICollection<Review>> ReviewDictionary = new Dictionary<int, ICollection<Review>>();
+
+    }
+
+
 }
