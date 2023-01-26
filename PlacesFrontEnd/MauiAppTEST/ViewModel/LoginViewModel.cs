@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MauiAppTEST.View;
-using MauiAppTEST.TestData;
+using MauiAppTEST.Models;
 using MauiAppTEST.Services;
 
 namespace MauiAppTEST.ViewModel
