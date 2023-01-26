@@ -1,7 +1,8 @@
-﻿namespace MauiAppTEST;
-
+﻿
 using MauiAppTEST.Services;
 using MauiAppTEST.Models;
+
+namespace MauiAppTEST;
 
 public partial class App : Application
 {
