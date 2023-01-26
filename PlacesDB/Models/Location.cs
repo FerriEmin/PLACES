@@ -14,12 +14,10 @@ namespace PlacesDB.Models
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
 
-        // City
-
         // Relations
         public virtual Country Country { get; set; }
         public virtual City City { get; set; }
-        public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Event> Events { get; set; }
 
 
 

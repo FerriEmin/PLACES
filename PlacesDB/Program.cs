@@ -1,4 +1,5 @@
 ﻿using PlacesDB.Models;
+using System.Linq;
 
 namespace PlacesDB
 {
@@ -6,23 +7,39 @@ namespace PlacesDB
     {
         static void Main(string[] args)
         {
-            //DeleteDatabase();
-            //BuildDatabase();
-            Console.WriteLine(Hasher.HashPassword("password", Hasher.GenerateSalt()));
-            //Test();
-            Console.WriteLine($"\nApplication finished");
+            using (var db = new Context())
+            {
+                var res = from user in db.Users
+                          select user;
+                res.ToList().ForEach(user =>
+                {
+                    Console.WriteLine("Enter Password: ");
+                    bool verified = Hasher.PasswordVerify(Console.ReadLine() ?? "null", user.Password);
+                    if (verified) 
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.WriteLine("Right Password!"); 
+                    }
+                    else 
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine("Wrong Password"); 
+                    }
+                    Console.ResetColor();
+                });
+            }
         }
 
-        private static void Test()
+        private static void Test(int num)
         {
-            var users = GenerateUsers(2);
+            var users = GenerateUsers(num);
             using (var db = new Context())
             {
                 try
                 {
-                    db.Users.Add(users.FirstOrDefault());
+                    db.Users.AddRange(users);
                     db.SaveChanges();
-                    Console.WriteLine($"Successfully created 50 users");
+                    Console.WriteLine($"Successfully created {num} users");
                 }
                 catch (Exception e)
                 {
@@ -52,8 +69,11 @@ namespace PlacesDB
                         LastName = lName,
                         UserGroup = 0,
                         Username = usn,
+                        Email= $"{fName}.{lName}@gmail.com",
                         Password = psw,
-                        Created = new DateTime()
+                        Created = DateTime.Now,
+                        DateOfBirth = DateTime.Now
+
                     }
                 );
             }
@@ -67,6 +87,7 @@ namespace PlacesDB
                 var res = db.Database.EnsureCreated();
                 if (res) { Console.WriteLine("Successfully Created Database"); }
                 else { Console.WriteLine("Failed to Create Database"); }
+                db.SaveChanges();
             }
         }
 
@@ -77,6 +98,7 @@ namespace PlacesDB
                 var res = db.Database.EnsureDeleted();
                 if (res) { Console.WriteLine("Successfully Deleted Database"); }
                 else { Console.WriteLine("Failed to Delete Database"); }
+                db.SaveChanges();
             }
         }
     }
