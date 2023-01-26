@@ -35,7 +35,7 @@
                                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AdminViewModel}}, Path=GoToManageUsersPageCommand}"/>
                                         </Frame.GestureRecognizers>
 
-                                        <Label Text="{Binding Username}"
+                                        <Label Text="{Binding UserName}"
                                                    Style="{StaticResource MediumLabel}" />
                                     </Frame>
 
