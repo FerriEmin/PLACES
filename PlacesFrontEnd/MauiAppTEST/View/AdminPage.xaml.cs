@@ -88,7 +88,7 @@ public partial class AdminPage : ContentPage
         }
         else
         {
-            var result = UserServices.GetUsers().Where(p => p.UserName.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+            var result = UserServices.GetUsers().Where(p => p.Username.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
             SetUserList(result);
         }
     }

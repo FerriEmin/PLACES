@@ -35,6 +35,9 @@
         <Button Text="ManageUsersPage"
                 Command="{Binding NavigateToManageUsersPageCommand}"/>
 
+        <Button Text="ActivityPage"
+                Command="{Binding NavigateToActivityPageCommand}"/>
+
     </VerticalStackLayout>
 
 </ContentPage>

@@ -17,7 +17,7 @@ namespace MauiAppTEST.TestData
         public string Location { get; set; }
         public string Details { get; set; }
         public string Image { get; set; }
-        public Activities Activities { get; set; } // gör class
+        public Post Activities { get; set; } // gör class
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 

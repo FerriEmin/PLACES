@@ -9,6 +9,11 @@ public partial class ActivityPage : ContentPage
 		InitializeComponent();
 		BindingContext = vm;
 	}
+
+    void LoadRating()
+    {
+
+    }
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);

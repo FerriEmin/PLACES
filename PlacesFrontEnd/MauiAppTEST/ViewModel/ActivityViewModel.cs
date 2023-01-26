@@ -6,7 +6,7 @@ namespace MauiAppTEST.ViewModel
 {
     public partial class ActivityViewModel : BaseViewModel
     {
-        public ObservableCollection<Activities> Activities { get; } = new();
+        public ObservableCollection<Post> Activities { get; } = new();
 
         public ActivityViewModel()
         {
@@ -28,12 +28,12 @@ namespace MauiAppTEST.ViewModel
                 //foreach (var city in cities)
                 //    Cities.Add(city);
 
-                List<Activities> activities = new List<Activities>()
+                List<Post> activities = new List<Post>()
                 {
-                new Activities(){ Name="Activity1"},
-                new Activities(){ Name="Activity2"},
-                new Activities(){ Name="Activity3"},
-                new Activities(){ Name="Activity4"},
+                new Post(){ Name="Activity1"},
+                new Post(){ Name="Activity2"},
+                new Post(){ Name="Activity3"},
+                new Post(){ Name="Activity4"},
                  };
 
                 foreach (var activity in activities)

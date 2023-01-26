@@ -7,6 +7,8 @@
              x:DataType="viewmodel:ActivityViewModel"
              Shell.PresentationMode="ModalAnimated"
              Title="ActivityPage">
+
+    
     <ScrollView>
         <VerticalStackLayout>
  
@@ -28,17 +30,29 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="testData:City">
 
-                            <HorizontalStackLayout Padding="10"
+                            <VerticalStackLayout Padding="10"
                                                    Spacing="10">
 
-
-                                <Label Text="{Binding Name}"
+                                <HorizontalStackLayout>
+                                    <Label Text="{Binding Name}"
                                        FontAttributes="Bold"
                                        Style="{StaticResource MediumLabel}"/>
 
-                                <CheckBox></CheckBox>
+                                    <CheckBox></CheckBox>
+                                </HorizontalStackLayout>
 
-                            </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="10">
+                                    <Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="Star1"/>
+                                    <Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="Star2"/>
+                                    <Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="Star3"/>
+                                    <Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="Star4"/>
+                                    <Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="Star5"/>
+                                </HorizontalStackLayout>
+              
+
+
+
+                            </VerticalStackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
 
