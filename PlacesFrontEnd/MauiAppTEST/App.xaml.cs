@@ -12,9 +12,10 @@ public partial class App : Application
 
         GlobalService.user = new()
         {
-            UserName = "MonaLisa",
+            Username = "MonaLisa",
             FirstName = "Mona",
             LastName = "Lisa",
+            Id = 123,
             DateOfBirth = new DateTime(1980, 12, 11),
         };
 

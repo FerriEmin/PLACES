@@ -17,7 +17,6 @@ public partial class ActivityPage : ContentPage
         var Posts = PostServices.GetPosts();
 
         Dictionary<int, ICollection<Review>> ReviewDictionary = new Dictionary<int, ICollection<Review>>();
-        Dictionary<int, List<Review>> ReviewsToPost = new Dictionary<int, List<Review>>();
 
         foreach (var item in Posts)
         {

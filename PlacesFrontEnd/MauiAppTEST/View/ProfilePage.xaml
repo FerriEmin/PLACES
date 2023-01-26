@@ -40,7 +40,7 @@
             <Button Text="My profile information" Clicked="OnProfileInfoButtonClicked" Style="{StaticResource SmallButton}"></Button>
             <Frame x:Name="UserInfoFrame" IsVisible="False">
                 <VerticalStackLayout>
-                    <Label Text="{Binding user.UserName}"/>
+                    <Label Text="{Binding user.Username}"/>
                     <Label Text="{Binding user.FirstName}"/>
                     <Label Text="{Binding user.LastName}"/>
                     <Label Text="{Binding user.DateOfBirth}"/>
