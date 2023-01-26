@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MauiAppTEST.TestData
+namespace MauiAppTEST.Models
 {
-    public class City
+    public class Country
     {
-        public City()
+        public Country()
         {
 
         }
@@ -17,7 +17,7 @@ namespace MauiAppTEST.TestData
         public string Location { get; set; }
         public string Details { get; set; }
         public string Image { get; set; }
-        public Post Activities { get; set; } // gör class
+        public Post Post { get; set; } // gör class
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 

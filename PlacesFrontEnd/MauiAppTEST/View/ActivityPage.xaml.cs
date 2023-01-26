@@ -1,4 +1,6 @@
+using DocumentFormat.OpenXml.Spreadsheet;
 using MauiAppTEST.ViewModel;
+using MauiAppTEST.Services;
 
 namespace MauiAppTEST.View;
 
@@ -8,8 +10,10 @@ public partial class ActivityPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = vm;
+        ReviewServices.GetReviewList();
+        UserServices.GetUsers();
+        PostServices.GetPosts();
 	}
-
     void LoadRating()
     {
 

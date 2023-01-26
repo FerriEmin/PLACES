@@ -1,7 +1,7 @@
 using MauiAppTEST.ViewModel;
 using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
-using MauiAppTEST.TestData;
+using MauiAppTEST.Models;
 using MauiAppTEST.Services;
 using DocumentFormat.OpenXml.Spreadsheet;
 
@@ -55,7 +55,7 @@ public partial class AdminPage : ContentPage
         ManageActivitiesFrame.Animate("HeightRequest", animation, length: 100);
     }
 
-    private void SetCityList(List<City> cities)
+    private void SetCityList(List<Country> cities)
     {
         CityView.ItemsSource = cities;
         //NoResultCheck();

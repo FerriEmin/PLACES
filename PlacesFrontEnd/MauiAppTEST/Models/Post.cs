@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MauiAppTEST.TestData
+namespace MauiAppTEST.Models
 {
     public class Post
     {
@@ -13,10 +13,12 @@ namespace MauiAppTEST.TestData
         {
 
         }
+        public string ImgPath { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Location { get; set; }
         public string Details { get; set; }
-        public City city { get; set; }
+        public Country city { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
     }
 }

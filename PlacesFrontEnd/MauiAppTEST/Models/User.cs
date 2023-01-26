@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MauiAppTEST.TestData
+namespace MauiAppTEST.Models
 {
     public class User
     {
