@@ -68,6 +68,7 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="7.0.58" />
 		<PackageReference Include="Plugin.Maui.ExpansionPanel" Version="1.0.3" />
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
+		<PackageReference Include="System.Net.Http" Version="4.3.4" />
 	</ItemGroup>
 
 	<ItemGroup>

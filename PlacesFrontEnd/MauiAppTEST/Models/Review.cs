@@ -13,7 +13,7 @@ namespace MauiAppTEST.Models
         public string Comment { get; set; }
         public DateTime Created { get; set; }
 
-        //public virtual Post Post { get; set; }
+        public virtual Event Event { get; set; }
         public virtual User User { get; set; }
     }
 }
