@@ -22,7 +22,7 @@ public partial class ActivityPage : ContentPage
         Dictionary<int, ICollection<Review>> ReviewDictionary = new Dictionary<int, ICollection<Review>>();
 
 
-
+ 
 
     }
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
