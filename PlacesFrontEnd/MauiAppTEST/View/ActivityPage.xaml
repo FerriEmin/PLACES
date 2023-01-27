@@ -6,29 +6,28 @@
              xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
              x:DataType="viewmodel:ActivityViewModel"
              Shell.PresentationMode="ModalAnimated"
+             x:Name="ActivityPageReference"
              Title="ActivityPage">
 
-    
+
     <ScrollView>
         <VerticalStackLayout>
- 
             <SearchBar Placeholder="Activity..">
 
             </SearchBar>
+            <!--<Image BindingContext="{x:Reference star1}"/>-->
 
             <Grid ColumnDefinitions="*,*"
           ColumnSpacing="5"
           RowDefinitions="*,Auto"
           RowSpacing="0">
-
-
                 <CollectionView BackgroundColor="Transparent"
                                 Grid.ColumnSpan="2"
                                 ItemsSource="{Binding Activities}"
                                 SelectionMode="Single">
 
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="Models:Country">
+                        <DataTemplate x:DataType="Models:Post">
 
                             <VerticalStackLayout Padding="10"
                                                    Spacing="10">
@@ -37,34 +36,50 @@
                                     <Label Text="{Binding Name}"
                                        FontAttributes="Bold"
                                        Style="{StaticResource MediumLabel}"/>
+                                    <Label Text="{Binding Details}"
+                                       FontAttributes="Bold"
+                                       Style="{StaticResource MediumLabel}"/>
 
-                                    <CheckBox></CheckBox>
                                 </HorizontalStackLayout>
+
+                                <CollectionView BackgroundColor="Transparent"
+                                                Grid.ColumnSpan="2"
+                                                ItemsSource="{Binding Reviews}"
+                                                SelectionMode="Single">
+
+                                    <CollectionView.GroupHeaderTemplate>
+                                        <DataTemplate>
+                                            <Label Text="{Binding Name}"/>
+                                        </DataTemplate>
+                                    </CollectionView.GroupHeaderTemplate>
+
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="Models:Review">
+                                            <VerticalStackLayout>
+                                                <CheckBox></CheckBox>
+                                                <Label Text="{Binding Rating}"/>
+                                                <Label Text="{Binding Comment}"/>
+                                            </VerticalStackLayout>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
 
                                 <HorizontalStackLayout Spacing="10">
-                                    <Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="Star1"/>
-                                    <Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="Star2"/>
-                                    <Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="Star3"/>
-                                    <Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="Star4"/>
-                                    <Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="Star5"/>
+
+
+                                    <Image Source="logo.png" Style="{StaticResource RatingImages}"/>
+                                    <Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="star2"/>
+                                    <Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="star3"/>
+                                    <Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="star4"/>
+                                    <Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="star5"/>
                                 </HorizontalStackLayout>
-              
-
-
 
                             </VerticalStackLayout>
                         </DataTemplate>
+
                     </CollectionView.ItemTemplate>
 
                 </CollectionView>
-
-
-                <ActivityIndicator IsVisible="{Binding IsBusy}"
-                           IsRunning="{Binding IsBusy}"
-                           HorizontalOptions="FillAndExpand"
-                           VerticalOptions="CenterAndExpand"
-                           Grid.RowSpan="2"
-                           Grid.ColumnSpan="2"/>
 
             </Grid>
 
