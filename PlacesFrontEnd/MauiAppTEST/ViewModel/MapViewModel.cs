@@ -1,5 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using MauiAppTEST.Services;
 using MauiAppTEST.View;
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Controls.Maps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +13,10 @@ namespace MauiAppTEST.ViewModel
 {
     public partial class MapViewModel : BaseViewModel
     {
+        
         public MapViewModel()
         {
-
+            
         }
 
     }
