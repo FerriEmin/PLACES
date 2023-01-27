@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +26,23 @@ namespace MauiAppTEST.Services
 
             return userList;
         }
+
+        //public static List<User2> GetUsers2()
+        //{
+        //    using (var handler = new SocketsHttpHandler())
+        //    {
+        //        handler.SslOptions.EnabledSslProtocols = SslProtocols.Tls12;
+        //        using (var client = new HttpClient(handler))
+        //        {
+        //            var response = await client.GetAsync("https://www.example.com");
+        //            var content = await response.Content.ReadAsStringAsync();
+        //            Console.WriteLine(content);
+        //        }
+        //    }
+
+
+        //    return
+        //}
     }
 }
 
