@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiAppTEST.View.MapPage"
              xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel" 
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
+             
+             x:Class="MauiAppTEST.View.MapPage"      
              x:DataType="viewmodel:MapViewModel"
              Shell.PresentationMode="ModalAnimated"  
-             Title="MapPage"
-             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib">
-
+             Title="MapPage">
     
     <Grid>
-        <maps:Map x:Name="map" IsShowingUser="True" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+        <maps:Map x:Name="map" IsShowingUser="True" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        </maps:Map>
+        
         <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Start" Margin="20">
             <Border StrokeThickness="10" BackgroundColor="#EDAE49">
                 <Border.StrokeShape>
@@ -41,6 +44,8 @@
                         </sys:DateTime>
                     </DatePicker.MaximumDate>
                 </DatePicker>
+                
+                
             </StackLayout>
         </HorizontalStackLayout>
         <HorizontalStackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="End" Spacing="25" Margin="20" HeightRequest="200">

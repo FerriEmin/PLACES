@@ -1,22 +1,34 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using MauiAppTEST.Services;
-using MauiAppTEST.View;
-using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls.Maps;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Maui.Maps;
+
 
 namespace MauiAppTEST.ViewModel
 {
     public partial class MapViewModel : BaseViewModel
     {
-        
-        public MapViewModel()
+        [ObservableProperty]
+        Double lon;
+
+        [ObservableProperty]
+        Double lat;
+
+        [ObservableProperty]
+        Location location;
+
+        [ObservableProperty]
+        ICollection<Pin> pinsList;  
+
+        public MapSpan mapSpan;
+
+        public MapViewModel(LocationService locationService, PinsService pinsService)
         {
-            
+            lon = locationService.GetCachedLocation().Result.Longitude;
+            lat = locationService.GetCachedLocation().Result.Latitude;
+            location = locationService.GetCachedLocation().Result;
+            PinsList = pinsService.PinsList;
+            mapSpan = new MapSpan(location, 0.01, 0.01);
         }
 
     }
