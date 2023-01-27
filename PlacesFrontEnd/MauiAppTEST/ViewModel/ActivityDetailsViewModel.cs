@@ -11,7 +11,7 @@ namespace MauiAppTEST.ViewModel
 {
     [QueryProperty(nameof(Post), nameof(Post))]
     [QueryProperty(nameof(Review), nameof(Review))]
-    [QueryProperty(nameof(Rating), nameof(Rating))]
+    //[QueryProperty(nameof(Rating), nameof(Rating))]
     public partial class ActivityDetailsViewModel : BaseViewModel
     {
         [ObservableProperty]
