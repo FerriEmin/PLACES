@@ -41,6 +41,10 @@
         <Button Text="MapPage"
                 Command="{Binding NavigateToMapPageCommand}"/>
 
+        <Button Text="ActivityDetailsPage"
+                Command="{Binding NavigateToActivityDetailsPageCommand}"/>
+
+
     </VerticalStackLayout>
 
 </ContentPage>

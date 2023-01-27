@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using MauiAppTEST.Models;
 using MauiAppTEST.Services;
+using MauiAppTEST.View;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
@@ -23,6 +25,32 @@ namespace MauiAppTEST.ViewModel
 
             foreach (var item in posts)
                 Activities.Add(item);
+        }
+
+        [RelayCommand]
+        async Task GoToActivityDetailsPageAsync(Post post)
+        {
+            if (post is null)
+                return;
+
+            float rating = default;
+            Review review = new Review();
+            var postList = PostServices.GetPosts();
+
+            foreach (var posts in postList)
+            {
+                if(post.Id == posts.Id)
+                foreach (var reviews in posts.Reviews)
+                {
+                        review = reviews;
+                }
+            }
+
+            await Shell.Current.GoToAsync($"{nameof(ActivityDetailsPage)}?Rating={rating}", true, new Dictionary<string, object>
+            {
+                ["Post"] = post,
+                ["Review"] = review,
+            });
         }
     }
 }
