@@ -24,10 +24,7 @@ namespace MauiAppTEST.Services
                 new Country(){ Name="Tokyo" },
                 new Country(){ Name="Los Angeles" },
             };
-
             return cityList;
         }
-
-
     }
 }
