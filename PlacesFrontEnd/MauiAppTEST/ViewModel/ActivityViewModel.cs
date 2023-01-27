@@ -11,6 +11,8 @@ namespace MauiAppTEST.ViewModel
     [QueryProperty(nameof(Country), nameof(Country))]
     public partial class ActivityViewModel : BaseViewModel
     {
+        public static Review rev { get; set; }
+
         [ObservableProperty] Country country;
         public ObservableCollection<Post> Activities { get; } = new();
 
@@ -37,13 +39,15 @@ namespace MauiAppTEST.ViewModel
             Review review = new Review();
             var postList = PostServices.GetPosts();
 
+
             foreach (var posts in postList)
             {
                 if(post.Id == posts.Id)
                 foreach (var reviews in posts.Reviews)
                 {
                         review = reviews;
-                }
+                        rev = review;
+                    }
             }
 
             await Shell.Current.GoToAsync($"{nameof(ActivityDetailsPage)}?Rating={rating}", true, new Dictionary<string, object>
