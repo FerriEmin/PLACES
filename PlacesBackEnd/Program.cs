@@ -21,13 +21,24 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// USER ENDPOINTS
+////// USER ENDPOINTS
 RouteGroupBuilder users = app.MapGroup("/users");
 users.MapGet("/", UserCRUD.GetAllUsers);
 users.MapGet("/{id}", UserCRUD.GetUserById);
 users.MapPost("/", UserCRUD.CreateUser);
 users.MapPut("/{id}", UserCRUD.UpdateUser);
 users.MapDelete("/{id}", UserCRUD.DeleteUser);
+//////
+
+
+////// EVENT ENDPOINTS
+RouteGroupBuilder events = app.MapGroup("/events");
+events.MapGet("/", EventCRUD.GetAllEvents);
+events.MapGet("/{id}", EventCRUD.GetEventById);
+events.MapPost("/", EventCRUD.CreateEvent);
+events.MapPut("/{id}", EventCRUD.UpdateEvent);
+events.MapDelete("/{id}", EventCRUD.DeleteEvent);
+//////
 
 
 app.Run();

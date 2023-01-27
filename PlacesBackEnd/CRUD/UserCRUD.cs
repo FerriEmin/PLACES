@@ -63,7 +63,7 @@ namespace PlacesBackEnd.CRUD
                 user.LastName = userDTO.LastName == "string" ? user.LastName : userDTO.LastName;
                 user.Username = userDTO.Username == "string" ? user.Username : userDTO.Username;
                 user.Email = userDTO.Email == "string" ? user.Email : userDTO.Email;
-                user.Password = Hasher.HashPassword(userDTO.Password == "string" ? user.Password : user.Password, Hasher.GenerateSalt());
+                user.Password = Hasher.HashPassword(userDTO.Password == "string" ? user.Password : userDTO.Password, Hasher.GenerateSalt());
 
                 await db.SaveChangesAsync();
 
