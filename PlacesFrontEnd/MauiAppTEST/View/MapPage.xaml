@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppTEST.View.MapPage"
+             xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel" 
+             x:DataType="viewmodel:MapViewModel"
+             Shell.PresentationMode="ModalAnimated"  
+             Title="MapPage"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    
+    <Grid>
+        <maps:Map x:Name="map" IsShowingUser="True" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+        <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Start" Margin="20">
+            <Border StrokeThickness="10" BackgroundColor="#EDAE49">
+                <Border.StrokeShape>
+                    <Ellipse WidthRequest="200" HeightRequest="200" />
+                </Border.StrokeShape>
+                <Frame HeightRequest="90" WidthRequest="90" CornerRadius="100" IsClippedToBounds="True" BorderColor="#EDAE49">
+                    <Image Source="monalisa.png" Scale="2.5" Aspect="AspectFit"/>
+            </Frame>
+            </Border>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Center" Margin="20">
+            <StackLayout>
+                <DatePicker VerticalOptions="CenterAndExpand" Date="{x:Static sys:DateTime.Now}">
+                    <DatePicker.Format>yyyy-MM-dd</DatePicker.Format>
+                    <DatePicker.MinimumDate>
+                        <sys:DateTime x:FactoryMethod="Parse">
+                            <x:Arguments>
+                                <x:String>Jan 1 2000</x:String>
+                            </x:Arguments>
+                        </sys:DateTime>
+                    </DatePicker.MinimumDate>
+                    <DatePicker.MaximumDate>
+                        <sys:DateTime x:FactoryMethod="Parse">
+                            <x:Arguments>
+                                <x:String>Dec 31 2050</x:String>
+                            </x:Arguments>
+                        </sys:DateTime>
+                    </DatePicker.MaximumDate>
+                </DatePicker>
+            </StackLayout>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="End" Spacing="25" Margin="20" HeightRequest="200">
+            <ImageButton Source="mappage_activities.png"
+                    WidthRequest="75"
+                    HeightRequest="75"
+                    HorizontalOptions="Center"
+                    VerticalOptions="CenterAndExpand" />
+            <ImageButton Source="mappage_add.png"
+                    WidthRequest="100"
+                    HeightRequest="100"
+                    HorizontalOptions="Center"
+                    VerticalOptions="CenterAndExpand" />
+            <ImageButton Source="mappage_search.png"
+                    WidthRequest="75"
+                    HeightRequest="75"
+                    HorizontalOptions="Center"
+                    VerticalOptions="CenterAndExpand" />
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

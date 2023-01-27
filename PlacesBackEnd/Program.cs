@@ -1,5 +1,10 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.EntityFrameworkCore;
+using PlacesBackEnd.DTO;
+using PlacesDB;
+using PlacesDB.Models;
+using PlacesBackEnd.CRUD;
 
+var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -16,6 +21,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// USER ENDPOINTS
+RouteGroupBuilder users = app.MapGroup("/users");
+users.MapGet("/", UserCRUD.GetAllUsers);
+users.MapGet("/{id}", UserCRUD.GetUserById);
+users.MapPost("/", UserCRUD.CreateUser);
+users.MapPut("/{id}", UserCRUD.UpdateUser);
+users.MapDelete("/{id}", UserCRUD.DeleteUser);
 
 
 app.Run();

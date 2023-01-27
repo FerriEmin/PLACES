@@ -2,17 +2,39 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppTEST.View.ManageUsersPage"
-             xmlns:TestData="clr-namespace:MauiAppTEST.TestData"
+             xmlns:Models="clr-namespace:MauiAppTEST.Models"
              xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
              x:DataType="viewmodel:ManageUsersViewModel"
              Shell.PresentationMode="ModalAnimated"
              Title="ManageUsersPage">
-
-    <VerticalStackLayout>
+    <Grid>
+        <Frame Grid.Row="1" Style="{StaticResource PopUpFrame}" x:Name="RemoveUserPopUp" IsVisible="false">
+            <VerticalStackLayout VerticalOptions="Center">
+                <Label Text="Are you sure you want to remove this user?" Style="{StaticResource MediumLabel}" TextColor="White"/>
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                    <Button Text="Yes" Style="{StaticResource SmallButton}"></Button>
+                    <Button Text="No" Style="{StaticResource SmallButton}"></Button>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+            
+        </Frame>
+    <VerticalStackLayout Grid.Row="1">
 
         <Label Text="Click one to expand" Style="{StaticResource LargeLabel}"/>
-        <Label Text="{Binding User.UserName}" Style="{StaticResource LargeLabel}"/>
-        <Button Text="See user comments" Clicked="ManageUserComments"></Button>
+        <Label Text="{Binding User.Username}" Style="{StaticResource LargeLabel}"/>
+
+        <Button Text="See User Info" Clicked="OnSeeUserInfoClicked" Style="{StaticResource SmallButton}"></Button>
+
+        <Frame x:Name="UserInfoFrame" IsVisible="False">
+            <VerticalStackLayout>
+                <Label Text="{Binding User.Username}"/>
+                <Label Text="{Binding User.FirstName}"/>
+                <Label Text="{Binding User.LastName}"/>
+                <Label Text="{Binding User.DateOfBirth}"/>
+            </VerticalStackLayout>
+        </Frame>
+
+            <Button Text="See user comments" Clicked="ManageUserComments" Style="{StaticResource SmallButton}"></Button>
 
         <Frame x:Name="ManageUsersFrame" IsVisible="False">
             <ScrollView>
@@ -26,7 +48,7 @@
                                     SelectionMode="None">
 
                         <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="TestData:User">
+                                <DataTemplate x:DataType="Models:User">
                                 <SwipeView>
                                     <SwipeView.RightItems>
                                         <SwipeItems>
@@ -47,12 +69,15 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-
                 </VerticalStackLayout>
             </ScrollView>
-
         </Frame>
+
+        <Button Text="RemoveUser" Clicked="OnRemoveUserClicked" Style="{StaticResource SmallButton}"></Button>
+
     </VerticalStackLayout>
+    </Grid>
+
 </ContentPage>
 
 <!--<CollectionView BackgroundColor="Transparent"

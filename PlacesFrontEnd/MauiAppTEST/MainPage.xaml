@@ -35,6 +35,12 @@
         <Button Text="ManageUsersPage"
                 Command="{Binding NavigateToManageUsersPageCommand}"/>
 
+        <Button Text="ActivityPage"
+                Command="{Binding NavigateToActivityPageCommand}"/>
+
+        <Button Text="MapPage"
+                Command="{Binding NavigateToMapPageCommand}"/>
+
     </VerticalStackLayout>
 
 </ContentPage>

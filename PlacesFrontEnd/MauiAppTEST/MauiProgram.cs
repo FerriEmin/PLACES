@@ -1,5 +1,6 @@
 ﻿using MauiAppTEST.View;
 using MauiAppTEST.ViewModel;
+using MauiAppTEST.Services;
 using Microsoft.Extensions.Logging;
 
 namespace MauiAppTEST;
@@ -15,9 +16,14 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			});
+			})
+            .UseMauiMaps();
 
-		builder.Logging.AddDebug();
+        builder.Services.AddSingleton<MapService>();
+        builder.Services.AddSingleton<LocationService>();
+
+
+        builder.Logging.AddDebug();
         builder.Services.AddSingleton<MainViewModel>();
         builder.Services.AddSingleton<CityViewModel>();
         builder.Services.AddSingleton<DetailViewModel>();
@@ -25,6 +31,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<SignUpViewModel>();
         builder.Services.AddSingleton<ActivityViewModel>();
         builder.Services.AddSingleton<ProfileViewModel>();
+        builder.Services.AddSingleton<MapViewModel>();
         builder.Services.AddTransient<AdminViewModel>();
         builder.Services.AddTransient<ManageUsersViewModel>();
 
@@ -35,6 +42,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<SignUpPage>();
         builder.Services.AddSingleton<ActivityPage>();
         builder.Services.AddSingleton<ProfilePage>();
+        builder.Services.AddSingleton<MapPage>();
         builder.Services.AddTransient<AdminPage>();
         builder.Services.AddTransient<ManageUsersPage>();
 

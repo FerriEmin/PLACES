@@ -1,55 +1,28 @@
-﻿using MauiAppTEST.TestData;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using MauiAppTEST.Models;
+using MauiAppTEST.Services;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace MauiAppTEST.ViewModel
 {
+    [QueryProperty(nameof(Country), nameof(Country))]
     public partial class ActivityViewModel : BaseViewModel
     {
-        public ObservableCollection<Activities> Activities { get; } = new();
+        [ObservableProperty] Country country;
+        public ObservableCollection<Post> Activities { get; } = new();
 
         public ActivityViewModel()
         {
-            GetActivitiesAsync();
+            LoadActivites();
         }
-        void GetActivitiesAsync()
+
+        void LoadActivites()
         {
-            if (IsBusy)
-                return;
+            var posts = PostServices.GetPosts();
 
-            try
-            {
-                IsBusy = true;
-                //var cities = cityService.GetCities();
-
-                //if (cities.Count != 0)
-                //    cities.Clear();
-
-                //foreach (var city in cities)
-                //    Cities.Add(city);
-
-                List<Activities> activities = new List<Activities>()
-                {
-                new Activities(){ Name="Activity1"},
-                new Activities(){ Name="Activity2"},
-                new Activities(){ Name="Activity3"},
-                new Activities(){ Name="Activity4"},
-                 };
-
-                foreach (var activity in activities)
-                    Activities.Add(activity);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-                //await Shell.Current.DisplayAlert("Error!", $"unable to get monkeys: {ex.Message}", "OK");
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-
-
+            foreach (var item in posts)
+                Activities.Add(item);
         }
     }
 }

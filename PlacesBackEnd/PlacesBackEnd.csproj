@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\" />
+    <ProjectReference Include="..\PlacesDB\PlacesDB.csproj" />
   </ItemGroup>
 
 </Project>

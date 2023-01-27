@@ -36,5 +36,12 @@ namespace PlacesDB
 
             return $"{Convert.ToHexString(hash)}{Convert.ToHexString(salt)}";
         }
+
+        public static bool PasswordVerify(string password, string hash)
+        {
+            // Salt will always be the half of password column regardless of keysize
+            byte[] salt = GenerateSalt(hash.Substring(hash.Length / 2, hash.Length / 2));
+            return hash.SequenceEqual(Hasher.HashPassword(password, salt));
+        }
     }
 }
