@@ -90,7 +90,6 @@
                 x:Name="btn_register"
                 Text="Register"
                 Command="{Binding RegisterUserCommand}"
-            IsEnabled="{Binding IsNotBusy}"
                 SemanticProperties.Hint="Register the user when click" HorizontalOptions="Center" />
                 
                 

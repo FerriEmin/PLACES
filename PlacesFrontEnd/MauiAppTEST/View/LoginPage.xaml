@@ -68,8 +68,7 @@
             Margin="8"
             Text="Sign in" FontSize="Medium"
                     Command="{Binding AuthenticateUserCommand}"
-            IsEnabled="{Binding IsNotBusy}"
-             />
+            />
 
 
         </Grid>

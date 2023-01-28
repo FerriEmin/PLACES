@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using MauiAppTEST.Services;
+using MauiAppTEST.View;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 
@@ -21,6 +22,9 @@ namespace MauiAppTEST.ViewModel
         ICollection<Pin> pinsList;  
 
         public MapSpan mapSpan;
+
+        Task NavigateToActivityPage() => Shell.Current.GoToAsync(nameof(ActivityPage));
+
 
         public MapViewModel(LocationService locationService, PinsService pinsService)
         {

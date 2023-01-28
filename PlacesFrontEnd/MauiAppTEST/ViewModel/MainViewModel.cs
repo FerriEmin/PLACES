@@ -49,25 +49,13 @@ namespace MauiAppTEST.ViewModel
         Task NavigateToActivityDetailsPage() => Shell.Current.GoToAsync(nameof(ActivityDetailsPage));
 
         [RelayCommand]
+        Task NavigateToSettingsPage() => Shell.Current.GoToAsync(nameof(SettingsPage));
+
+        [RelayCommand]
+        Task NavigateToAddActivityPage() => Shell.Current.GoToAsync(nameof(AddActivityPage));
+
+
+        [RelayCommand]
         Task Back() => Shell.Current.GoToAsync("..");
-
-        //[ObservableProperty]
-        //ObservableCollection<string> items;
-
-        //[ObservableProperty]
-        //string text;
-
-        //[RelayCommand]
-        //async Task Tap(string s)
-        //{
-        //    await Shell.Current.GoToAsync(nameof(CityPage));
-        //}
-
-        //void NavigationPages()
-        //{
-        //    Items = new ObservableCollection<string>();
-
-        //    Items.Add("MainPage");
-        //}
     }
 }
