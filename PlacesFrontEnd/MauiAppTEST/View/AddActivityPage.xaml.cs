@@ -9,4 +9,9 @@ public partial class AddActivityPage : ContentPage
 		BindingContext= vm;
 		InitializeComponent();
 	}
+
+    private void entry_Focused(object sender, FocusEventArgs e)
+    {
+
+    }
 }

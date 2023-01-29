@@ -27,22 +27,7 @@
             <VerticalStackLayout Margin="10">
                 <Entry x:Name="entry"
                    Placeholder="Title"
-                   TextChanged="OnEntryTextChanged"
-                   Completed="OnEntryCompleted" />
-            </VerticalStackLayout>
-
-            <VerticalStackLayout Margin="10">
-                <Entry x:Name="entry"
-                   Placeholder="Date"
-                   TextChanged="OnEntryTextChanged"
-                   Completed="OnEntryCompleted" />
-            </VerticalStackLayout>
-
-            <VerticalStackLayout Margin="10">
-                <Entry x:Name="entry"
-                   Placeholder="Location"
-                   TextChanged="OnEntryTextChanged"
-                   Completed="OnEntryCompleted" />
+                   />
             </VerticalStackLayout>
 
         </VerticalStackLayout>

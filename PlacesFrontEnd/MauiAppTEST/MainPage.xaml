@@ -7,12 +7,14 @@
              x:DataType="viewmodel:MainViewModel"
              x:Class="MauiAppTEST.MainPage">
 
-    <VerticalStackLayout
+    <ScrollView WidthRequest="10000">
+        <VerticalStackLayout
         Spacing="25"
-        Margin="10"
-        Padding="30,0"
+
         HorizontalOptions="Center">
         <!--Command="{Binding NavigationCommand}"-->
+        
+        
 
         <Button Text="CityPage"
                 Command="{Binding NavigationCommand}"/>
@@ -50,7 +52,11 @@
         <Button Text="AddActivity"
                 Command="{Binding NavigateToAddActivityPageCommand}"/>
 
+        <Button Text="SearchPage"
+                Command="{Binding NavigateToSearchPageCommand}"/>
+
 
     </VerticalStackLayout>
+    </ScrollView>
 
 </ContentPage>

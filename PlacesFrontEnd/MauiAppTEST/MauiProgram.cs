@@ -38,6 +38,8 @@ public static class MauiProgram
         builder.Services.AddTransient<AdminViewModel>();
         builder.Services.AddTransient<ManageUsersViewModel>();
         builder.Services.AddTransient<ActivityDetailsViewModel>();
+        builder.Services.AddSingleton<SearchViewModel>();
+
 
 
         builder.Services.AddSingleton<MainPage>();
@@ -53,6 +55,8 @@ public static class MauiProgram
         builder.Services.AddTransient<ManageUsersPage>();
         builder.Services.AddTransient<ActivityDetailsPage>();
         builder.Services.AddSingleton<AddActivityPage>();
+        builder.Services.AddSingleton<SearchPage>();
+
 
 
 
