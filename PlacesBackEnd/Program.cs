@@ -28,6 +28,14 @@ users.MapGet("/{id}", UserCRUD.GetUserById);
 users.MapPost("/", UserCRUD.CreateUser);
 users.MapPut("/{id}", UserCRUD.UpdateUser);
 users.MapDelete("/{id}", UserCRUD.DeleteUser);
+//////
 
+////// CITY ENDPOINTS
+RouteGroupBuilder cities = app.MapGroup("/cities");
+cities.MapGet("/", CityCRUD.GetAllCitys);
+cities.MapGet("/{id}", CityCRUD.GetCityById);
+cities.MapPost("/", CityCRUD.CreateCity);
+cities.MapPut("/{id}", CityCRUD.UpdateCity);
+cities.MapDelete("/{id}", CityCRUD.DeleteCity);
 
 app.Run();
