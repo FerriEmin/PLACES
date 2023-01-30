@@ -4,6 +4,7 @@ namespace PlacesBackEnd.DTO
 {
     public class UserDTO
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -13,6 +14,6 @@ namespace PlacesBackEnd.DTO
 
         public UserDTO() { }
         public UserDTO(User user) =>
-            (FirstName, LastName, Email, Username, Password, DateOfBirth) = (user.FirstName, user.LastName, user.Email, user.Username, user.Password, user.DateOfBirth);
+            (Id, FirstName, LastName, Email, Username, Password, DateOfBirth) = (user.Id, user.FirstName, user.LastName, user.Email, user.Username, user.Password, user.DateOfBirth);
     }
 }
