@@ -21,13 +21,21 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// USER ENDPOINTS
+////// USER ENDPOINTS
 RouteGroupBuilder users = app.MapGroup("/users");
 users.MapGet("/", UserCRUD.GetAllUsers);
 users.MapGet("/{id}", UserCRUD.GetUserById);
 users.MapPost("/", UserCRUD.CreateUser);
 users.MapPut("/{id}", UserCRUD.UpdateUser);
 users.MapDelete("/{id}", UserCRUD.DeleteUser);
+//////
 
+////// CATEGORY ENDPOINTS
+RouteGroupBuilder categories = app.MapGroup("/categories");
+categories.MapGet("/", CategoryCRUD.GetAllCategories);
+categories.MapGet("/{id}", CategoryCRUD.GetCategoryById);
+categories.MapPost("/", CategoryCRUD.CreateCategory);
+categories.MapPut("/{id}", CategoryCRUD.UpdateCategory);
+categories.MapDelete("/{id}", CategoryCRUD.DeleteCategory);
 
 app.Run();
