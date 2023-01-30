@@ -23,9 +23,6 @@ namespace MauiAppTEST.ViewModel
 
         public MapSpan mapSpan;
 
-        Task NavigateToActivityPage() => Shell.Current.GoToAsync(nameof(ActivityPage));
-
-
         public MapViewModel(LocationService locationService, PinsService pinsService)
         {
             lon = locationService.GetCachedLocation().Result.Longitude;

@@ -15,19 +15,22 @@ public partial class MapPage : ContentPage
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
-		Double lat = 1;
-        Double lon = 1;
 
         base.OnNavigatedTo(args);
-		MapSpan ms = new MapSpan(mapViewModel.Location, lat, lon);
+
+        Double lat = 1;
+        Double lon = 1;
+        MapSpan ms = new MapSpan(mapViewModel.Location, lat, lon);
+
 		map.MoveToRegion(ms);
-		var PinsList = mapViewModel.PinsList;
-		foreach (var item in PinsList)
-		{
-			if (item != null)
-			{
-                map.Pins.Add(item);
-            }
-		}
+
+		//var PinsList = mapViewModel.PinsList;
+		//foreach (var item in PinsList)
+		//{
+		//	if (item != null)
+		//	{
+  //              map.Pins.Add(item);
+  //          }
+		//}
     }
 }
