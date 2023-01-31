@@ -80,5 +80,14 @@ categories.MapGet("/{id}", CategoryCRUD.GetCategoryById);
 categories.MapPost("/", CategoryCRUD.CreateCategory);
 categories.MapPut("/{id}", CategoryCRUD.UpdateCategory);
 categories.MapDelete("/{id}", CategoryCRUD.DeleteCategory);
+//////
+
+////// LOCATION ENDPOINTS
+RouteGroupBuilder locations = app.MapGroup("/locations");
+locations.MapGet("/", LocationCRUD.GetAllLocations);
+locations.MapGet("/{id}", LocationCRUD.GetLocationById);
+locations.MapPost("/", LocationCRUD.CreateLocation);
+locations.MapPut("/{id}", LocationCRUD.UpdateLocation);
+locations.MapDelete("/{id}", LocationCRUD.DeleteLocation);
 
 app.Run();
