@@ -56,6 +56,13 @@ users.MapPut("/{id}", UserCRUD.UpdateUser);
 users.MapDelete("/{id}", UserCRUD.DeleteUser);
 //////
 
+////// CITY ENDPOINTS
+RouteGroupBuilder cities = app.MapGroup("/cities");
+cities.MapGet("/", CityCRUD.GetAllCitys);
+cities.MapGet("/{id}", CityCRUD.GetCityById);
+cities.MapPost("/", CityCRUD.CreateCity);
+cities.MapPut("/{id}", CityCRUD.UpdateCity);
+cities.MapDelete("/{id}", CityCRUD.DeleteCity);
 
 ////// EVENT ENDPOINTS
 RouteGroupBuilder events = app.MapGroup("/events");
@@ -73,5 +80,14 @@ categories.MapGet("/{id}", CategoryCRUD.GetCategoryById);
 categories.MapPost("/", CategoryCRUD.CreateCategory);
 categories.MapPut("/{id}", CategoryCRUD.UpdateCategory);
 categories.MapDelete("/{id}", CategoryCRUD.DeleteCategory);
+//////
+
+////// LOCATION ENDPOINTS
+RouteGroupBuilder locations = app.MapGroup("/locations");
+locations.MapGet("/", LocationCRUD.GetAllLocations);
+locations.MapGet("/{id}", LocationCRUD.GetLocationById);
+locations.MapPost("/", LocationCRUD.CreateLocation);
+locations.MapPut("/{id}", LocationCRUD.UpdateLocation);
+locations.MapDelete("/{id}", LocationCRUD.DeleteLocation);
 
 app.Run();
