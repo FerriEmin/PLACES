@@ -13,7 +13,22 @@ namespace PlacesBackEnd.DTO
         public DateTime DateOfBirth { get; set; }
 
         public UserDTO() { }
-        public UserDTO(User user) =>
-            (Id, FirstName, LastName, Email, Username, Password, DateOfBirth) = (user.Id, user.FirstName, user.LastName, user.Email, user.Username, user.Password, user.DateOfBirth);
+        public UserDTO(User user) => (
+            Id,
+            FirstName,
+            LastName,
+            Email,
+            Username,
+            Password,
+            DateOfBirth
+        ) = (
+            user.Id,
+            user.FirstName,
+            user.LastName,
+            user.Email,
+            user.Username,
+            user.Password,
+            user.DateOfBirth
+        );
     }
 }
