@@ -11,11 +11,15 @@
         <SearchBar x:Name="SearchBar" BackgroundColor="White" TextChanged="SearchBar_TextChanged"/>
             
             <Frame x:Name="Suggestions"  WidthRequest="400" HeightRequest="400" BackgroundColor="#F3F3F3" IsVisible="False">
-            <CollectionView ItemsSource="{Binding Titles}">
+            <CollectionView ItemsSource="{Binding Predictions}"
+                            SelectionChanged="CollectionView_SelectionChanged"
+                            SelectionMode="Single"
+                            >
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:StructuredFormatting">
+                    <DataTemplate x:DataType="models:Prediction">
                         <Grid Padding="10">
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
@@ -24,10 +28,13 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="1"
-                               Text="{Binding main_text}"
+                               Text="{Binding structured_formatting.main_text}"
                                FontAttributes="Bold" />
-                            <Label Grid.Column="1"
-                               Text="{Binding secondary_text}"
+                            <Label Grid.Column="1" Grid.Row="1"
+                               Text="{Binding structured_formatting.secondary_text}"
+                                />
+                            <Label Grid.Column="1" Grid.Row="2"
+                               Text="{Binding place_id}"
                                 />
 
                         </Grid>
@@ -35,10 +42,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </Frame>
-        <!--<Label 
-            
-            Text="{Binding ResponseBody}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />-->
+        <Label Text="{Binding Id}"></Label>
+
     </VerticalStackLayout>
 </ContentPage>

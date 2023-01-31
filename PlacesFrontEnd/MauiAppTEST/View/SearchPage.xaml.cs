@@ -1,13 +1,16 @@
 using MauiAppTEST.ViewModel;
+using MauiAppTEST.Models;
 
 namespace MauiAppTEST.View;
 
 public partial class SearchPage : ContentPage
 {
+
+	SearchViewModel svm;
 	public SearchPage(SearchViewModel vm)
 	{
 
-
+		svm = vm;
 		BindingContext = vm;	
 		InitializeComponent();
 	}
@@ -21,6 +24,11 @@ public partial class SearchPage : ContentPage
 		{
 			Suggestions.IsVisible = false;
 		}
-		
+    }
+
+    private void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+	{
+        string current = (e.CurrentSelection.FirstOrDefault() as Prediction)?.place_id;
+		svm.Id = current;
     }
 }
