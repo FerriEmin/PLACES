@@ -29,7 +29,7 @@ namespace MauiAppTEST.Services
         {
             try
             {
-                Location location = await Geolocation.Default.GetLastKnownLocationAsync();
+                Location location = Geolocation.Default.GetLastKnownLocationAsync().Result;
 
                 if (location != null)
                     return location;
@@ -64,7 +64,7 @@ namespace MauiAppTEST.Services
         {
             try
             {
-                Location location = await Geolocation.GetLocationAsync();
+                Location location = Geolocation.GetLocationAsync().Result;
                 if (location != null) { 
 
                     System.Diagnostics.Debug.WriteLine($"MapClick: {location.Latitude}, {location.Longitude}");

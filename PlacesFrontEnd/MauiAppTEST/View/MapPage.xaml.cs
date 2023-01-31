@@ -20,17 +20,18 @@ public partial class MapPage : ContentPage
 
         Double lat = 1;
         Double lon = 1;
-        MapSpan ms = new MapSpan(mapViewModel.Location, lat, lon);
+		MapSpan ms = new MapSpan(mapViewModel.Location, lat, lon);
 
 		map.MoveToRegion(ms);
 
-		//var PinsList = mapViewModel.PinsList;
-		//foreach (var item in PinsList)
-		//{
-		//	if (item != null)
-		//	{
-  //              map.Pins.Add(item);
-  //          }
-		//}
-    }
+		var PinsList = mapViewModel.PinsLis;
+
+		foreach (var item in PinsList)
+		{
+			if (item != null)
+			{
+				map.Pins.Add(item);
+			}
+		}
+	}
 }

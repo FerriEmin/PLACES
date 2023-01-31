@@ -11,7 +11,7 @@ namespace MauiAppTEST.Services
     {
         public async Task showMapError()
         {
-            await Shell.Current.DisplayAlert("Map error", "Couldn't retrieve map", "Cancel");
+            Shell.Current.DisplayAlert("Map error", "Couldn't retrieve map", "Cancel").RunSynchronously();
         }
 
         public async Task NavigateToCurrentLocation(Location currentLocation, IMap m)
@@ -21,7 +21,7 @@ namespace MauiAppTEST.Services
 
             try
             {
-                await m.OpenAsync(location.Longitude,location.Latitude, options);
+                await m.TryOpenAsync(location.Longitude,location.Latitude, options);
             }
             catch (Exception ex)
             {
@@ -37,7 +37,7 @@ namespace MauiAppTEST.Services
 
             try
             {
-                await Map.Default.OpenAsync(location, options);
+                await Map.Default.TryOpenAsync(location, options);
             }
             catch (Exception ex)
             {

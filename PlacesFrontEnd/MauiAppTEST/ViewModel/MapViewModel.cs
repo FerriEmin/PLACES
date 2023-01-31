@@ -19,7 +19,7 @@ namespace MauiAppTEST.ViewModel
         Location location;
 
         [ObservableProperty]
-        ICollection<Pin> pinsList;  
+        ICollection<Pin> pinsLis;  
 
         public MapSpan mapSpan;
 
@@ -28,8 +28,9 @@ namespace MauiAppTEST.ViewModel
             lon = locationService.GetCachedLocation().Result.Longitude;
             lat = locationService.GetCachedLocation().Result.Latitude;
             location = locationService.GetCachedLocation().Result;
-            PinsList = pinsService.PinsList;
-            mapSpan = new MapSpan(location, 0.01, 0.01);
+            
+            PinsLis = pinsService.PinsList;
+            mapSpan = new MapSpan(location, lat, lon);
         }
 
     }

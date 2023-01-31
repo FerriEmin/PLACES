@@ -2,14 +2,43 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
+             xmlns:models="clr-namespace:MauiAppTEST.Models"
              x:Class="MauiAppTEST.View.SearchPage"
              x:DataType="viewmodel:SearchViewModel"
              
              Title="SearchPage">
     <VerticalStackLayout>
-        <Label 
+        <SearchBar x:Name="SearchBar" BackgroundColor="White" TextChanged="SearchBar_TextChanged"/>
+            
+            <Frame x:Name="Suggestions"  WidthRequest="400" HeightRequest="400" BackgroundColor="#F3F3F3" IsVisible="False">
+            <CollectionView ItemsSource="{Binding Titles}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:StructuredFormatting">
+                        <Grid Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="1"
+                               Text="{Binding main_text}"
+                               FontAttributes="Bold" />
+                            <Label Grid.Column="1"
+                               Text="{Binding secondary_text}"
+                                />
+
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Frame>
+        <!--<Label 
+            
             Text="{Binding ResponseBody}"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center" />-->
     </VerticalStackLayout>
 </ContentPage>
