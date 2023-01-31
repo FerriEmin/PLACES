@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppTEST.View.AdminPage"
-             xmlns:TestData="clr-namespace:MauiAppTEST.TestData"
+             xmlns:Models="clr-namespace:MauiAppTEST.Models"
              xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
              x:DataType="viewmodel:AdminViewModel"
              Shell.PresentationMode="ModalAnimated"
@@ -28,14 +28,14 @@
                                 ItemsSource="{Binding Users}"
                                 SelectionMode="Single">
                         <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="TestData:User">
+                                <DataTemplate x:DataType="Models:User">
                                     <Frame>
                                         <Frame.GestureRecognizers>
                                             <TapGestureRecognizer CommandParameter="{Binding .}"
                                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AdminViewModel}}, Path=GoToManageUsersPageCommand}"/>
                                         </Frame.GestureRecognizers>
 
-                                        <Label Text="{Binding UserName}"
+                                        <Label Text="{Binding Username}"
                                                    Style="{StaticResource MediumLabel}" />
                                     </Frame>
 
@@ -53,7 +53,7 @@
                 <ScrollView>
                     
                 <VerticalStackLayout>
-                    <SearchBar Placeholder="City.." x:Name="CitySearch" TextChanged="CitySearch_TextChanged" ></SearchBar>
+                    <SearchBar Placeholder="Country.." x:Name="CitySearch" TextChanged="CitySearch_TextChanged" ></SearchBar>
                     <!--<Button Text="Remove Activity" Style="{StaticResource SmallButton}"></Button>
                 <Button Text="Remove User Comment" Style="{StaticResource SmallButton}"></Button>-->
 
@@ -63,7 +63,7 @@
                                 ItemsSource="{Binding Cities}"
                                 SelectionMode="Single">
                         <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="TestData:City">
+                                <DataTemplate x:DataType="Models:Country">
                                 <VerticalStackLayout 
                                    Padding="0">
                                     <Label Text="{Binding Name}"

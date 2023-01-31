@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
+             x:DataType="viewmodel:AddActivityViewModel"
+
+             x:Class="MauiAppTEST.View.AddActivityPage"
+             Shell.PresentationMode="ModalAnimated"
+             Title="Add Activity Page">
+    <VerticalStackLayout>
+
+        <VerticalStackLayout.Background>
+            <LinearGradientBrush EndPoint="0,1">
+                <GradientStop Color="#ECAE4A"
+                          Offset="0.1" />
+                <GradientStop Color="#042D97"
+                          Offset="1" />
+            </LinearGradientBrush>
+        </VerticalStackLayout.Background>
+
+        <Frame CornerRadius="20"  HeightRequest="200" Margin="10">
+
+            <Image Source="ny.png"  HeightRequest="200" Aspect="AspectFill" />
+        </Frame>
+
+        <VerticalStackLayout Margin="30">
+            <VerticalStackLayout Margin="10">
+                <Entry x:Name="entry"
+                   Placeholder="Title"
+                   />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+
+
+
+    </VerticalStackLayout>
+</ContentPage>

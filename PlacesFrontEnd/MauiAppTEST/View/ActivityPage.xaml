@@ -2,55 +2,90 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppTEST.View.ActivityPage"
-             xmlns:testData="clr-namespace:MauiAppTEST.TestData"
+             xmlns:Models="clr-namespace:MauiAppTEST.Models"
              xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
              x:DataType="viewmodel:ActivityViewModel"
              Shell.PresentationMode="ModalAnimated"
+             x:Name="ActivityPageReference"
              Title="ActivityPage">
+
+
     <ScrollView>
         <VerticalStackLayout>
- 
             <SearchBar Placeholder="Activity..">
 
             </SearchBar>
+            <!--<Image BindingContext="{x:Reference star1}"/>-->
 
             <Grid ColumnDefinitions="*,*"
           ColumnSpacing="5"
           RowDefinitions="*,Auto"
           RowSpacing="0">
-
-
                 <CollectionView BackgroundColor="Transparent"
                                 Grid.ColumnSpan="2"
                                 ItemsSource="{Binding Activities}"
-                                SelectionMode="Single">
+                                SelectionMode="None">
 
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="testData:City">
+                        <DataTemplate x:DataType="Models:Post">
+                            <Frame>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                          Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ActivityViewModel}}, Path=GoToActivityDetailsPageCommand}"/>
+                                </Frame.GestureRecognizers>
 
-                            <HorizontalStackLayout Padding="10"
+                            <VerticalStackLayout Padding="10"
                                                    Spacing="10">
 
+                                <HorizontalStackLayout>
+                                    <Label Text="{Binding Name}"
+                                           FontAttributes="Bold"
+                                           Style="{StaticResource MediumLabel}"/>
+                                    <Label Text="{Binding Details}"
+                                           FontAttributes="Bold"
+                                           Style="{StaticResource MediumLabel}"/>
+                                </HorizontalStackLayout>
 
-                                <Label Text="{Binding Name}"
-                                       FontAttributes="Bold"
-                                       Style="{StaticResource MediumLabel}"/>
+                                <CollectionView BackgroundColor="Transparent"
+                                                Grid.ColumnSpan="2"
+                                                ItemsSource="{Binding Reviews}"
+                                                SelectionMode="None">
 
-                                <CheckBox></CheckBox>
+                                    <CollectionView.GroupHeaderTemplate>
+                                        <DataTemplate>
+                                            <Label Text="{Binding Name}"/>
+                                        </DataTemplate>
+                                    </CollectionView.GroupHeaderTemplate>
 
-                            </HorizontalStackLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="Models:Review">
+                                            <VerticalStackLayout>
+
+                                                    <Label Text="{Binding Comment}"/>
+                                                    <Label Text="{Binding Rating}"/>
+                                                    <!--<Image Source="logo.png" Style="{StaticResource RatingImages}" BindingContext="{x:Reference }"/>-->
+
+
+                                                    <!--<Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="star1"/>-->
+                                                <!--<Image Source="logo.png" Style="{StaticResource RatingImages}" BindingContext="{Reference }"/>
+                                                <Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="star3"/>
+                                                <Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="star5"/>-->
+                                            </VerticalStackLayout>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                     
+
+                            </VerticalStackLayout>
+
+                                
+                            </Frame>
+
                         </DataTemplate>
+
                     </CollectionView.ItemTemplate>
 
                 </CollectionView>
-
-
-                <ActivityIndicator IsVisible="{Binding IsBusy}"
-                           IsRunning="{Binding IsBusy}"
-                           HorizontalOptions="FillAndExpand"
-                           VerticalOptions="CenterAndExpand"
-                           Grid.RowSpan="2"
-                           Grid.ColumnSpan="2"/>
 
             </Grid>
 
@@ -58,3 +93,21 @@
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
+
+
+
+<!--<Image>
+    <Image.Triggers>
+        <DataTrigger Binding="{Binding Rating}" Value="false" TargetType="Image">
+            -->
+<!--<Image BindingContext="{Binding Source={x:Reference Rating}, Path=Review}"/>-->
+<!--
+            <Setter Property="IsVisible" Value="true" TargetName="star1"/>
+            -->
+<!--<Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="star3"/>-->
+<!--<Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="star4"/>-->
+<!--<Image Source="logo.png" Style="{StaticResource RatingImages}" x:Name="star5"/>-->
+<!--
+        </DataTrigger>
+    </Image.Triggers>
+</Image>-->
