@@ -54,6 +54,17 @@ users.MapGet("/{id}", UserCRUD.GetUserById);
 users.MapPost("/", UserCRUD.CreateUser);
 users.MapPut("/{id}", UserCRUD.UpdateUser);
 users.MapDelete("/{id}", UserCRUD.DeleteUser);
+//////
+
+
+////// EVENT ENDPOINTS
+RouteGroupBuilder events = app.MapGroup("/events");
+events.MapGet("/", EventCRUD.GetAllEvents);
+events.MapGet("/{id}", EventCRUD.GetEventById);
+events.MapPost("/", EventCRUD.CreateEvent);
+events.MapPut("/{id}", EventCRUD.UpdateEvent);
+events.MapDelete("/{id}", EventCRUD.DeleteEvent);
+//////
 
 // CATEGORY ENDPOINTS
 RouteGroupBuilder categories = app.MapGroup("/categories");
