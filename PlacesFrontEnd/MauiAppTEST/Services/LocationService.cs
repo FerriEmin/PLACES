@@ -19,6 +19,13 @@ namespace MauiAppTEST.Services
     //[assembly: UsesFeature("android.hardware.location.network", Required = false)]
     public class LocationService
     {
+
+        IGeolocation geolocation;
+
+        public LocationService(IGeolocation ls)
+        {
+            geolocation = ls;
+        }
        
         public async Task showLocationError()
         {
@@ -52,7 +59,7 @@ namespace MauiAppTEST.Services
                 // Unable to get location
             }
 
-            throw new Exception();
+            throw new Exception("LocationService");
 
 
 
@@ -60,29 +67,29 @@ namespace MauiAppTEST.Services
 
         //Get current location if possible, else get last known location.
         //Throw error 
+
+        private CancellationTokenSource _cancelTokenSource;
+        private bool _isCheckingLocation;
+
         public async Task<Location> GetLocation()
         {
             try
             {
-                Location location = Geolocation.GetLocationAsync().Result;
+                Location location = geolocation.GetLastKnownLocationAsync().Result;
+                
                 if (location != null) { 
-
-                    System.Diagnostics.Debug.WriteLine($"MapClick: {location.Latitude}, {location.Longitude}");
                     return location;
                 } else
                 {
-                    location = await Geolocation.GetLastKnownLocationAsync();
+                    location = geolocation.GetLocationAsync().Result;
                     if (location != null)
                     {
-                        System.Diagnostics.Debug.WriteLine($"MapClick: {location.Latitude}, {location.Longitude}");
-
                         return location;
                     }
                     else
                     {
-
                         await showLocationError();
-                        throw new Exception();
+                        throw new Exception("Could not load location");
                     }
                         
                 }
@@ -91,7 +98,7 @@ namespace MauiAppTEST.Services
             {
 
                 await showLocationError();
-                throw new Exception();
+                throw new Exception("Could not load location");
             }
 
         }

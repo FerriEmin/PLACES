@@ -23,6 +23,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<MapService>();
         builder.Services.AddSingleton<LocationService>();
         builder.Services.AddSingleton<PinsService>();
+        builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
 
 
         builder.Logging.AddDebug();

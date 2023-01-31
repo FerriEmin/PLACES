@@ -9,6 +9,10 @@ namespace MauiAppTEST.ViewModel
 {
     public partial class MapViewModel : BaseViewModel
     {
+
+        LocationService locationService;
+        public PinsService ps;
+
         [ObservableProperty]
         Double lon;
 
@@ -18,19 +22,21 @@ namespace MauiAppTEST.ViewModel
         [ObservableProperty]
         Location location;
 
-        [ObservableProperty]
-        ICollection<Pin> pinsLis;  
 
+        [ObservableProperty]
         public MapSpan mapSpan;
 
-        public MapViewModel(LocationService locationService, PinsService pinsService)
+        public MapViewModel(LocationService ls, PinsService pinsService)
         {
-            lon = locationService.GetCachedLocation().Result.Longitude;
-            lat = locationService.GetCachedLocation().Result.Latitude;
-            location = locationService.GetCachedLocation().Result;
-            
-            PinsLis = pinsService.PinsList;
-            mapSpan = new MapSpan(location, lat, lon);
+            locationService = ls;
+            ps = pinsService;
+
+            var res = locationService.GetLocation().Result;
+
+            Lon = res.Longitude;
+            Lat = res.Latitude;
+            Location location = res;            
+            mapSpan = new MapSpan(location, Lon, Lat);
         }
 
     }

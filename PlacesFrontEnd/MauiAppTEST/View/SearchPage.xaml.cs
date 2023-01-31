@@ -17,6 +17,9 @@ public partial class SearchPage : ContentPage
 
     private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
     {
+		svm.Input = e.NewTextValue;
+		svm.search();
+
 		if (SearchBar.Text.Length > 0)
 		{
 			Suggestions.IsVisible = true;

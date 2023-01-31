@@ -42,21 +42,20 @@ namespace MauiAppTEST.ViewModel
         string id;
 
 
-        public async Task<Root> search()
+        public void search()
         {
             Url = $"https://maps.googleapis.com/maps/api/place/autocomplete/json?input={Input}&key={Apikey}";
             HttpClient client = new HttpClient();
-            var response = client.GetStringAsync(url).Result;
+            var response = client.GetStringAsync(Url).Result;
             var json = JsonConvert.DeserializeObject<Root>(response);
 
-            return json;
+            Predictions = json.predictions;
         }
 
         public SearchViewModel()
         {
             Id = "Inget här";
-            var temp = search().Result;
-            predictions = temp.predictions;
+            search();
         }    
     }
 }

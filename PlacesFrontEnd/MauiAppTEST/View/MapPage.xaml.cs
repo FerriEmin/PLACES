@@ -8,30 +8,26 @@ public partial class MapPage : ContentPage
 	MapViewModel mapViewModel;
 	public MapPage(MapViewModel vm)
 	{
+        mapViewModel = vm;
 		BindingContext = vm;
-		mapViewModel = vm;
 		InitializeComponent();
 	}
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
-
         base.OnNavigatedTo(args);
 
         Double lat = 1;
         Double lon = 1;
-		MapSpan ms = new MapSpan(mapViewModel.Location, lat, lon);
 
-		map.MoveToRegion(ms);
+        map.MoveToRegion(mapViewModel.MapSpan);
 
-		var PinsList = mapViewModel.PinsLis;
-
-		foreach (var item in PinsList)
-		{
-			if (item != null)
-			{
-				map.Pins.Add(item);
-			}
-		}
-	}
+        foreach (var item in mapViewModel.ps.PinsList)
+        {
+           if (item != null)
+           {
+               map.Pins.Add(item);
+            }
+        }
+    }
 }

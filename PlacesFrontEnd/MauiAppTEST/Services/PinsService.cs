@@ -12,6 +12,7 @@ namespace MauiAppTEST.Services
     {
         LocationService locationService;
         int amtOfPins = 10;
+
         public ICollection<Pin> PinsList;
 
         public PinsService(LocationService ls) 
@@ -23,12 +24,12 @@ namespace MauiAppTEST.Services
         public async Task<ICollection<Pin>> CreatePins() 
         {
             List<Pin> tempPinsList = new List<Pin>();
-            Location currentLocation = locationService.GetCachedLocation().Result;
+            Location currentLocation = await locationService.GetCachedLocation();
 
             for (int i = 0; i < amtOfPins; i++)
             {
                 Location newLocation = new Location(currentLocation.Latitude + 2 * i, currentLocation.Longitude - 2 * i);
-                Pin pin = CreatePin("apa", "apa", PinType.Place, newLocation).Result;
+                Pin pin = await CreatePin("apa", "apa", PinType.Place, newLocation);
                 tempPinsList.Add(pin);
             }
             return tempPinsList;
