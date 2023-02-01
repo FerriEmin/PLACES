@@ -17,9 +17,6 @@ public partial class MapPage : ContentPage
     {
         base.OnNavigatedTo(args);
 
-        Double lat = 1;
-        Double lon = 1;
-
         map.MoveToRegion(mapViewModel.MapSpan);
 
         foreach (var item in mapViewModel.ps.PinsList)

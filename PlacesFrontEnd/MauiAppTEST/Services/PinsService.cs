@@ -24,7 +24,7 @@ namespace MauiAppTEST.Services
         public async Task<ICollection<Pin>> CreatePins() 
         {
             List<Pin> tempPinsList = new List<Pin>();
-            Location currentLocation = await locationService.GetCachedLocation();
+            Location currentLocation = locationService.GetLocation().Result;
 
             for (int i = 0; i < amtOfPins; i++)
             {
