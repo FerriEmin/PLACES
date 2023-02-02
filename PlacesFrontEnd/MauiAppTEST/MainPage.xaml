@@ -19,9 +19,6 @@
         <Button Text="CityPage"
                 Command="{Binding NavigationCommand}"/>
 
-        <Button Text="DetailPage"
-                Command="{Binding NavigateToDetailPageCommand}"/>
-
         <Button Text="LoginPage"
                 Command="{Binding NavigateToLoginPageCommand}"/>
 

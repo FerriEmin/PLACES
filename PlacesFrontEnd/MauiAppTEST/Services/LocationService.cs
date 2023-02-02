@@ -51,8 +51,7 @@ namespace MauiAppTEST.Services
                     {
                         await showLocationError();
                         throw new Exception("Could not load location");
-                    }
-                        
+                    }        
                 }
             }
             catch (Exception)
@@ -61,7 +60,6 @@ namespace MauiAppTEST.Services
                 await showLocationError();
                 throw new Exception("Could not load location");
             }
-
         }
 
         public async Task<double> GetDistance(Location location, double lat, double lon, DistanceUnits units)

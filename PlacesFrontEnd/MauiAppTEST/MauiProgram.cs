@@ -44,7 +44,6 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<CityPage>();
-        builder.Services.AddSingleton<DetailPage>();
         builder.Services.AddSingleton<LoginPage>();
         builder.Services.AddSingleton<SignUpPage>();
         builder.Services.AddSingleton<ActivityPage>();

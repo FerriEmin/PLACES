@@ -22,9 +22,6 @@ namespace MauiAppTEST.ViewModel
         Task Navigation() => Shell.Current.GoToAsync(nameof(CityPage));
 
         [RelayCommand]
-        Task NavigateToDetailPage() => Shell.Current.GoToAsync(nameof(DetailPage));
-
-        [RelayCommand]
         Task NavigateToLoginPage() => Shell.Current.GoToAsync(nameof(LoginPage));
 
         [RelayCommand]

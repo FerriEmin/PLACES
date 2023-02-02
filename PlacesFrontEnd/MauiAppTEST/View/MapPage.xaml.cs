@@ -36,15 +36,12 @@ public partial class MapPage : ContentPage
     private void ActivityButton_Clicked(object sender, EventArgs e)
     {
         mapViewModel.NavigateToActivityPage();
-
     }
 
     private void AddActivityButton_Clicked(object sender, EventArgs e)
     {
         mapViewModel.NavigateToAddActivityPage();
-
     }
-
 
     private void map_MapClicked(object sender, Microsoft.Maui.Controls.Maps.MapClickedEventArgs e)
     {
@@ -54,6 +51,5 @@ public partial class MapPage : ContentPage
     private void ProfilePicture_Clicked(object sender, EventArgs e)
     {
         mapViewModel.NavigateToSettingsPage();
-
     }
 }
