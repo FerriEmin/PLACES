@@ -4,6 +4,7 @@ using PlacesDB;
 using PlacesDB.Models;
 using PlacesBackEnd.CRUD;
 using PlacesBackEnd;
+using Microsoft.AspNetCore.Mvc;
 
 var corsPolicy = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -68,12 +69,13 @@ cities.MapDelete("/{id}", CityCRUD.DeleteCity);
 RouteGroupBuilder events = app.MapGroup("/events");
 events.MapGet("/", EventCRUD.GetAllEvents);
 events.MapGet("/{id}", EventCRUD.GetEventById);
+events.MapGet("/location/{locationid}", EventCRUD.GetEventsByLocationId);
 events.MapPost("/", EventCRUD.CreateEvent);
 events.MapPut("/{id}", EventCRUD.UpdateEvent);
 events.MapDelete("/{id}", EventCRUD.DeleteEvent);
 //////
 
-// CATEGORY ENDPOINTS
+////// CATEGORY ENDPOINTS
 RouteGroupBuilder categories = app.MapGroup("/categories");
 categories.MapGet("/", CategoryCRUD.GetAllCategories);
 categories.MapGet("/{id}", CategoryCRUD.GetCategoryById);
