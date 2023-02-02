@@ -26,7 +26,7 @@
         <VerticalStackLayout Margin="30">
             <VerticalStackLayout Margin="10">
                 <Label TextColor="Purple">Username and password</Label>
-                <Button BackgroundColor="Purple" Text="My Profile" HeightRequest="60" CornerRadius="10"/>
+                <Button x:Name="ProfileButton" Clicked="ProfileButton_Clicked" BackgroundColor="Purple" Text="My Profile" HeightRequest="60" CornerRadius="10"/>
             </VerticalStackLayout>
 
             <VerticalStackLayout Margin="10">

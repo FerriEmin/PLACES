@@ -16,9 +16,9 @@ public partial class SearchPage : ContentPage
 	}
 
     private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
-    {
+   {
 		svm.Input = e.NewTextValue;
-		svm.search();
+		svm.populatePredictions(e.NewTextValue);
 
 		if (SearchBar.Text.Length > 0)
 		{
@@ -29,9 +29,10 @@ public partial class SearchPage : ContentPage
 		}
     }
 
-    private void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+	private void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
 	{
-        string current = (e.CurrentSelection.FirstOrDefault() as Prediction)?.place_id;
-		svm.Id = current;
+		string current = (e.CurrentSelection.FirstOrDefault() as Prediction)?.place_id;
+		svm.populateDetail(current);
+		svm.Id = svm.Detail.result.address_components[0].long_name;
     }
 }

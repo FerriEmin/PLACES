@@ -37,15 +37,12 @@
                         WidthRequest="155"/>
 
             </Border>
-            <Button Text="My profile information" Clicked="OnProfileInfoButtonClicked" Style="{StaticResource SmallButton}"></Button>
-            <Frame x:Name="UserInfoFrame" IsVisible="False">
-                <VerticalStackLayout>
-                    <Label Text="{Binding user.Username}"/>
-                    <Label Text="{Binding user.FirstName}"/>
-                    <Label Text="{Binding user.LastName}"/>
-                    <Label Text="{Binding user.DateOfBirth}"/>
-                </VerticalStackLayout>
-            </Frame>
+            <VerticalStackLayout>
+                <Entry Placeholder="{Binding user.Username}"/>
+                <Entry Placeholder="{Binding user.FirstName}"/>
+                <Entry Placeholder="{Binding user.LastName}"/>
+                <Entry Placeholder="{Binding user.DateOfBirth}"/>
+            </VerticalStackLayout>
             <Button Text="My added activitives" Style="{StaticResource SmallButton}"></Button>
 
 

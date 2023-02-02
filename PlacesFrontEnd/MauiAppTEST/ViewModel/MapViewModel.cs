@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using MauiAppTEST.Services;
 using MauiAppTEST.View;
 using Microsoft.Maui.Controls.Maps;
@@ -25,6 +26,22 @@ namespace MauiAppTEST.ViewModel
 
         [ObservableProperty]
         public MapSpan mapSpan;
+
+        [RelayCommand]
+        public Task NavigateToSearchPage() => Shell.Current.GoToAsync(nameof(SearchPage));
+
+        [RelayCommand]
+        public Task NavigateToActivityPage() => Shell.Current.GoToAsync(nameof(ActivityPage));
+
+        [RelayCommand]
+        public Task NavigateToAddActivityPage() => Shell.Current.GoToAsync(nameof(AddActivityPage));
+
+        [RelayCommand]
+        public Task NavigateToSettingsPage() => Shell.Current.GoToAsync(nameof(SettingsPage));
+
+
+        [RelayCommand]
+        Task Back() => Shell.Current.GoToAsync("..");
 
         public MapViewModel(LocationService ls, PinsService pinsService)
         {

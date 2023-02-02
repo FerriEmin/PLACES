@@ -9,23 +9,28 @@ using Newtonsoft.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using MauiAppTEST.Services;
+using System.Runtime.CompilerServices;
 
 namespace MauiAppTEST.ViewModel
 {
     public partial class SearchViewModel : BaseViewModel
     {
+        
+        GoogleApiService googleApiService;
+
         [ObservableProperty]
-        Root res;
+        PlacesSearchResult res;
 
         [ObservableProperty]
         List<Prediction> predictions = new List<Prediction>();
 
         [ObservableProperty]
-        string input = "eiffel";
-        
-        [ObservableProperty]
-        string apikey = "AIzaSyAY85IYZfPLkT6EyiauSREDkc7ZhYJCPys";
+        PlacesDetailsResult detail = null;
 
+        [ObservableProperty]
+        string input = "Eiffel";
+         
         [ObservableProperty]
         string responseBody;
 
@@ -41,21 +46,21 @@ namespace MauiAppTEST.ViewModel
         [ObservableProperty]
         string id;
 
-
-        public void search()
+        public void populatePredictions(string input)
         {
-            Url = $"https://maps.googleapis.com/maps/api/place/autocomplete/json?input={Input}&key={Apikey}";
-            HttpClient client = new HttpClient();
-            var response = client.GetStringAsync(Url).Result;
-            var json = JsonConvert.DeserializeObject<Root>(response);
-
-            Predictions = json.predictions;
+            Predictions = googleApiService.GetSearchPredictions(input).Result.predictions;
         }
 
-        public SearchViewModel()
+        public void populateDetail(string placesId)
         {
-            Id = "Inget här";
-            search();
-        }    
+            Detail = googleApiService.GetDetails(placesId).Result;
+        }
+
+        public SearchViewModel(GoogleApiService gas)
+        {
+            googleApiService = gas;
+            Id = "Du har inte valt någonting";
+            populatePredictions(Input);
+        }
     }
 }

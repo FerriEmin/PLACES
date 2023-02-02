@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MauiAppTEST.Services
 {
-    public class LocalStorageService
+    public class SecureStorageService
     {
         public async Task SaveToLocalStorage()
         {

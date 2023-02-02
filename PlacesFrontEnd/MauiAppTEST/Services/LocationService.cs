@@ -32,56 +32,17 @@ namespace MauiAppTEST.Services
             await Shell.Current.DisplayAlert("Location error", "Couldn't retrieve location data", "Cancel");
         }
 
-        public async Task<Location> GetCachedLocation()
-        {
-            try
-            {
-                Location location = Geolocation.Default.GetLastKnownLocationAsync().Result;
-
-                if (location != null)
-                    return location;
-              
-            }
-            catch (FeatureNotSupportedException fnsEx)
-            {
-                // Handle not supported on device exception
-            }
-            catch (FeatureNotEnabledException fneEx)
-            {
-                // Handle not enabled on device exception
-            }
-            catch (PermissionException pEx)
-            {
-                // Handle permission exception
-            }
-            catch (Exception ex)
-            {
-                // Unable to get location
-            }
-
-            throw new Exception("LocationService");
-
-
-
-        }
-
-        //Get current location if possible, else get last known location.
-        //Throw error 
-
-        private CancellationTokenSource _cancelTokenSource;
-        private bool _isCheckingLocation;
-
         public async Task<Location> GetLocation()
         {
             try
             {
-                Location location = geolocation.GetLastKnownLocationAsync().Result;
+                Location location = await geolocation.GetLastKnownLocationAsync();
                 
                 if (location != null) { 
                     return location;
                 } else
                 {
-                    location = geolocation.GetLocationAsync().Result;
+                    location = await geolocation.GetLocationAsync();
                     if (location != null)
                     {
                         return location;

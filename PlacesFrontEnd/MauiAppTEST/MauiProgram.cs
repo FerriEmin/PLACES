@@ -24,7 +24,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<LocationService>();
         builder.Services.AddSingleton<PinsService>();
         builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
-
+        builder.Services.AddSingleton<GoogleApiService>();
 
         builder.Logging.AddDebug();
         builder.Services.AddSingleton<MainViewModel>();
@@ -42,8 +42,6 @@ public static class MauiProgram
         builder.Services.AddTransient<ActivityDetailsViewModel>();
         builder.Services.AddSingleton<SearchViewModel>();
 
-
-
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<CityPage>();
         builder.Services.AddSingleton<DetailPage>();
@@ -58,10 +56,6 @@ public static class MauiProgram
         builder.Services.AddTransient<ActivityDetailsPage>();
         builder.Services.AddSingleton<AddActivityPage>();
         builder.Services.AddSingleton<SearchPage>();
-
-
-
-
 
         return builder.Build();
 	}

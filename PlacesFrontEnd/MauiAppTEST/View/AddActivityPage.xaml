@@ -18,19 +18,43 @@
             </LinearGradientBrush>
         </VerticalStackLayout.Background>
 
-        <Frame CornerRadius="20"  HeightRequest="200" Margin="10">
+        <Frame CornerRadius="20"  IsClippedToBounds="True" HeightRequest="200" WidthRequest="300" Margin="10">
 
-            <Image Source="ny.png"  HeightRequest="200" Aspect="AspectFill" />
+            <Image Source="ny.png" WidthRequest="300" HeightRequest="200" Aspect="AspectFill" />
         </Frame>
 
         <VerticalStackLayout Margin="30">
             <VerticalStackLayout Margin="10">
-                <Entry x:Name="entry"
-                   Placeholder="Title"
+                <Entry 
+                    x:Name="entry"
+                    Placeholder="Title"
+                     
                    />
+
+                <Entry x:Name="date"
+                   Placeholder="Date"
+                   />
+
+                <Entry x:Name="location"
+                   Placeholder="Location"
+                   />
+
+                <HorizontalStackLayout>
+                    <Label Text="Age Limit" VerticalTextAlignment="Center"/>
+                    <Entry Margin="10" BackgroundColor="Orange"/>
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout>
+                    <Label Text="Attendee limit" VerticalTextAlignment="Center"/>
+                    <Entry BackgroundColor="Orange" Margin="10" VerticalOptions="CenterAndExpand"/>
+                </HorizontalStackLayout>
             </VerticalStackLayout>
 
+            <Editor HeightRequest="200" MinimumHeightRequest="200" MaximumHeightRequest="200" BackgroundColor="Orange"/>
+
         </VerticalStackLayout>
+
+        <Button Text="Add event"/>
 
 
 

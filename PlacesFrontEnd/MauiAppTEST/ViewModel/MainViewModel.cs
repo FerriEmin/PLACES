@@ -55,7 +55,7 @@ namespace MauiAppTEST.ViewModel
         Task NavigateToAddActivityPage() => Shell.Current.GoToAsync(nameof(AddActivityPage));
 
         [RelayCommand]
-        Task NavigateToSearchPage() => Shell.Current.GoToAsync(nameof(SearchPage));
+        public Task NavigateToSearchPage() => Shell.Current.GoToAsync(nameof(SearchPage));
 
 
         [RelayCommand]

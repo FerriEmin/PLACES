@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace MauiAppTEST.Models
 {
-    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
     public class MainTextMatchedSubstring
     {
         public int length { get; set; }
@@ -30,7 +29,7 @@ namespace MauiAppTEST.Models
         public List<string> types { get; set; }
     }
 
-    public class Root
+    public class PlacesSearchResult
     {
         public List<Prediction> predictions { get; set; }
         public string status { get; set; }
