@@ -15,26 +15,6 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-
-        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping(nameof(IView.Background), (handler, view) =>
-        {
-            if (view is CustomEntry)
-            {
-                var color = view.Background.ToColor();
-                Color apa = Color.FromRgb(color.Red, color.Green, color.Blue);
-
-#if ANDROID
-                handler.PlatformView.SetBackgroundColor(apa.ToPlatform());
-#elif IS
-                handler.PlatformView.BackgroundColor = Colors.LightGray.ToPlatform();
-                handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.Line;
-#elif WINDOWS
-                handler.PlatformView.Background = Colors.LightGray.ToPlatform();
-#endif
-
-            }
-        });
-
         GlobalService.user = new()
         {
             Username = "MonaLisa",
