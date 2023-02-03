@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
+             xmlns:entry="clr-namespace:MauiAppTEST.CustomUI"
              x:DataType="viewmodel:AddActivityViewModel"
 
              x:Class="MauiAppTEST.View.AddActivityPage"
@@ -25,33 +26,22 @@
 
         <VerticalStackLayout Margin="30">
             <VerticalStackLayout Margin="10">
-                <Entry 
-                    x:Name="entry"
-                    Placeholder="Title"
-                     
-                   />
+                <Frame CornerRadius="20" BackgroundColor="Bisque">
+                    <entry:CustomEntry 
+                        Text="CUSTOM"
+                        BackgroundColor="Bisque"
+                        Background="Bisque"
+                    />
+                </Frame>
 
-                <Entry x:Name="date"
-                   Placeholder="Date"
-                   />
-
-                <Entry x:Name="location"
-                   Placeholder="Location"
-                   />
-
-                <HorizontalStackLayout>
-                    <Label Text="Age Limit" VerticalTextAlignment="Center"/>
-                    <Entry Margin="10" BackgroundColor="Orange"/>
-                </HorizontalStackLayout>
-                
-                <HorizontalStackLayout>
-                    <Label Text="Attendee limit" VerticalTextAlignment="Center"/>
-                    <Entry BackgroundColor="Orange" Margin="10" VerticalOptions="CenterAndExpand"/>
-                </HorizontalStackLayout>
+                <Frame CornerRadius="20" BackgroundColor="red">
+                    <entry:CustomEntry 
+                        Text="CUSTOM"
+                        BackgroundColor="red"
+                        Background="red"
+                    />
+                </Frame>
             </VerticalStackLayout>
-
-            <Editor HeightRequest="200" MinimumHeightRequest="200" MaximumHeightRequest="200" BackgroundColor="Orange"/>
-
         </VerticalStackLayout>
 
         <Button Text="Add event"/>
