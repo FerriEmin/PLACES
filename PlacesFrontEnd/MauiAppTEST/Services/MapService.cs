@@ -21,7 +21,7 @@ namespace MauiAppTEST.Services
 
             try
             {
-                await m.OpenAsync(location.Longitude,location.Latitude, options);
+                await m.TryOpenAsync(location.Longitude,location.Latitude, options);
             }
             catch (Exception ex)
             {

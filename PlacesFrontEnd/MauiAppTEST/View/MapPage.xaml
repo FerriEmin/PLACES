@@ -1,18 +1,25 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel" 
-             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             
              xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+
              
              x:Class="MauiAppTEST.View.MapPage"      
              x:DataType="viewmodel:MapViewModel"
              Shell.PresentationMode="ModalAnimated"  
              Title="MapPage">
-    
+
     <Grid>
-        <maps:Map x:Name="map" IsShowingUser="True" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <maps:Map 
+            MapClicked="map_MapClicked"
+            x:Name="map" 
+            IsShowingUser="True" 
+            HorizontalOptions="CenterAndExpand" 
+            VerticalOptions="CenterAndExpand">
         </maps:Map>
         
         <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Start" Margin="20">
@@ -21,8 +28,8 @@
                     <Ellipse WidthRequest="200" HeightRequest="200" />
                 </Border.StrokeShape>
                 <Frame HeightRequest="90" WidthRequest="90" CornerRadius="100" IsClippedToBounds="True" BorderColor="#EDAE49">
-                    <Image Source="monalisa.png" Scale="2.5" Aspect="AspectFit"/>
-            </Frame>
+                    <ImageButton x:Name="ProfilePicture" Source="monalisa.png" Scale="2.5" Aspect="AspectFit" Clicked="ProfilePicture_Clicked"/>
+                </Frame>
             </Border>
         </HorizontalStackLayout>
         <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Center" Margin="20">
@@ -53,17 +60,24 @@
                     WidthRequest="75"
                     HeightRequest="75"
                     HorizontalOptions="Center"
-                    VerticalOptions="CenterAndExpand" />
+                    VerticalOptions="CenterAndExpand" 
+                    Clicked="ActivityButton_Clicked"
+                         />
             <ImageButton Source="mappage_add.png"
                     WidthRequest="100"
                     HeightRequest="100"
                     HorizontalOptions="Center"
-                    VerticalOptions="CenterAndExpand" />
+                    VerticalOptions="CenterAndExpand"
+                    Clicked="AddActivityButton_Clicked"
+                         />
             <ImageButton Source="mappage_search.png"
                     WidthRequest="75"
                     HeightRequest="75"
                     HorizontalOptions="Center"
-                    VerticalOptions="CenterAndExpand" />
+                    VerticalOptions="CenterAndExpand"
+                    Clicked="SearchButton_Clicked"
+                         
+                         />
         </HorizontalStackLayout>
     </Grid>
 </ContentPage>

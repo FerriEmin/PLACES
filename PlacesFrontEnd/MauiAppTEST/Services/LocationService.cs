@@ -19,81 +19,47 @@ namespace MauiAppTEST.Services
     //[assembly: UsesFeature("android.hardware.location.network", Required = false)]
     public class LocationService
     {
+
+        IGeolocation geolocation;
+
+        public LocationService(IGeolocation ls)
+        {
+            geolocation = ls;
+        }
        
         public async Task showLocationError()
         {
             await Shell.Current.DisplayAlert("Location error", "Couldn't retrieve location data", "Cancel");
         }
 
-        public async Task<Location> GetCachedLocation()
-        {
-            try
-            {
-                Location location = await Geolocation.Default.GetLastKnownLocationAsync();
-
-                if (location != null)
-                    return location;
-              
-            }
-            catch (FeatureNotSupportedException fnsEx)
-            {
-                // Handle not supported on device exception
-            }
-            catch (FeatureNotEnabledException fneEx)
-            {
-                // Handle not enabled on device exception
-            }
-            catch (PermissionException pEx)
-            {
-                // Handle permission exception
-            }
-            catch (Exception ex)
-            {
-                // Unable to get location
-            }
-
-            throw new Exception();
-
-
-
-        }
-
-        //Get current location if possible, else get last known location.
-        //Throw error 
         public async Task<Location> GetLocation()
         {
             try
             {
-                Location location = await Geolocation.GetLocationAsync();
+                Location location = await geolocation.GetLastKnownLocationAsync();
+                
                 if (location != null) { 
-
-                    System.Diagnostics.Debug.WriteLine($"MapClick: {location.Latitude}, {location.Longitude}");
                     return location;
                 } else
                 {
-                    location = await Geolocation.GetLastKnownLocationAsync();
+                    location = await geolocation.GetLocationAsync();
                     if (location != null)
                     {
-                        System.Diagnostics.Debug.WriteLine($"MapClick: {location.Latitude}, {location.Longitude}");
-
                         return location;
                     }
                     else
                     {
-
                         await showLocationError();
-                        throw new Exception();
-                    }
-                        
+                        throw new Exception("Could not load location");
+                    }        
                 }
             }
             catch (Exception)
             {
 
                 await showLocationError();
-                throw new Exception();
+                throw new Exception("Could not load location");
             }
-
         }
 
         public async Task<double> GetDistance(Location location, double lat, double lon, DistanceUnits units)

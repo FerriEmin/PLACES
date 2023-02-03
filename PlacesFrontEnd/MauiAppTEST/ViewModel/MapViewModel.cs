@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using MauiAppTEST.Services;
 using MauiAppTEST.View;
 using Microsoft.Maui.Controls.Maps;
@@ -9,6 +10,10 @@ namespace MauiAppTEST.ViewModel
 {
     public partial class MapViewModel : BaseViewModel
     {
+
+        LocationService locationService;
+        public PinsService ps;
+
         [ObservableProperty]
         Double lon;
 
@@ -18,21 +23,37 @@ namespace MauiAppTEST.ViewModel
         [ObservableProperty]
         Location location;
 
-        [ObservableProperty]
-        ICollection<Pin> pinsList;  
 
+        [ObservableProperty]
         public MapSpan mapSpan;
 
-        Task NavigateToActivityPage() => Shell.Current.GoToAsync(nameof(ActivityPage));
+        [RelayCommand]
+        public Task NavigateToSearchPage() => Shell.Current.GoToAsync(nameof(SearchPage));
+
+        [RelayCommand]
+        public Task NavigateToActivityPage() => Shell.Current.GoToAsync(nameof(ActivityPage));
+
+        [RelayCommand]
+        public Task NavigateToAddActivityPage() => Shell.Current.GoToAsync(nameof(AddActivityPage));
+
+        [RelayCommand]
+        public Task NavigateToSettingsPage() => Shell.Current.GoToAsync(nameof(SettingsPage));
 
 
-        public MapViewModel(LocationService locationService, PinsService pinsService)
+        [RelayCommand]
+        Task Back() => Shell.Current.GoToAsync("..");
+
+        public MapViewModel(LocationService ls, PinsService pinsService)
         {
-            lon = locationService.GetCachedLocation().Result.Longitude;
-            lat = locationService.GetCachedLocation().Result.Latitude;
-            location = locationService.GetCachedLocation().Result;
-            PinsList = pinsService.PinsList;
-            mapSpan = new MapSpan(location, 0.01, 0.01);
+            locationService = ls;
+            ps = pinsService;
+
+            var res = locationService.GetLocation().Result;
+
+            Lon = res.Longitude;
+            Lat = res.Latitude;
+            Location location = res;            
+            mapSpan = new MapSpan(location, Lon, Lat);
         }
 
     }

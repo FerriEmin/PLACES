@@ -9,7 +9,6 @@ public partial class AppShell : Shell
 		InitializeComponent();
 
 		Routing.RegisterRoute(nameof(CityPage), typeof(CityPage));
-		Routing.RegisterRoute(nameof(DetailPage), typeof(DetailPage));
 		Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
 		Routing.RegisterRoute(nameof(SignUpPage), typeof(SignUpPage));
 		Routing.RegisterRoute(nameof(ActivityPage), typeof(ActivityPage));
@@ -21,8 +20,5 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(ActivityDetailsPage), typeof(ActivityDetailsPage));
         Routing.RegisterRoute(nameof(AddActivityPage), typeof(AddActivityPage));
         Routing.RegisterRoute(nameof(SearchPage), typeof(SearchPage));
-
-
-
     }
 }

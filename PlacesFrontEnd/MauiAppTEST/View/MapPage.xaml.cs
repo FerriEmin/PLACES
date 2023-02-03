@@ -7,27 +7,49 @@ public partial class MapPage : ContentPage
 {
 	MapViewModel mapViewModel;
 	public MapPage(MapViewModel vm)
-	{
+	{  
+        mapViewModel = vm;
 		BindingContext = vm;
-		mapViewModel = vm;
 		InitializeComponent();
 	}
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
-		Double lat = 1;
-        Double lon = 1;
-
         base.OnNavigatedTo(args);
-		MapSpan ms = new MapSpan(mapViewModel.Location, lat, lon);
-		map.MoveToRegion(ms);
-		var PinsList = mapViewModel.PinsList;
-		foreach (var item in PinsList)
-		{
-			if (item != null)
-			{
-                map.Pins.Add(item);
+
+        map.MoveToRegion(mapViewModel.MapSpan);
+
+        foreach (var item in mapViewModel.ps.PinsList)
+        {
+           if (item != null)
+           {
+               map.Pins.Add(item);
             }
-		}
+        }
+    }
+
+    private void SearchButton_Clicked(object sender, EventArgs e)
+    {
+        mapViewModel.NavigateToSearchPage();
+    }
+
+    private void ActivityButton_Clicked(object sender, EventArgs e)
+    {
+        mapViewModel.NavigateToActivityPage();
+    }
+
+    private void AddActivityButton_Clicked(object sender, EventArgs e)
+    {
+        mapViewModel.NavigateToAddActivityPage();
+    }
+
+    private void map_MapClicked(object sender, Microsoft.Maui.Controls.Maps.MapClickedEventArgs e)
+    {
+        
+    }
+
+    private void ProfilePicture_Clicked(object sender, EventArgs e)
+    {
+        mapViewModel.NavigateToSettingsPage();
     }
 }

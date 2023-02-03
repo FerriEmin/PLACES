@@ -3,6 +3,7 @@ using MauiAppTEST.ViewModel;
 using MauiAppTEST.Services;
 using Microsoft.Extensions.Logging;
 
+
 namespace MauiAppTEST;
 
 public static class MauiProgram
@@ -12,7 +13,7 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-			.ConfigureFonts(fonts =>
+            .ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
@@ -22,7 +23,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<MapService>();
         builder.Services.AddSingleton<LocationService>();
         builder.Services.AddSingleton<PinsService>();
-
+        builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
+        builder.Services.AddSingleton<GoogleApiService>();
 
         builder.Logging.AddDebug();
         builder.Services.AddSingleton<MainViewModel>();
@@ -40,11 +42,8 @@ public static class MauiProgram
         builder.Services.AddTransient<ActivityDetailsViewModel>();
         builder.Services.AddSingleton<SearchViewModel>();
 
-
-
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<CityPage>();
-        builder.Services.AddSingleton<DetailPage>();
         builder.Services.AddSingleton<LoginPage>();
         builder.Services.AddSingleton<SignUpPage>();
         builder.Services.AddSingleton<ActivityPage>();
@@ -56,10 +55,6 @@ public static class MauiProgram
         builder.Services.AddTransient<ActivityDetailsPage>();
         builder.Services.AddSingleton<AddActivityPage>();
         builder.Services.AddSingleton<SearchPage>();
-
-
-
-
 
         return builder.Build();
 	}
