@@ -2,6 +2,10 @@
 using MauiAppTEST.Services;
 using MauiAppTEST.Models;
 using MauiAppTEST.View;
+using MauiAppTEST.CustomUI;
+using Microsoft.Maui.Platform;
+using Microsoft.Maui.Handlers;
+
 
 namespace MauiAppTEST;
 
