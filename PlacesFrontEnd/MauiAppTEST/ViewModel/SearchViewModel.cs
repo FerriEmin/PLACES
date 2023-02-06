@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using MauiAppTEST.Services;
 using System.Runtime.CompilerServices;
+using CommunityToolkit.Mvvm.Input;
 
 namespace MauiAppTEST.ViewModel
 {
@@ -55,6 +56,10 @@ namespace MauiAppTEST.ViewModel
         {
             Detail = googleApiService.GetDetails(placesId).Result;
         }
+
+        [RelayCommand]
+        public Task Back() => Shell.Current.GoToAsync("..");
+
 
         public SearchViewModel(GoogleApiService gas)
         {

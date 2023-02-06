@@ -17,5 +17,8 @@ namespace MauiAppTEST.ViewModel
         {
             user = GlobalService.user;
         }
+
+        [RelayCommand]
+        public Task Back() => Shell.Current.GoToAsync("..");
     }
 }

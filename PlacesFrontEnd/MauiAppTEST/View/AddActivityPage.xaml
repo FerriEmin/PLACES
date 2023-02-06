@@ -1,52 +1,179 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
              xmlns:entry="clr-namespace:MauiAppTEST.CustomUI"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              x:DataType="viewmodel:AddActivityViewModel"
-
              x:Class="MauiAppTEST.View.AddActivityPage"
              Shell.PresentationMode="ModalAnimated"
              Title="Add Activity Page">
-    <VerticalStackLayout>
 
-        <VerticalStackLayout.Background>
-            <LinearGradientBrush EndPoint="0,1">
-                <GradientStop Color="#ECAE4A"
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="#FF9900"/>
+    </ContentPage.Behaviors>
+
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="0,1">
+                <GradientStop Color="#FF9900"
                           Offset="0.1" />
-                <GradientStop Color="#042D97"
-                          Offset="1" />
+                <GradientStop Color="#001F71"
+                          Offset="0.90" />
+
+                
             </LinearGradientBrush>
-        </VerticalStackLayout.Background>
+    </ContentPage.Background>
+    <VerticalStackLayout Margin="30,20,30,0" VerticalOptions="CenterAndExpand">
 
-        <Frame CornerRadius="20"  IsClippedToBounds="True" HeightRequest="200" WidthRequest="300" Margin="10">
 
-            <Image Source="ny.png" WidthRequest="300" HeightRequest="200" Aspect="AspectFill" />
+        <Frame CornerRadius="10" HasShadow="False" IsClippedToBounds="True" HeightRequest="210" HorizontalOptions="FillAndExpand">
+
+            <Image Source="ny.png" Scale="1.7" />
         </Frame>
 
-        <VerticalStackLayout Margin="30">
-            <VerticalStackLayout Margin="10">
-                <Frame CornerRadius="20" BackgroundColor="Bisque">
+        <VerticalStackLayout>
+            <VerticalStackLayout>
+                <Frame BackgroundColor="#26FFFFFF" Margin="0,10,0,0" CornerRadius="10" HasShadow="False" HeightRequest="50" HorizontalOptions="FillAndExpand">
                     <entry:CustomEntry 
-                        Text="CUSTOM"
-                        BackgroundColor="Bisque"
-                        Background="Bisque"
+                        Text=""
+                        BackgroundColor="Transparent"
+                        HeightRequest="60"
+                        FontSize="25"
+                        TextColor="White"
+                        FontFamily="OswaldRegular"
+
                     />
                 </Frame>
 
-                <Frame CornerRadius="20" BackgroundColor="red">
+                <Frame BackgroundColor="#26FFFFFF" Margin="0,10,0,0" CornerRadius="10" HasShadow="False" HeightRequest="40">
                     <entry:CustomEntry 
-                        Text="CUSTOM"
-                        BackgroundColor="red"
-                        Background="red"
+                        Text=""
+                        BackgroundColor="Transparent"
+                        HeightRequest="40"
+                        FontSize="20"
+                        TextColor="White"
+                        FontFamily="OswaldRegular"
                     />
                 </Frame>
-            </VerticalStackLayout>
+
+                <Frame BackgroundColor="#26FFFFFF" Margin="0,10,0,0" CornerRadius="10" HasShadow="False" HeightRequest="40">
+                    <entry:CustomEntry 
+                        Text=""
+                        BackgroundColor="Transparent"
+                        HeightRequest="40"
+                        FontSize="20"
+                        TextColor="White"
+                        FontFamily="OswaldRegular"
+                        />
+                </Frame>
+
+                <HorizontalStackLayout Margin="0,10,0,0" HeightRequest="40">
+                    <Label
+                        Text="Age Limit"
+                        FontSize="20"
+                        TextColor="White"
+                        FontFamily="SeoulHangangCBL"
+                        VerticalTextAlignment="Center"
+                        Margin="0,0,15,0"
+                        /> 
+
+                        <Frame BackgroundColor="#1AFFFFFF" WidthRequest="40" CornerRadius="10" HasShadow="False" HeightRequest="40">
+                            <entry:CustomEntry 
+                                Text=""
+                                BackgroundColor="Transparent"
+                                HeightRequest="40"
+                                FontSize="20"
+                                TextColor="White"
+                                FontFamily="OswaldRegular"
+
+                                WidthRequest="40"
+                                />
+                        </Frame>
+
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Margin="0,10,0,0" HeightRequest="40">
+                    <Label
+                        Text="Attendee Limit"
+                        FontSize="20"
+                        TextColor="White"
+                        FontFamily="SeoulHangangCBL"
+                        VerticalTextAlignment="Center"
+                        Margin="0,0,15,0"
+                        />
+
+                        <Frame BackgroundColor="#1AFFFFFF" WidthRequest="40" CornerRadius="10" HasShadow="False" HeightRequest="40">
+                            <entry:CustomEntry 
+                                Text=""
+                                BackgroundColor="Transparent"
+                                HeightRequest="40"
+                                FontSize="20"
+                                TextColor="White"
+                                FontFamily="OswaldRegular"
+
+                                WidthRequest="40"
+                                />
+                        </Frame>
+
+                </HorizontalStackLayout>
+
+                <Frame BackgroundColor="#1AFFFFFF" ZIndex="1" Margin="0,10,0,0" HasShadow="False" CornerRadius="20">
+                    <Editor
+                        FontSize="20"
+                        TextColor="White"
+                        FontFamily="OswaldRegular"
+                        ZIndex="2"
+                        BackgroundColor="Transparent"
+                        HeightRequest="150"/>
+                </Frame>
+               
+               
         </VerticalStackLayout>
+        </VerticalStackLayout>
+        <Grid Margin="0,20,0,0">
 
-        <Button Text="Add event"/>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+
+            </Grid.ColumnDefinitions>
+
+            
+            <Button
+                Text="Back"
+                WidthRequest="50"
+                BackgroundColor="Red"
+                HorizontalOptions="Start"
+                CornerRadius="15"
+                TextColor="White"
+                FontFamily="SeoulHangangCBL"
+                Clicked="BackButton_Clicked"
 
 
+                />
+            <Button
+                Grid.Column="1"
+                Padding="50"
+                CornerRadius="15"
+                BackgroundColor="#FF9900"
+                Text="Add activity"
+                TextColor="White"
+                FontSize="25"
+                HeightRequest="40"
+                FontFamily="SeoulHangangCBL"
+                HorizontalOptions="CenterAndExpand"
+                WidthRequest="220"
+                
+                VerticalOptions="Center"
 
+                />
+         </Grid>
+       
     </VerticalStackLayout>
 </ContentPage>
+

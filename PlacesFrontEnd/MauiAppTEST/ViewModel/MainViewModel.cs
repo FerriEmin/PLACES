@@ -54,6 +54,9 @@ namespace MauiAppTEST.ViewModel
         [RelayCommand]
         public Task NavigateToSearchPage() => Shell.Current.GoToAsync(nameof(SearchPage));
 
+        [RelayCommand]
+        public Task NavigateToSignLogPage() => Shell.Current.GoToAsync(nameof(SignLogPage));
+
 
         [RelayCommand]
         Task Back() => Shell.Current.GoToAsync("..");

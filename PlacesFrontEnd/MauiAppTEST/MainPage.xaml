@@ -52,6 +52,9 @@
         <Button Text="SearchPage"
                 Command="{Binding NavigateToSearchPageCommand}"/>
 
+        <Button Text="SearchPage"
+                Command="{Binding NavigateToSignLogPageCommand}"/>
+
 
     </VerticalStackLayout>
     </ScrollView>

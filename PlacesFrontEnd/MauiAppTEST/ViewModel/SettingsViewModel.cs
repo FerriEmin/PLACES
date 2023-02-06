@@ -15,7 +15,7 @@ namespace MauiAppTEST.ViewModel
         public Task NavigateToProfilePage() => Shell.Current.GoToAsync(nameof(ProfilePage));
 
         [RelayCommand]
-        Task Back() => Shell.Current.GoToAsync("..");
+        public Task Back() => Shell.Current.GoToAsync("..");
 
         public SettingsViewModel() { }
     }

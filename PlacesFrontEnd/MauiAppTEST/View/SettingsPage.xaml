@@ -1,27 +1,49 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              x:DataType="viewmodel:SettingsViewModel"
              x:Class="MauiAppTEST.View.SettingsPage"
              Shell.PresentationMode="ModalAnimated"
              Title="MapPage">
 
-    <VerticalStackLayout>
-        
-        <VerticalStackLayout.Background>
-            <LinearGradientBrush EndPoint="0,1">
-                <GradientStop Color="#ECAE4A"
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="#FF9900"/>
+    </ContentPage.Behaviors>
+
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="0,1">
+                <GradientStop Color="#FF9900"
                           Offset="0.1" />
-                <GradientStop Color="#042D97"
-                          Offset="1" />
+                <GradientStop Color="#001F71"
+                          Offset="0.90" />
+
+                
             </LinearGradientBrush>
-        </VerticalStackLayout.Background>
+    </ContentPage.Background>
 
-        <Frame CornerRadius="1000" WidthRequest="150" HeightRequest="150" Margin="50" BorderColor="Blue">
+    <VerticalStackLayout>
+        <Frame HeightRequest="140"
+                   WidthRequest="140"
+                   CornerRadius="70"
+                   HorizontalOptions="Center"
+                   IsClippedToBounds="True"
+                   Padding="10"
+                   Margin="0,0,0,0"
+                   HasShadow="False"
 
-            <Image Source="monalisa.png" WidthRequest="150" HeightRequest="150" Aspect="AspectFill" />
-        </Frame>
+                   >
+
+                <Image
+                    Aspect="AspectFill"
+                    Source="monalisa.png"
+                    SemanticProperties.Description="Cute dot net bot waving hi to you!"
+                    HeightRequest="140"
+                    WidthRequest="140"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center" />
+            </Frame>
 
         <VerticalStackLayout Margin="30">
             <VerticalStackLayout Margin="10">
@@ -44,10 +66,49 @@
                 <Button BackgroundColor="Purple" Text="Terms and services" HeightRequest="60" CornerRadius="10"/>
             </VerticalStackLayout>
 
+            <Grid Margin="0,20,0,0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+
+            </Grid.ColumnDefinitions>
+
+            
+            <Button
+                Text="Back"
+                WidthRequest="50"
+                BackgroundColor="Red"
+                HorizontalOptions="Start"
+                CornerRadius="15"
+                TextColor="White"
+                FontFamily="SeoulHangangCBL"
+                Clicked="BackButton_Clicked"
+
+
+                />
+            <Button
+                Grid.Column="1"
+                Padding="50"
+                CornerRadius="15"
+                BackgroundColor="Red"
+                Text="Logout"
+                TextColor="White"
+                FontSize="25"
+                HeightRequest="40"
+                FontFamily="SeoulHangangCBL"
+                HorizontalOptions="CenterAndExpand"
+                WidthRequest="220"
+                Clicked="LogOutButton_Clicked"
+                VerticalOptions="Center"
+
+                />
+        </Grid>
         </VerticalStackLayout>
-
-        <Button BackgroundColor="Red" Text="Logout" Margin="50"/>
-
-
     </VerticalStackLayout>
 </ContentPage>

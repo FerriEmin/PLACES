@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppTEST.View.SignLogPage"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel" 
+             x:DataType="viewmodel:SignLogViewModel"
+
+             Shell.PresentationMode="ModalAnimated"  
+             Title="SignLogPage"
+             >
+
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="#FF9900"/>
+    </ContentPage.Behaviors>
+
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="0,1">
+                <GradientStop Color="#FF9900"
+                          Offset="0.1" />
+                <GradientStop Color="#001F71"
+                          Offset="0.90" />
+
+                
+            </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid>
+        <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                
+
+            </Grid.ColumnDefinitions>
+
+    <VerticalStackLayout Grid.Column="0" Grid.Row="0">
+
+        <Image Source="logo.png" Margin="30" HeightRequest="300" WidthRequest="300"/>
+
+        <Button
+            Padding="50"
+            CornerRadius="15"
+            BackgroundColor="#FF9900"
+            Text="Log In"
+            TextColor="White"
+            FontSize="40"
+            HeightRequest="60"
+            FontFamily="SeoulHangangCBL"
+            HorizontalOptions="CenterAndExpand"
+            WidthRequest="250"
+                
+            VerticalOptions="Center"
+
+            />
+
+        <Label
+            Text="OR"
+            TextColor="White"
+            FontFamily="SeoulHangangCBL"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            FontSize="15"
+            Margin="15"
+
+            />
+
+        <Button
+            Padding="50"
+            CornerRadius="15"
+            BackgroundColor="#001F71"
+            Text="Sign Up"
+            TextColor="White"
+            FontSize="25"
+            HeightRequest="40"
+            FontFamily="SeoulHangangCBL"
+            HorizontalOptions="CenterAndExpand"
+            WidthRequest="220"    
+            VerticalOptions="Center"
+            />
+
+        <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+            <Label
+                Text="OKAY"
+                TextColor="White"
+                FontFamily="SeoulHangangCBL"
+            />
+
+
+            <Label
+                Text="OKAY"
+                TextColor="White"
+                FontFamily="SeoulHangangCBL"
+            />
+
+            <Label
+                Text="OKAY"
+                TextColor="White"
+                FontFamily="SeoulHangangCBL"
+            />
+
+            <Label
+                Text="OKAY"
+                TextColor="White"
+                FontFamily="SeoulHangangCBL"
+            />
+
+        </HorizontalStackLayout>
+        <Button
+            Padding="50"
+            CornerRadius="10"
+            BackgroundColor="Red"
+            Text="Cancel"
+            TextColor="White"
+            FontSize="15"
+            HeightRequest="30"
+            FontFamily="SeoulHangangCBL"
+            HorizontalOptions="CenterAndExpand"
+            WidthRequest="180"    
+            VerticalOptions="FillAndExpand"
+            
+
+            />
+    </VerticalStackLayout>
+    </Grid>
+</ContentPage>

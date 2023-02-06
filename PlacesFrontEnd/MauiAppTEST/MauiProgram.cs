@@ -2,6 +2,8 @@
 using MauiAppTEST.ViewModel;
 using MauiAppTEST.Services;
 using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui;
+
 
 
 namespace MauiAppTEST;
@@ -13,20 +15,26 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			})
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("Oswald-Regular.ttf", "OswaldRegular");
+                fonts.AddFont("SeoulHangangCBL.ttf", "SeoulHangangCBL");
+
+
+            })
             .UseMauiMaps();
 
+        //Services
         builder.Services.AddSingleton<MapService>();
         builder.Services.AddSingleton<LocationService>();
         builder.Services.AddSingleton<PinsService>();
         builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
         builder.Services.AddSingleton<GoogleApiService>();
 
-        builder.Logging.AddDebug();
+        //Viewmodels
         builder.Services.AddSingleton<MainViewModel>();
         builder.Services.AddSingleton<CityViewModel>();
         builder.Services.AddSingleton<DetailViewModel>();
@@ -41,7 +49,10 @@ public static class MauiProgram
         builder.Services.AddTransient<ManageUsersViewModel>();
         builder.Services.AddTransient<ActivityDetailsViewModel>();
         builder.Services.AddSingleton<SearchViewModel>();
+        builder.Services.AddSingleton<SignLogViewModel>();
 
+
+        //Views
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<CityPage>();
         builder.Services.AddSingleton<LoginPage>();
@@ -55,6 +66,11 @@ public static class MauiProgram
         builder.Services.AddTransient<ActivityDetailsPage>();
         builder.Services.AddTransient<AddActivityPage>();
         builder.Services.AddSingleton<SearchPage>();
+        builder.Services.AddSingleton<SignLogPage>();
+
+
+        //Logging
+        builder.Logging.AddDebug();
 
         return builder.Build();
 	}
