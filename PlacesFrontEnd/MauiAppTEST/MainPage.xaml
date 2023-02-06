@@ -52,7 +52,7 @@
         <Button Text="SearchPage"
                 Command="{Binding NavigateToSearchPageCommand}"/>
 
-        <Button Text="SearchPage"
+        <Button Text="SignLogPage"
                 Command="{Binding NavigateToSignLogPageCommand}"/>
 
 
