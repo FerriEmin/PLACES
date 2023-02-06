@@ -5,6 +5,20 @@ using PlacesDB.Models;
 using PlacesBackEnd.CRUD;
 using PlacesBackEnd;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualBasic;
+using PlacesBackEnd.DTO;
+using PlacesDB.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+
 
 var corsPolicy = "_myCorsPolicy";
 var builder = WebApplication.CreateBuilder(args);
@@ -26,9 +40,26 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters() 
+    { 
+        ValidateActor= true,
+        ValidateAudience= true,
+        ValidateLifetime= true,
+        ValidateIssuerSigningKey= true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    
+    };
+});
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+app.UseAuthorization();
+app.UseAuthentication();
 
 // Set cors policy
 app.UseCors(corsPolicy);
@@ -44,11 +75,11 @@ app.UseHttpsRedirection();
 
 // Authentication Endpoints
 RouteGroupBuilder auth = app.MapGroup("/auth");
-auth.MapPost("/login", Auth.Login);
+auth.MapPost("/login",async (UserLoginDTO details) => { await Auth.Login(details, builder); });
 
 // USER ENDPOINTS
 RouteGroupBuilder users = app.MapGroup("/users");
-users.MapGet("/", UserCRUD.GetAllUsers);
+users.MapGet("/", [Authorize()] (UserCRUD.GetAllUsers);
 users.MapGet("/{id}", UserCRUD.GetUserById);
 users.MapPost("/", UserCRUD.CreateUser);
 users.MapPut("/{id}", UserCRUD.UpdateUser);
