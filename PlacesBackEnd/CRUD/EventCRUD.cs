@@ -50,14 +50,33 @@ namespace PlacesBackEnd.CRUD
             {
                 using (var db = new Context())
                 {
+                    // Hard coded to always use this user
+                    var user = await db.Users.Where(x => x.Id == 1).FirstOrDefaultAsync();
+                    var location = new Location()
+                    {
+                        Name = eventDTO.Location.Name,
+                        Address = eventDTO.Location.Address,
+                        Latitude= eventDTO.Location.Latitude,
+                        Longitude= eventDTO.Location.Longitude,
+                    };
+
+                    db.Locations.Add(location);
+
+                    if (user == null || location == null)  
+                        return TypedResults.StatusCode(500);
+                  
+
                     var _event = new Event
                     {
                         Title= eventDTO.Title,
                         Description= eventDTO.Description,
                         Image = eventDTO.Image,
-                        Rating= eventDTO.Rating,
+                        Planned= eventDTO.Planned,
                     };
-                    db.Events.Add(_event);
+
+                    user.Events.Add(_event);
+                    location.Events.Add(_event);
+
                     await db.SaveChangesAsync();
 
                     return TypedResults.Created($"/event/{_event.Id}", eventDTO);
@@ -85,7 +104,6 @@ namespace PlacesBackEnd.CRUD
 
                     _event.Title = eventDTO.Title == "string" ? _event.Title : eventDTO.Title;
                     _event.Description = eventDTO.Description == "string" ? _event.Description : eventDTO.Description;
-                    _event.Rating = eventDTO.Rating is null ? _event.Rating : eventDTO.Rating;
 
                     await db.SaveChangesAsync();
 
@@ -144,7 +162,6 @@ namespace PlacesBackEnd.CRUD
                             Title = item.Title,
                             Description = item.Description,
                             Image = item.Image,
-                            Rating = item.Rating,
                         });
                     }
                     return TypedResults.Ok(listOfEvents);
