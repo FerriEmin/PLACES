@@ -8,11 +8,11 @@ namespace PlacesBackEnd.DTO
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public byte[] Image { get; set; }
-        public float? Rating { get; set; }
+        public string Image { get; set; }
+        public int Likes { get; set; }
 
         public EventDTO () { }
         public EventDTO(Event @event) =>
-            (Title, Description, Image, Rating) = (@event.Title, @event.Description, @event.Image, @event.Rating);
+            (Title, Description, Image, Likes) = (@event.Title, @event.Description, @event.Image, @event.Reviews.Where(x => x.Like == true).Count());
     }
 }
