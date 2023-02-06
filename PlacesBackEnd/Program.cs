@@ -5,7 +5,7 @@ using PlacesDB.Models;
 using PlacesBackEnd.CRUD;
 using PlacesBackEnd;
 
-var corsPolicy = "_myAllowSpecificOrigins";
+var corsPolicy = "_myCorsPolicy";
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -24,14 +24,6 @@ builder.Services.AddCors(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCors((options =>
-{
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                      builder =>
-                      {
-                          builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
-                      });
-}));
 
 
 
@@ -46,8 +38,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpsRedirection();
 
@@ -70,5 +60,9 @@ categories.MapGet("/{id}", CategoryCRUD.GetCategoryById);
 categories.MapPost("/", CategoryCRUD.CreateCategory);
 categories.MapPut("/{id}", CategoryCRUD.UpdateCategory);
 categories.MapDelete("/{id}", CategoryCRUD.DeleteCategory);
+
+// Availability check
+RouteGroupBuilder check = app.MapGroup("/check");
+check.MapGet("/username/{username}", Check.CheckUsernameAvailable);
 
 app.Run();

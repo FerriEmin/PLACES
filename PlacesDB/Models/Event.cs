@@ -12,8 +12,7 @@ namespace PlacesDB.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public byte[] Image { get; set; }
-        public float? Rating { get; set; }
+        public string Image { get; set; }
         public DateTime Created { get; set; }
         public DateTime Planned { get; set; }
 

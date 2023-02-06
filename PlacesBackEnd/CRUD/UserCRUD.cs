@@ -51,6 +51,7 @@ namespace PlacesBackEnd.CRUD
                     UserGroup = 0,
                     FirstName = userDTO.FirstName,
                     LastName = userDTO.LastName,
+                    ProfileImage= userDTO.ProfileImage,
                     Email = userDTO.Email,
                     Username = userDTO.Username,
                     Password = Hasher.HashPassword(userDTO.Password, Hasher.GenerateSalt()),

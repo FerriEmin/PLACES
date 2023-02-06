@@ -9,7 +9,7 @@ namespace PlacesDB.Models
     public class Review
     {
         public int Id { get; set; }
-        public float Rating { get; set; }
+        public bool Like { get; set; } = false;
         public string Comment { get; set; }
         public DateTime Created { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Globalization;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace PlacesDB.Models
@@ -9,6 +10,7 @@ namespace PlacesDB.Models
         public int UserGroup { get; set; } = 0;
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string ProfileImage { get; set; }
         public string Email { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
