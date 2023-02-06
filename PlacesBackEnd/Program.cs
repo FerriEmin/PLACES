@@ -52,7 +52,7 @@ users.MapGet("/", UserCRUD.GetAllUsers);
 users.MapGet("/{id}", UserCRUD.GetUserById);
 users.MapPost("/", UserCRUD.CreateUser);
 users.MapPut("/{id}", UserCRUD.UpdateUser);
-users.MapPut("/password", UserCRUD.CreateUser);
+users.MapPut("/password", UserCRUD.UpdatePassword);
 users.MapDelete("/{id}", UserCRUD.DeleteUser);
 //////
 
