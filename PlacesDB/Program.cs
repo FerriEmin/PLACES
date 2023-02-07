@@ -7,7 +7,7 @@ namespace PlacesDB
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Hasher.HashPassword("password", Hasher.GenerateSalt()));
+            BuildDatabase();
         }
 
         private static void Test(int num)
@@ -49,6 +49,7 @@ namespace PlacesDB
                         LastName = lName,
                         UserGroup = 0,
                         Username = usn,
+                        ProfileImage = "",
                         Email= $"{fName}.{lName}@gmail.com",
                         Password = psw,
                         Created = DateTime.Now,

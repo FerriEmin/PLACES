@@ -240,6 +240,11 @@ namespace PlacesDB.Models
                 entity.Property(e => e.Name)
                 .HasMaxLength(32)
                 .IsRequired();
+
+                entity.HasOne(e => e.Country)
+                .WithMany(e => e.Cities)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
             });
         }
 
