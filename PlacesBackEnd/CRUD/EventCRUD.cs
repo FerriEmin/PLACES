@@ -2,6 +2,9 @@
 using PlacesDB.Models;
 using PlacesDB;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PlacesBackEnd.CRUD
 {
@@ -22,7 +25,7 @@ namespace PlacesBackEnd.CRUD
             }
 
         }
-        
+
 
 
         public static async Task<IResult> GetEventById(int id)
@@ -52,34 +55,105 @@ namespace PlacesBackEnd.CRUD
                 {
                     // Hard coded to always use this user
                     var user = await db.Users.Where(x => x.Id == 1).FirstOrDefaultAsync();
+
+                    Country countryToUse;
+                    City cityToUse;
+
+                    //Check if countryname exists in DB
+                    //True: return existing country
+                    //False: Create new Country and it
+
+
+                    Country? countryRes = await db.Countries.FirstOrDefaultAsync(x => x.Name == eventDTO.Location.City.Country.Name);
+
+                    if (countryRes == null)
+                    {
+                        Country newCountry = new Country()
+                        {
+                            Name = eventDTO.Location.City.Country.Name,
+                            CountryCode = eventDTO.Location.City.Country.CountryCode
+                        };
+
+                        var addedCountry = await db.Countries.AddAsync(newCountry);
+                        await db.SaveChangesAsync();
+                        countryToUse = addedCountry.Entity;
+                    }
+                    else
+                    {
+                        countryToUse = countryRes;
+                    }
+
+
+                    //Check if cityname exists in DB
+                    //True: return existing City
+                    //False: Create new City and return it
+                    City? cityRes = await db.Cities.FirstOrDefaultAsync(x => x.Name == eventDTO.Location.City.Name);
+
+                    if (cityRes == null)
+                    {
+                        City newCity = new City()
+                        {
+                            Name = eventDTO.Location.City.Name,
+                            Country = countryToUse
+                        };
+
+                        var addedCity = await db.Cities.AddAsync(newCity);
+                        await db.SaveChangesAsync();
+                        cityToUse = addedCity.Entity;
+                    }
+                    else
+                    {
+                        cityToUse = cityRes;
+                    }
+
+
                     var location = new Location()
                     {
                         Name = eventDTO.Location.Name,
                         Address = eventDTO.Location.Address,
-                        Latitude= eventDTO.Location.Latitude,
-                        Longitude= eventDTO.Location.Longitude,
+                        Latitude = eventDTO.Location.Latitude,
+                        Longitude = eventDTO.Location.Longitude,
+                        Country = countryToUse,
+                        City = cityToUse,
                     };
 
-                    db.Locations.Add(location);
-
-                    if (user == null || location == null)  
-                        return TypedResults.StatusCode(500);
-                  
-
-                    var _event = new Event
-                    {
-                        Title= eventDTO.Title,
-                        Description= eventDTO.Description,
-                        Image = eventDTO.Image,
-                        Planned= eventDTO.Planned,
-                    };
-
-                    user.Events.Add(_event);
-                    location.Events.Add(_event);
+                    var loc = await db.Locations.AddAsync(location);
 
                     await db.SaveChangesAsync();
 
-                    return TypedResults.Created($"/event/{_event.Id}", eventDTO);
+                    var newloc = loc.Entity;
+
+
+
+                    if (user == null || location == null)
+                        return TypedResults.StatusCode(500);
+
+                    Category cat = new Category()
+                    {
+                        Name = "cat"
+                    };
+
+                    var category = await db.Categories.AddAsync(cat);
+                    await db.SaveChangesAsync();
+                    var newcat = category.Entity;
+
+
+                    var _event = new Event
+                    {
+                        Title = eventDTO.Title,
+                        Description = eventDTO.Description,
+                        Image = eventDTO.Image,
+                        Planned = eventDTO.Planned,
+                        Location = newloc,
+                        User = user,
+                        Category = newcat
+                    };
+
+                    await db.Events.AddAsync(_event);
+
+                    await db.SaveChangesAsync();
+
+                    return TypedResults.StatusCode(200);
                 }
 
             }
@@ -87,8 +161,6 @@ namespace PlacesBackEnd.CRUD
             {
                 return TypedResults.StatusCode(500);
             }
-
-
         }
 
 
