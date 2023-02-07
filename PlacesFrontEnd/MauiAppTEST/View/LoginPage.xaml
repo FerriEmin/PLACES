@@ -1,88 +1,89 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppTEST.View.LoginPage"
              xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
+             xmlns:entry="clr-namespace:MauiAppTEST.CustomUI"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+
              x:DataType="viewmodel:LoginViewModel"
              Shell.PresentationMode="ModalAnimated"
-             Title="Sign in and let's party!">
-    
-    <!--<ContentPage.Resources>
-        <Style TargetType="Entry">
-            <Setter Property="HorizontalOptions" Value="Fill" />
-            <Setter Property="VerticalOptions" Value="Center" />
-            <Setter Property="BackgroundColor" Value="Transparent" />
-            <Setter Property="FontAttributes" Value="None" />
-            <Setter Property="TextColor" Value="Blue" />
-        </Style>
-        <Style x:Key="entryWrapper"
-               TargetType="Frame">
-            <Setter Property="Margin" Value="10" />
-            <Setter Property="BorderColor" Value="Gray" />
-            <Setter Property="BackgroundColor" Value="Transparent" />
-            <Setter Property="Padding" Value="10" />
-            <Setter Property="CornerRadius" Value="10" />
-        </Style>
-    </ContentPage.Resources>-->
+             >
 
-    <VerticalStackLayout>
-        <Border StrokeShape="RoundRectangle 80"
-                    Stroke="pink"
-                    StrokeThickness="6"
-                    HeightRequest="160"
-                    WidthRequest="160"
-                    Margin="0,8,0,0"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center">
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="#FF9900"/>
+    </ContentPage.Behaviors>
 
-            <Image Aspect="AspectFill"
-                        HeightRequest="160"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
-                        Source="la.png"
-                        WidthRequest="160"/>
-        </Border>
-        <Grid>
-            <Frame Style="{StaticResource entryWrapper}">
-                <Grid ColumnDefinitions="*" ColumnSpacing="10">
-                    <Entry Placeholder="Email" x:Name="LoginEmail" Text="{Binding user.Username}"
-                    Grid.Column="2" />
-                </Grid>
-            </Frame>
-        </Grid>
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="0,1">
+                <GradientStop Color="#FF9900"
+                          Offset="0.1" />
+                <GradientStop Color="#001F71"
+                          Offset="0.90" />
+
+                
+            </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid>
+        <Grid.RowDefinitions>
+                <RowDefinition/>
+         </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <VerticalStackLayout Grid.Column="0" Grid.Row="0">
+
+            <Image Source="logo.png" Margin="30" HeightRequest="300" WidthRequest="300"/>
+
         
-        <Grid>
-            <Frame Style="{StaticResource entryWrapper}">
-                <Grid ColumnDefinitions="*" ColumnSpacing="10">
-                    <Entry Placeholder="Password" IsPassword="true" x:Name="LoginPassword" Text="{Binding user.Username}"
-                    Grid.Column="2" />
-                </Grid>
+            <Frame BackgroundColor="#26FFFFFF" Margin="0,10,0,0" CornerRadius="10" HasShadow="False" HeightRequest="50" HorizontalOptions="FillAndExpand">
+                <entry:CustomEntry 
+                    Text=""
+                    BackgroundColor="Transparent"
+                    HeightRequest="60"
+                    FontSize="25"
+                    TextColor="White"
+                    FontFamily="SeoulHangangCBL"
+                    Placeholder="Username"
+                />
             </Frame>
-        </Grid>
-        <Grid>
 
-            <Button BackgroundColor="Blue" BorderColor="Transparent"
-                HeightRequest="50"
-            Grid.Row="1"
-            Grid.Column="0"
-            Margin="8"
-            Text="Sign in" FontSize="Medium"
-                    Command="{Binding AuthenticateUserCommand}"
-            />
+            <Frame BackgroundColor="#26FFFFFF" Margin="0,10,0,0" CornerRadius="10" HasShadow="False" HeightRequest="50" HorizontalOptions="FillAndExpand">
+                <entry:CustomEntry 
+                    Text=""
+                    BackgroundColor="Transparent"
+                    HeightRequest="60"
+                    FontSize="25"
+                    TextColor="White"
+                    FontFamily="SeoulHangangCBL"
+                    Placeholder="Password"
+                    IsPassword="True"
+                />
+            </Frame>
 
-
-        </Grid>
-
-        <Label FontAttributes="Bold" Text="Forgot Password?" TextColor="Gray" HorizontalTextAlignment="Center" />
-        <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
-            <Label  FontAttributes="Bold" TextColor="Gray" Text="Don't have account?" VerticalTextAlignment="Center" />
-            <Label  Text="SIGN UP" FontSize="18" 
-                           FontAttributes="Bold"
-                           TextColor="Blue"/>
+            <Button
+                Padding="50"
+                CornerRadius="10"
+                BackgroundColor="Red"
+                Text="Cancel"
+                TextColor="White"
+                FontSize="15"
+                HeightRequest="30"
+                FontFamily="SeoulHangangCBL"
+                HorizontalOptions="CenterAndExpand"
+                WidthRequest="180"    
+                VerticalOptions="FillAndExpand"
+                Command="{Binding BackCommand}"
             
-            
-        </HorizontalStackLayout>
-    </VerticalStackLayout>
+
+                />
+        </VerticalStackLayout>
+    </Grid>
+    
+    
 </ContentPage>
     
     

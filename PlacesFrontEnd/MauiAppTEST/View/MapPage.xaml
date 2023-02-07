@@ -7,75 +7,84 @@
              xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
              xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
 
-             
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+
              x:Class="MauiAppTEST.View.MapPage"      
              x:DataType="viewmodel:MapViewModel"
              Shell.PresentationMode="ModalAnimated"  
              Title="MapPage">
 
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="#FF9900"/>
+    </ContentPage.Behaviors>
+
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="0,1">
+                <GradientStop Color="#FF9900"
+                          Offset="0.1" />
+                <GradientStop Color="#001F71"
+                          Offset="0.90" />
+
+                
+            </LinearGradientBrush>
+    </ContentPage.Background>
+
     <Grid>
-        <maps:Map 
+        <Grid.RowDefinitions>
+
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <maps:Map Grid.Column="0" Grid.Row="0"
             MapClicked="map_MapClicked"
             x:Name="map" 
-            IsShowingUser="True" 
-            HorizontalOptions="CenterAndExpand" 
-            VerticalOptions="CenterAndExpand">
-        </maps:Map>
+            IsShowingUser="True"            
+
+            />
+            
         
         <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Start" Margin="20">
-            <Border StrokeThickness="10" BackgroundColor="#EDAE49">
-                <Border.StrokeShape>
-                    <Ellipse WidthRequest="200" HeightRequest="200" />
-                </Border.StrokeShape>
-                <Frame HeightRequest="90" WidthRequest="90" CornerRadius="100" IsClippedToBounds="True" BorderColor="#EDAE49">
-                    <ImageButton x:Name="ProfilePicture" Source="monalisa.png" Scale="2.5" Aspect="AspectFit" Clicked="ProfilePicture_Clicked"/>
-                </Frame>
+            <Border
+                HeightRequest="100"
+                WidthRequest="100"
+                StrokeThickness="4"
+                StrokeShape="RoundRectangle 50"
+                >
+                    <ImageButton
+                        x:Name="ProfilePicture"
+                        Source="monalisa.png"
+                        HeightRequest="100"
+                        WidthRequest="100"
+                        Aspect="AspectFill"
+                        Command="{Binding NavigateToSettingsPageCommand}"
+                        />
             </Border>
         </HorizontalStackLayout>
-        <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Center" Margin="20">
-            <StackLayout>
-                <DatePicker VerticalOptions="CenterAndExpand" Date="{x:Static sys:DateTime.Now}">
-                    <DatePicker.Format>yyyy-MM-dd</DatePicker.Format>
-                    <DatePicker.MinimumDate>
-                        <sys:DateTime x:FactoryMethod="Parse">
-                            <x:Arguments>
-                                <x:String>Jan 1 2000</x:String>
-                            </x:Arguments>
-                        </sys:DateTime>
-                    </DatePicker.MinimumDate>
-                    <DatePicker.MaximumDate>
-                        <sys:DateTime x:FactoryMethod="Parse">
-                            <x:Arguments>
-                                <x:String>Dec 31 2050</x:String>
-                            </x:Arguments>
-                        </sys:DateTime>
-                    </DatePicker.MaximumDate>
-                </DatePicker>
-                
-                
-            </StackLayout>
-        </HorizontalStackLayout>
+
         <HorizontalStackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="End" Spacing="25" Margin="20" HeightRequest="200">
             <ImageButton Source="mappage_activities.png"
                     WidthRequest="75"
                     HeightRequest="75"
                     HorizontalOptions="Center"
                     VerticalOptions="CenterAndExpand" 
-                    Clicked="ActivityButton_Clicked"
+                    Command="{Binding NavigateToActivityPageCommand}"
                          />
             <ImageButton Source="mappage_add.png"
                     WidthRequest="100"
                     HeightRequest="100"
                     HorizontalOptions="Center"
                     VerticalOptions="CenterAndExpand"
-                    Clicked="AddActivityButton_Clicked"
+                    Command="{Binding NavigateToAddActivityPageCommand}"
                          />
             <ImageButton Source="mappage_search.png"
                     WidthRequest="75"
                     HeightRequest="75"
                     HorizontalOptions="Center"
                     VerticalOptions="CenterAndExpand"
-                    Clicked="SearchButton_Clicked"
+                    Command="{Binding NavigateToSearchPageCommand}"
                          
                          />
         </HorizontalStackLayout>

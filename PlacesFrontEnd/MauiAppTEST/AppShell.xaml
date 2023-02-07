@@ -1,10 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="MauiAppTEST.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MauiAppTEST"
     Shell.FlyoutBehavior="Disabled">
+
+
+    <Shell.Background>
+        <LinearGradientBrush EndPoint="0,1">
+                <GradientStop Color="#FF9900"
+                          Offset="0.1" />
+                <GradientStop Color="#001F71"
+                          Offset="0.90" />
+
+          
+            </LinearGradientBrush>
+    </Shell.Background>
 
     <ShellContent
         Title="Home"

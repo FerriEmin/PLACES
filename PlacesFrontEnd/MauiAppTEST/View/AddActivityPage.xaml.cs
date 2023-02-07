@@ -10,8 +10,11 @@ namespace MauiAppTEST.View;
 
 public partial class AddActivityPage : ContentPage
 {
+    public AddActivityViewModel addActivityViewModel;
+
 	public AddActivityPage(AddActivityViewModel vm)
 	{
+        addActivityViewModel = vm;
 		BindingContext= vm;
 
         Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping(nameof(IView.Background), (handler, view) =>
@@ -22,11 +25,11 @@ public partial class AddActivityPage : ContentPage
 
 #if ANDROID
                 handler.PlatformView.SetBackgroundColor(colorFromButton.ToPlatform());
-#elif IS
-                handler.PlatformView.BackgroundColor = Colors.LightGray.ToPlatform();
-                handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.Line;
+#elif IOS
+                handler.PlatformView.BackgroundColor = colorFromButton.ToPlatform();
+                handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 #elif WINDOWS
-                handler.PlatformView.Background = Colors.LightGray.ToPlatform();
+                handler.PlatformView.Background = colorFromButton.ToPlatform();
 #endif
 
             }
@@ -36,9 +39,9 @@ public partial class AddActivityPage : ContentPage
 
     }
 
-
-    private void entry_Focused(object sender, FocusEventArgs e)
+    public void BackButton_Clicked(System.Object sender, System.EventArgs e)
     {
-
+        addActivityViewModel.Back();
     }
+      
 }

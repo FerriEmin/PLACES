@@ -16,4 +16,13 @@ public partial class SettingsPage : ContentPage
     {
 		settingsViewModel.NavigateToProfilePage();
     }
+
+    void BackButton_Clicked(System.Object sender, System.EventArgs e)
+    {
+        settingsViewModel.Back();
+    }
+
+    void LogOutButton_Clicked(System.Object sender, System.EventArgs e)
+    {
+    }
 }

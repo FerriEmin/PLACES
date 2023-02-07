@@ -35,4 +35,9 @@ public partial class SearchPage : ContentPage
 		svm.populateDetail(current);
 		svm.Id = svm.Detail.result.address_components[0].long_name;
     }
+
+    void BackButton_Clicked(System.Object sender, System.EventArgs e)
+    {
+		svm.Back();
+    }
 }
