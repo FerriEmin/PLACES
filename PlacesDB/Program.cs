@@ -7,7 +7,7 @@ namespace PlacesDB
     {
         static void Main(string[] args)
         {
-            BuildDatabase();
+            
         }
 
         private static void Test(int num)
