@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppTEST.View.SignLogPage"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+
              xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel" 
              x:DataType="viewmodel:SignLogViewModel"
 
@@ -51,7 +52,7 @@
             FontFamily="SeoulHangangCBL"
             HorizontalOptions="CenterAndExpand"
             WidthRequest="250"
-                
+            Command="{Binding NavigateToLoginPageCommand}"
             VerticalOptions="Center"
 
             />
@@ -79,6 +80,8 @@
             HorizontalOptions="CenterAndExpand"
             WidthRequest="220"    
             VerticalOptions="Center"
+            Command="{Binding NavigateToSignUpPageCommand}"
+
             />
 
         <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
@@ -120,6 +123,7 @@
             HorizontalOptions="CenterAndExpand"
             WidthRequest="180"    
             VerticalOptions="FillAndExpand"
+            Command="{Binding BackCommand}"
             
 
             />

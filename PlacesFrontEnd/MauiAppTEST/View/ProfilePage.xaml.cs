@@ -9,7 +9,6 @@ namespace MauiAppTEST.View;
 
 public partial class ProfilePage : ContentPage
 {
-    ProfileViewModel profileViewModel;
 	public ProfilePage(ProfileViewModel vm)
 	{
         Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping(nameof(IView.Background), (handler, view) =>
@@ -30,15 +29,9 @@ public partial class ProfilePage : ContentPage
             }
         });
 
-        profileViewModel = vm;
+        BindingContext = vm;
 		InitializeComponent();
-		BindingContext = vm;
 	}
-
-    public void BackButton_Clicked(System.Object sender, System.EventArgs e)
-    {
-        profileViewModel.Back();
-    }
 
     void LoadUserActivities()
 	{

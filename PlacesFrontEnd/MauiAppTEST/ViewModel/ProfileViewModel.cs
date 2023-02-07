@@ -10,15 +10,12 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace MauiAppTEST.ViewModel
 {
-    public partial class ProfileViewModel
+    public partial class ProfileViewModel : BaseViewModel
     {
         public User user { get; set; }
         public ProfileViewModel()
         {
             user = GlobalService.user;
         }
-
-        [RelayCommand]
-        public Task Back() => Shell.Current.GoToAsync("..");
     }
 }

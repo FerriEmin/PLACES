@@ -51,7 +51,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<SearchViewModel>();
         builder.Services.AddSingleton<SignLogViewModel>();
 
-
         //Views
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<CityPage>();

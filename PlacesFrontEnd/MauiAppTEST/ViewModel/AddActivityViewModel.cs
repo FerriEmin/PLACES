@@ -9,10 +9,6 @@ namespace MauiAppTEST.ViewModel
 {
     public partial class AddActivityViewModel : BaseViewModel
     {
-
-        [RelayCommand]
-        public Task Back() => Shell.Current.GoToAsync("..");
-
         public AddActivityViewModel()
         {
 

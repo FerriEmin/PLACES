@@ -2,11 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppTEST.View.ProfilePage"
-             xmlns:Models="clr-namespace:MauiAppTEST.Models"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
              xmlns:entry="clr-namespace:MauiAppTEST.CustomUI"
-
              x:DataType="viewmodel:ProfileViewModel"
              Shell.PresentationMode="ModalAnimated"
 
@@ -141,10 +139,9 @@
                 CornerRadius="15"
                 TextColor="White"
                 FontFamily="SeoulHangangCBL"
-                Clicked="BackButton_Clicked"
-
-
+                Command="{Binding BackCommand}"
                 />
+
             <Button
                 Grid.Column="1"
                 Padding="50"

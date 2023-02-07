@@ -10,13 +10,6 @@ namespace MauiAppTEST.ViewModel
 {
     public partial class SettingsViewModel : BaseViewModel
     {
-
-        [RelayCommand]
-        public Task NavigateToProfilePage() => Shell.Current.GoToAsync(nameof(ProfilePage));
-
-        [RelayCommand]
-        public Task Back() => Shell.Current.GoToAsync("..");
-
         public SettingsViewModel() { }
     }
 }

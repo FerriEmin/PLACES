@@ -14,6 +14,7 @@ namespace MauiAppTEST.ViewModel
         {
             user = GlobalService.user;
         }
+
         [RelayCommand]
         async Task AuthenticateUser()
         {

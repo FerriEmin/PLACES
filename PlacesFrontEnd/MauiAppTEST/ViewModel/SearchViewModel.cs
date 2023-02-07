@@ -57,10 +57,6 @@ namespace MauiAppTEST.ViewModel
             Detail = googleApiService.GetDetails(placesId).Result;
         }
 
-        [RelayCommand]
-        public Task Back() => Shell.Current.GoToAsync("..");
-
-
         public SearchViewModel(GoogleApiService gas)
         {
             googleApiService = gas;

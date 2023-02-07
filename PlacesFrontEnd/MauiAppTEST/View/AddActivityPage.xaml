@@ -40,7 +40,7 @@
                         HeightRequest="60"
                         FontSize="25"
                         TextColor="White"
-                        FontFamily="OswaldRegular"
+                        FontFamily="SeoulHangangCBL"
 
                     />
                 </Frame>
@@ -52,7 +52,7 @@
                         HeightRequest="40"
                         FontSize="20"
                         TextColor="White"
-                        FontFamily="OswaldRegular"
+                        FontFamily="SeoulHangangCBLSeoulHangangCBL"
                     />
                 </Frame>
 
@@ -63,7 +63,7 @@
                         HeightRequest="40"
                         FontSize="20"
                         TextColor="White"
-                        FontFamily="OswaldRegular"
+                        FontFamily="SeoulHangangCBL"
                         />
                 </Frame>
 
@@ -84,7 +84,7 @@
                                 HeightRequest="40"
                                 FontSize="20"
                                 TextColor="White"
-                                FontFamily="OswaldRegular"
+                                FontFamily="SeoulHangangCBL"
 
                                 WidthRequest="40"
                                 />
@@ -109,7 +109,7 @@
                                 HeightRequest="40"
                                 FontSize="20"
                                 TextColor="White"
-                                FontFamily="OswaldRegular"
+                                FontFamily="SeoulHangangCBL"
 
                                 WidthRequest="40"
                                 />
@@ -121,7 +121,7 @@
                     <Editor
                         FontSize="20"
                         TextColor="White"
-                        FontFamily="OswaldRegular"
+                        FontFamily="SeoulHangangCBL"
                         ZIndex="2"
                         BackgroundColor="Transparent"
                         HeightRequest="150"/>

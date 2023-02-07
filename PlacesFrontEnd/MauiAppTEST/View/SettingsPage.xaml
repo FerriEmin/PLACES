@@ -38,7 +38,6 @@
                 <Image
                     Aspect="AspectFill"
                     Source="monalisa.png"
-                    SemanticProperties.Description="Cute dot net bot waving hi to you!"
                     HeightRequest="140"
                     WidthRequest="140"
                     VerticalOptions="Center"
@@ -48,7 +47,7 @@
         <VerticalStackLayout Margin="30">
             <VerticalStackLayout Margin="10">
                 <Label TextColor="Purple">Username and password</Label>
-                <Button x:Name="ProfileButton" Clicked="ProfileButton_Clicked" BackgroundColor="Purple" Text="My Profile" HeightRequest="60" CornerRadius="10"/>
+                <Button x:Name="ProfileButton" Command="{Binding NavigateToProfilePageCommand}" BackgroundColor="Purple" Text="My Profile" HeightRequest="60" CornerRadius="10"/>
             </VerticalStackLayout>
 
             <VerticalStackLayout Margin="10">
@@ -88,7 +87,7 @@
                 CornerRadius="15"
                 TextColor="White"
                 FontFamily="SeoulHangangCBL"
-                Clicked="BackButton_Clicked"
+                Command="{Binding BackCommand}"
 
 
                 />
@@ -104,7 +103,7 @@
                 FontFamily="SeoulHangangCBL"
                 HorizontalOptions="CenterAndExpand"
                 WidthRequest="220"
-                Clicked="LogOutButton_Clicked"
+                Command="{Binding NavigateToSignLogPageCommand}"
                 VerticalOptions="Center"
 
                 />

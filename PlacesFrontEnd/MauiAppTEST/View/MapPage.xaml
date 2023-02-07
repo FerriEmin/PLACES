@@ -59,7 +59,7 @@
                         HeightRequest="100"
                         WidthRequest="100"
                         Aspect="AspectFill"
-                        Clicked="ProfilePicture_Clicked"
+                        Command="{Binding NavigateToSettingsPageCommand}"
                         />
             </Border>
         </HorizontalStackLayout>
@@ -70,21 +70,21 @@
                     HeightRequest="75"
                     HorizontalOptions="Center"
                     VerticalOptions="CenterAndExpand" 
-                    Clicked="ActivityButton_Clicked"
+                    Command="{Binding NavigateToActivityPageCommand}"
                          />
             <ImageButton Source="mappage_add.png"
                     WidthRequest="100"
                     HeightRequest="100"
                     HorizontalOptions="Center"
                     VerticalOptions="CenterAndExpand"
-                    Clicked="AddActivityButton_Clicked"
+                    Command="{Binding NavigateToAddActivityPageCommand}"
                          />
             <ImageButton Source="mappage_search.png"
                     WidthRequest="75"
                     HeightRequest="75"
                     HorizontalOptions="Center"
                     VerticalOptions="CenterAndExpand"
-                    Clicked="SearchButton_Clicked"
+                    Command="{Binding NavigateToSearchPageCommand}"
                          
                          />
         </HorizontalStackLayout>

@@ -1,4 +1,5 @@
 ﻿using MauiAppTEST.View;
+using MauiAppTEST;
 
 namespace MauiAppTEST;
 
@@ -8,7 +9,7 @@ public partial class AppShell : Shell
 	{
 		InitializeComponent();
 
-		Routing.RegisterRoute(nameof(CityPage), typeof(CityPage));
+        Routing.RegisterRoute(nameof(CityPage), typeof(CityPage));
 		Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
 		Routing.RegisterRoute(nameof(SignUpPage), typeof(SignUpPage));
 		Routing.RegisterRoute(nameof(ActivityPage), typeof(ActivityPage));
