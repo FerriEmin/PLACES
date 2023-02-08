@@ -14,7 +14,33 @@ namespace PlacesBackEnd.DTO
         public List<(string, string)> Comments { get; set; }
         public LocationDTO Location { get; set; }
 
-        public EventDTO () { }
+        public EventDTO () {
+        }
+
+        public EventDTO(Event @event, bool extended)
+        {
+            
+            (
+            Title,
+            Description,
+            Image,
+            Planned,
+            Likes,
+            Comments,
+            Location
+            ) =
+            (
+            @event.Title,
+            @event.Description,
+            @event.Image,
+            @event.Planned,
+            @event.Reviews.Where(x => x.Like == true).Count(),
+            @event.Reviews.Select(x => (x.User.Username, x.Comment)).ToList(),
+            new LocationDTO(@event.Location)
+            );
+        }
+
+
         public EventDTO(Event @event) =>
             (
             Title,
