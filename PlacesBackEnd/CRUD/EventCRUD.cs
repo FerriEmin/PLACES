@@ -1,7 +1,6 @@
-﻿using PlacesBackEnd.DTO;
+﻿using Microsoft.EntityFrameworkCore;
+using PlacesBackEnd.DTO;
 using PlacesDB.Models;
-using PlacesDB;
-using Microsoft.EntityFrameworkCore;
 
 namespace PlacesBackEnd.CRUD
 {
@@ -22,7 +21,7 @@ namespace PlacesBackEnd.CRUD
             }
 
         }
-        
+
 
 
         public static async Task<IResult> GetEventById(int id)
@@ -56,22 +55,22 @@ namespace PlacesBackEnd.CRUD
                     {
                         Name = eventDTO.Location.Name,
                         Address = eventDTO.Location.Address,
-                        Latitude= eventDTO.Location.Latitude,
-                        Longitude= eventDTO.Location.Longitude,
+                        Latitude = eventDTO.Location.Latitude,
+                        Longitude = eventDTO.Location.Longitude,
                     };
 
                     db.Locations.Add(location);
 
-                    if (user == null || location == null)  
+                    if (user == null || location == null)
                         return TypedResults.StatusCode(500);
-                  
+
 
                     var _event = new Event
                     {
-                        Title= eventDTO.Title,
-                        Description= eventDTO.Description,
+                        Title = eventDTO.Title,
+                        Description = eventDTO.Description,
                         Image = eventDTO.Image,
-                        Planned= eventDTO.Planned,
+                        Planned = eventDTO.Planned,
                     };
 
                     user.Events.Add(_event);
@@ -175,46 +174,19 @@ namespace PlacesBackEnd.CRUD
 
         }
 
-        //public static async Task<IResult> GetEventsByReviewId(int userId)
-        //{
-        //    try
-        //    {
-        //        using (var db = new Context())
-        //        {
+        public static async Task<IResult> GetGroupedReviewsByUserId(int userId)
+        {
+            using (var db = new Context())
+            {
+                var grouped = (from e in db.Events
+                               where e.User.Id == userId
+                               join c in db.Reviews on e.Id equals c.Event.Id
+                               select new { Title = e.Title, Image = e.Image, Likes = e.Reviews.Where(x => x.Like == true).Count(), Comment = c.Comment }).ToList();
 
-        //            var res = await db.Reviews.Where(x => x.User.Id == userId).ToListAsync();
-        //            if (res is null || res.Count == 0)
-        //            {
-        //                return TypedResults.NotFound("No Reviews found for this user");
-        //            }
+                    return TypedResults.Ok(grouped);
+            };
 
-        //            var listOfEvents = new List<Event>();
-        //            foreach (var item in res)
-        //            {
-        //                listOfEvents.Add(db.Events.Where(x => x.Reviews.FirstOrDefault().Id == item.Id).FirstOrDefault());
-        //            }
-
-        //            var res2 = db.Events.ToListAsync();
-        //            foreach (var item in listOfEvents)
-        //            {
-
-        //            }
-
-
-
-
-
-        //            return TypedResults.Ok(listOfEvents);
-        //        };
-
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        return TypedResults.StatusCode(500);
-        //    }
-
-        //}
+        }
 
         public static async Task<IResult> GetEventsByUserId(int userId)
         {
