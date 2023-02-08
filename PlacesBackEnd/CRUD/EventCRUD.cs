@@ -174,5 +174,66 @@ namespace PlacesBackEnd.CRUD
             }
 
         }
+
+        //public static async Task<IResult> GetEventsByReviewId(int userId)
+        //{
+        //    try
+        //    {
+        //        using (var db = new Context())
+        //        {
+
+        //            var res = await db.Reviews.Where(x => x.User.Id == userId).ToListAsync();
+        //            if (res is null || res.Count == 0)
+        //            {
+        //                return TypedResults.NotFound("No Reviews found for this user");
+        //            }
+
+        //            var listOfEvents = new List<Event>();
+        //            foreach (var item in res)
+        //            {
+        //                listOfEvents.Add(db.Events.Where(x => x.Reviews.FirstOrDefault().Id == item.Id).FirstOrDefault());
+        //            }
+
+        //            var res2 = db.Events.ToListAsync();
+        //            foreach (var item in listOfEvents)
+        //            {
+
+        //            }
+
+
+
+
+
+        //            return TypedResults.Ok(listOfEvents);
+        //        };
+
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        return TypedResults.StatusCode(500);
+        //    }
+
+        //}
+
+        public static async Task<IResult> GetEventsByUserId(int userId)
+        {
+            try
+            {
+                using (var db = new Context())
+                {
+                    var res = await db.Events.Where(x => x.User.Id.Equals(userId)).FirstOrDefaultAsync();
+                    if (res is null)
+                    { return TypedResults.NotFound("No events found"); }
+                    return TypedResults.Ok();
+                }
+
+            }
+            catch (Exception)
+            {
+                return TypedResults.StatusCode(500);
+            }
+        }
+
     }
 }
