@@ -1,22 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using PlacesBackEnd.DTO;
-using PlacesDB;
-using PlacesDB.Models;
-using PlacesBackEnd.CRUD;
-using PlacesBackEnd;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.VisualBasic;
+using PlacesBackEnd;
+using PlacesBackEnd.CRUD;
 using PlacesBackEnd.DTO;
-using PlacesDB.Models;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Text;
 
 
@@ -27,7 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: corsPolicy,
-        policy => { 
+        policy =>
+        {
             policy.AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader();
@@ -42,16 +30,16 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
-    options.TokenValidationParameters = new TokenValidationParameters() 
-    { 
-        ValidateActor= true,
-        ValidateAudience= true,
-        ValidateLifetime= true,
-        ValidateIssuerSigningKey= true,
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateActor = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-    
+
     };
 });
 builder.Services.AddAuthorization();
@@ -75,11 +63,13 @@ app.UseHttpsRedirection();
 
 // Authentication Endpoints
 RouteGroupBuilder auth = app.MapGroup("/auth");
-auth.MapPost("/login",async (UserLoginDTO details) => { await Auth.Login(details, builder); });
+auth.MapPost("/login", async (UserLoginDTO details) => { return await Auth.Login(details, builder); });
+auth.MapGet("/tokentest/{id}", [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)] (int id) => { TypedResults.Ok(new { msg = "Authenticated" }); });
+
 
 // USER ENDPOINTS
 RouteGroupBuilder users = app.MapGroup("/users");
-users.MapGet("/", [Authorize()] (UserCRUD.GetAllUsers);
+users.MapGet("/", UserCRUD.GetAllUsers);
 users.MapGet("/{id}", UserCRUD.GetUserById);
 users.MapPost("/", UserCRUD.CreateUser);
 users.MapPut("/{id}", UserCRUD.UpdateUser);
