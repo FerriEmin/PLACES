@@ -1,6 +1,4 @@
-﻿using PlacesBackEnd.CRUD;
-using PlacesDB.Models;
-using System.Text.Json.Serialization;
+﻿using PlacesDB.Models;
 
 namespace PlacesBackEnd.DTO
 {
@@ -11,54 +9,29 @@ namespace PlacesBackEnd.DTO
         public string Image { get; set; }
         public DateTime Planned { get; set; }
         public int Likes { get; set; }
-        public List<(string, string)> Comments { get; set; }
+        public List<(string, string, bool)> Comments { get; set; }
         public LocationDTO Location { get; set; }
 
-        public EventDTO () {
-        }
-
-        public EventDTO(Event @event, bool extended)
+        public EventDTO()
         {
-            
-            (
-            Title,
-            Description,
-            Image,
-            Planned,
-            Likes,
-            Comments,
-            Location
-            ) =
-            (
-            @event.Title,
-            @event.Description,
-            @event.Image,
-            @event.Planned,
-            @event.Reviews.Where(x => x.Like == true).Count(),
-            @event.Reviews.Select(x => (x.User.Username, x.Comment)).ToList(),
-            new LocationDTO(@event.Location)
-            );
         }
 
+        public EventDTO(Event @event)
+        {
+            using (var db = new Context())
+            {
 
-        public EventDTO(Event @event) =>
-            (
-            Title,
-            Description,
-            Image,
-            Planned,
-            Likes,
-            Comments,
-            Location
-            ) =
-            (
-            @event.Title,
-            @event.Description,
-            @event.Image,
-            @event.Planned,
-            @event.Reviews.Where(x => x.Like == true).Count(),
-            @event.Reviews.Select(x => (x.User.Username, x.Comment)).ToList(),
-            new LocationDTO(@event.Location)
-            );
+                var comments = (from r in @event.Reviews select (r.User.Username, r.Comment, r.Like)).ToList();
+                var likes = comments.Where(x => x.Like == true).Count();
+
+                Title = @event.Title;
+                Description = @event.Description;
+                Image = @event.Image;
+                Planned = @event.Planned;
+                Likes = likes;
+                Comments = comments;
+                Location = new LocationDTO(@event.Location);
+            }
+        }
     }
 }
