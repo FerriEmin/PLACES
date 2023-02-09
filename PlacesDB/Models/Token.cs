@@ -10,8 +10,8 @@ namespace PlacesDB.Models
     {
         public int Id { get; set; }
         public string Value { get; set; }
-        public DateTime Expires { get; set; }
+        public DateTime? Expires { get; set; }
 
-        public User User { get; set; }
+        public User? User { get; set; }
     }
 }
