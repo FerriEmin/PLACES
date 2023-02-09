@@ -69,6 +69,8 @@ RouteGroupBuilder events = app.MapGroup("/events");
 events.MapGet("/", EventCRUD.GetAllEvents);
 events.MapGet("/{id}", EventCRUD.GetEventById);
 events.MapGet("/location/{locationid}", EventCRUD.GetEventsByLocationId);
+events.MapGet("/reviews/{userId}", EventCRUD.GetGroupedReviewsByUserId);
+events.MapGet("/user/{userId}", EventCRUD.GetEventsByUserId);
 events.MapPost("/", EventCRUD.CreateEvent);
 events.MapPut("/{id}", EventCRUD.UpdateEvent);
 events.MapDelete("/{id}", EventCRUD.DeleteEvent);

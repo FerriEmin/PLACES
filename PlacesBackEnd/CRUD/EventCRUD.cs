@@ -1,4 +1,5 @@
-﻿using PlacesBackEnd.DTO;
+﻿using Microsoft.EntityFrameworkCore;
+using PlacesBackEnd.DTO;
 using PlacesDB.Models;
 using PlacesDB;
 using Microsoft.EntityFrameworkCore;
@@ -246,5 +247,39 @@ namespace PlacesBackEnd.CRUD
             }
 
         }
+
+        public static async Task<IResult> GetGroupedReviewsByUserId(int userId)
+        {
+            using (var db = new Context())
+            {
+                var grouped = (from e in db.Events
+                               where e.User.Id == userId
+                               join c in db.Reviews on e.Id equals c.Event.Id
+                               select new { Title = e.Title, Image = e.Image, Likes = e.Reviews.Where(x => x.Like == true).Count(), Comment = c.Comment }).ToList();
+
+                    return TypedResults.Ok(grouped);
+            };
+
+        }
+
+        public static async Task<IResult> GetEventsByUserId(int userId)
+        {
+            try
+            {
+                using (var db = new Context())
+                {
+                    var res = await db.Events.Where(x => x.User.Id.Equals(userId)).FirstOrDefaultAsync();
+                    if (res is null)
+                    { return TypedResults.NotFound("No events found"); }
+                    return TypedResults.Ok();
+                }
+
+            }
+            catch (Exception)
+            {
+                return TypedResults.StatusCode(500);
+            }
+        }
+
     }
 }
