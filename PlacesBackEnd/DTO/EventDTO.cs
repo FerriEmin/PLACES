@@ -7,7 +7,7 @@ namespace PlacesBackEnd.DTO
         public string Title { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
-        public DateTime Planned { get; set; }
+        public DateTime Planned { get; set; } = DateTime.Now;
         public int Likes { get; set; }
         public List<(string, string, bool)> Comments { get; set; }
         public LocationDTO Location { get; set; }
