@@ -18,9 +18,6 @@ namespace PlacesBackEnd.CRUD
             {
                 using (var db = new Context())
                 {
-                    //customers = db.Customers.Include(a => a.Adress).ToList();
-
-
                     var events = db.Events
                         .Include(e => e.User)
                         .Include(e => e.Category)
@@ -31,7 +28,6 @@ namespace PlacesBackEnd.CRUD
                         .Include(e => e.Reviews).
                         ToList()
                         .Select(e => new EventDTO(e)).ToList();
-
 
                     return TypedResults.Ok(events);
                 }
