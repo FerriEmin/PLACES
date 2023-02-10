@@ -1,10 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using PlacesBackEnd.DTO;
-using PlacesDB;
-using PlacesDB.Models;
-using PlacesBackEnd.CRUD;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
 using PlacesBackEnd;
-using Microsoft.AspNetCore.Mvc;
+using PlacesBackEnd.CRUD;
+using PlacesBackEnd.DTO;
+using System.Text;
+
 
 var corsPolicy = "_myCorsPolicy";
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: corsPolicy,
-        policy => { 
+        policy =>
+        {
             policy.AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader();
@@ -26,9 +28,26 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateActor = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
 
+    };
+});
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+app.UseAuthorization();
+app.UseAuthentication();
 
 // Set cors policy
 app.UseCors(corsPolicy);
@@ -44,7 +63,9 @@ app.UseHttpsRedirection();
 
 // Authentication Endpoints
 RouteGroupBuilder auth = app.MapGroup("/auth");
-auth.MapPost("/login", Auth.Login);
+auth.MapPost("/login", async (UserLoginDTO details) => { return await Auth.Login(details, builder); });
+auth.MapGet("/tokentest/{id}", [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)] (int id) => { TypedResults.Ok(new { msg = "Authenticated" }); });
+
 
 // USER ENDPOINTS
 RouteGroupBuilder users = app.MapGroup("/users");
