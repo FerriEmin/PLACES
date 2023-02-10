@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace PlacesBackEnd.CRUD
 {
@@ -48,14 +49,17 @@ namespace PlacesBackEnd.CRUD
             }
         }
 
-        public static async Task<IResult> CreateEvent(EventDTO eventDTO)
+        public static async Task<IResult> CreateEvent(EventDTO eventDTO, int userId)
         {
-            try
-            {
+
                 using (var db = new Context())
                 {
                     // Hard coded to always use this user
-                    var user = await db.Users.Where(x => x.Id == 1).FirstOrDefaultAsync();
+                    //var user = await db.Users.Where(x => x.Id == 1).FirstOrDefaultAsync();
+
+                    var userRes = await db.Users.FirstOrDefaultAsync(x => x.Id == userId);
+                    if (userRes == null)
+                        return TypedResults.NotFound("No user found");
 
                     Country countryToUse;
                     City cityToUse;
@@ -126,8 +130,8 @@ namespace PlacesBackEnd.CRUD
 
 
 
-                    if (user == null || location == null)
-                        return TypedResults.StatusCode(500);
+                    if (userRes == null || location == null)
+                        return TypedResults.NotFound("No user or location found");
 
                     Category cat = new Category()
                     {
@@ -146,7 +150,7 @@ namespace PlacesBackEnd.CRUD
                         Image = eventDTO.Image,
                         Planned = eventDTO.Planned,
                         Location = newloc,
-                        User = user,
+                        User = userRes,
                         Category = newcat
                     };
 
@@ -154,14 +158,9 @@ namespace PlacesBackEnd.CRUD
 
                     await db.SaveChangesAsync();
 
-                    return TypedResults.StatusCode(200);
+                    return TypedResults.Ok();
                 }
 
-            }
-            catch (Exception)
-            {
-                return TypedResults.StatusCode(500);
-            }
         }
 
 
@@ -245,20 +244,6 @@ namespace PlacesBackEnd.CRUD
 
                 return TypedResults.StatusCode(500);
             }
-
-        }
-
-        public static async Task<IResult> GetGroupedReviewsByUserId(int userId)
-        {
-            using (var db = new Context())
-            {
-                var grouped = (from e in db.Events
-                               where e.User.Id == userId
-                               join c in db.Reviews on e.Id equals c.Event.Id
-                               select new { Title = e.Title, Image = e.Image, Likes = e.Reviews.Where(x => x.Like == true).Count(), Comment = c.Comment }).ToList();
-
-                    return TypedResults.Ok(grouped);
-            };
 
         }
 

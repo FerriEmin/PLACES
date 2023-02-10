@@ -90,7 +90,6 @@ RouteGroupBuilder events = app.MapGroup("/events");
 events.MapGet("/", EventCRUD.GetAllEvents);
 events.MapGet("/{id}", EventCRUD.GetEventById);
 events.MapGet("/location/{locationid}", EventCRUD.GetEventsByLocationId);
-events.MapGet("/reviews/{userId}", EventCRUD.GetGroupedReviewsByUserId);
 events.MapGet("/user/{userId}", EventCRUD.GetEventsByUserId);
 events.MapPost("/", EventCRUD.CreateEvent);
 events.MapPut("/{id}", EventCRUD.UpdateEvent);
@@ -113,6 +112,14 @@ locations.MapGet("/{id}", LocationCRUD.GetLocationById);
 locations.MapPost("/", LocationCRUD.CreateLocation);
 locations.MapPut("/{id}", LocationCRUD.UpdateLocation);
 locations.MapDelete("/{id}", LocationCRUD.DeleteLocation);
+//////
+
+
+////// REVIEW ENDPOINTS
+RouteGroupBuilder reviews = app.MapGroup("/reviews");
+reviews.MapPost("/", ReviewCRUD.CreateReview);
+reviews.MapGet("/{userId}", ReviewCRUD.GetGroupedReviewsByUserId);
+//////
 
 // Availability check
 RouteGroupBuilder check = app.MapGroup("/check");

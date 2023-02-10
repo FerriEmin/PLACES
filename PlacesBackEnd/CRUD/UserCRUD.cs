@@ -83,10 +83,10 @@ namespace PlacesBackEnd.CRUD
                 if (await UsernameTaken(userDTO.Username))
                     return TypedResults.BadRequest(new { msg = "Username already taken!" });
 
-                user.FirstName = userDTO.FirstName;
-                user.LastName = userDTO.LastName;
-                user.Username = userDTO.Username;
-                user.Email = userDTO.Email;
+                user.FirstName = userDTO.FirstName == "string" ? user.FirstName : userDTO.FirstName;
+                user.LastName = userDTO.LastName == "string" ? user.LastName : userDTO.LastName;
+                user.Username = userDTO.Username == "string" ? user.Username : userDTO.Username;
+                user.Email = userDTO.Email == "string" ? user.Email : userDTO.Email;
 
                 await db.SaveChangesAsync();
 
