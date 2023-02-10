@@ -18,7 +18,22 @@ namespace PlacesBackEnd.CRUD
             {
                 using (var db = new Context())
                 {
-                    return TypedResults.Ok(await db.Events.Select(x => new EventDTO(x)).ToListAsync());
+                    //customers = db.Customers.Include(a => a.Adress).ToList();
+
+
+                    var events = db.Events
+                        .Include(e => e.User)
+                        .Include(e => e.Category)
+                        .Include(e => e.Location)
+                        .Include(e => e.Location.City)
+                        .Include(e => e.Location.City.Country)
+                        .Include(e => e.Location.Country)
+                        .Include(e => e.Reviews).
+                        ToList()
+                        .Select(e => new EventDTO(e)).ToList();
+
+
+                    return TypedResults.Ok(events);
                 }
             }
             catch (Exception)
