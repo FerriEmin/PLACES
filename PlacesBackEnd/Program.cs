@@ -4,8 +4,9 @@ using PlacesDB;
 using PlacesDB.Models;
 using PlacesBackEnd.CRUD;
 using PlacesBackEnd;
+using Microsoft.AspNetCore.Mvc;
 
-var corsPolicy = "_myAllowSpecificOrigins";
+var corsPolicy = "_myCorsPolicy";
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -39,8 +40,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(corsPolicy);
-
 app.UseHttpsRedirection();
 
 // Authentication Endpoints
@@ -53,6 +52,7 @@ users.MapGet("/", UserCRUD.GetAllUsers);
 users.MapGet("/{id}", UserCRUD.GetUserById);
 users.MapPost("/", UserCRUD.CreateUser);
 users.MapPut("/{id}", UserCRUD.UpdateUser);
+users.MapPut("/password", UserCRUD.UpdatePassword);
 users.MapDelete("/{id}", UserCRUD.DeleteUser);
 //////
 
@@ -68,12 +68,15 @@ cities.MapDelete("/{id}", CityCRUD.DeleteCity);
 RouteGroupBuilder events = app.MapGroup("/events");
 events.MapGet("/", EventCRUD.GetAllEvents);
 events.MapGet("/{id}", EventCRUD.GetEventById);
+events.MapGet("/location/{locationid}", EventCRUD.GetEventsByLocationId);
+events.MapGet("/reviews/{userId}", EventCRUD.GetGroupedReviewsByUserId);
+events.MapGet("/user/{userId}", EventCRUD.GetEventsByUserId);
 events.MapPost("/", EventCRUD.CreateEvent);
 events.MapPut("/{id}", EventCRUD.UpdateEvent);
 events.MapDelete("/{id}", EventCRUD.DeleteEvent);
 //////
 
-// CATEGORY ENDPOINTS
+////// CATEGORY ENDPOINTS
 RouteGroupBuilder categories = app.MapGroup("/categories");
 categories.MapGet("/", CategoryCRUD.GetAllCategories);
 categories.MapGet("/{id}", CategoryCRUD.GetCategoryById);
@@ -89,5 +92,9 @@ locations.MapGet("/{id}", LocationCRUD.GetLocationById);
 locations.MapPost("/", LocationCRUD.CreateLocation);
 locations.MapPut("/{id}", LocationCRUD.UpdateLocation);
 locations.MapDelete("/{id}", LocationCRUD.DeleteLocation);
+
+// Availability check
+RouteGroupBuilder check = app.MapGroup("/check");
+check.MapGet("/username/{username}", Check.CheckUsernameAvailable);
 
 app.Run();

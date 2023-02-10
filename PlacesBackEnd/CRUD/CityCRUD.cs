@@ -9,72 +9,107 @@ namespace PlacesBackEnd.CRUD
     {
         public static async Task<IResult> GetAllCitys()
         {
-            using (var db = new Context())
+            try
             {
-                return TypedResults.Ok(await db.Cities.Select(x => new CityDTO(x)).ToListAsync());
+                using (var db = new Context())
+                {
+                    return TypedResults.Ok(await db.Cities.Select(x => new CityDTO(x)).ToListAsync());
+                }
             }
+            catch (Exception)
+            {
+                return TypedResults.StatusCode(500);
+            }
+
         }
-
-
         public static async Task<IResult> GetCityById(int id)
         {
-            using (var db = new Context())
+            try
             {
-                return await db.Cities.FindAsync(id)
-                    is City city
-                        ? TypedResults.Ok(new CityDTO(city))
-                        : TypedResults.NotFound();
+                using (var db = new Context())
+                {
+                    return await db.Cities.FindAsync(id)
+                        is City city
+                            ? TypedResults.Ok(new CityDTO(city))
+                            : TypedResults.NotFound();
+                }
             }
-
+            catch (Exception)
+            {
+                return TypedResults.StatusCode(500);
+            }
         }
 
         public static async Task<IResult> CreateCity(CityDTO cityDTO)
         {
-            using (var db = new Context())
+            try
             {
-                var city = new City
+                using (var db = new Context())
                 {
-                    Name = cityDTO.Name,
-                };
-                db.Cities.Add(city);
-                await db.SaveChangesAsync();
+                    var city = new City
+                    {
+                        Name = cityDTO.Name,
+                    };
+                    db.Cities.Add(city);
+                    await db.SaveChangesAsync();
 
-                return TypedResults.Created($"/user/{city.Id}", cityDTO);
+                    return TypedResults.Created($"/user/{city.Id}", cityDTO);
 
+                }
             }
+            catch (Exception)
+            {
+                return TypedResults.StatusCode(500);
+            }
+
 
         }
 
 
         public static async Task<IResult> UpdateCity(int id, CityDTO cityDTO)
         {
-            using (var db = new Context())
+            try
             {
-                var city = await db.Cities.FindAsync(id);
+                using (var db = new Context())
+                {
+                    var city = await db.Cities.FindAsync(id);
 
-                if (city is null) return TypedResults.NotFound();
+                    if (city is null) return TypedResults.NotFound();
 
-                city.Name = cityDTO.Name == "string" ? city.Name : cityDTO.Name;
+                    city.Name = cityDTO.Name == "string" ? city.Name : cityDTO.Name;
 
-                await db.SaveChangesAsync();
+                    await db.SaveChangesAsync();
 
-                return TypedResults.NoContent();
+                    return TypedResults.NoContent();
+                }
             }
+            catch (Exception)
+            {
+                return TypedResults.StatusCode(500);
+            }
+
         }
 
         public static async Task<IResult> DeleteCity(int id)
         {
-            using (var db = new Context())
+            try
             {
-                if (await db.Cities.FindAsync(id) is City city)
+                using (var db = new Context())
                 {
-                    db.Cities.Remove(city);
-                    await db.SaveChangesAsync();
-                    return TypedResults.Ok(city);
+                    if (await db.Cities.FindAsync(id) is City city)
+                    {
+                        db.Cities.Remove(city);
+                        await db.SaveChangesAsync();
+                        return TypedResults.Ok(city);
+                    }
+                    return TypedResults.NotFound();
                 }
-
-                return TypedResults.NotFound();
             }
+            catch (Exception)
+            {
+                return TypedResults.StatusCode(500);
+            }
+
         }
     }
 }

@@ -9,70 +9,113 @@ namespace PlacesBackEnd.CRUD
     {
         public static async Task<IResult> GetAllCategories()
         {
-            using (var db = new Context())
+            try
             {
-                return TypedResults.Ok(await db.Categories.ToListAsync());
+                using (var db = new Context())
+                {
+                    return TypedResults.Ok(await db.Categories.ToListAsync());
+                }
+
             }
+            catch (Exception)
+            {
+
+                return TypedResults.StatusCode(500);
+            }
+
         }
 
 
         public static async Task<IResult> GetCategoryById(int id)
         {
-            using (var db = new Context())
+            try
             {
-                return await db.Categories.FindAsync(id)
-                    is Category category
-                        ? TypedResults.Ok(category)
-                        : TypedResults.NotFound();
+                using (var db = new Context())
+                {
+                    return await db.Categories.FindAsync(id)
+                        is Category category
+                            ? TypedResults.Ok(category)
+                            : TypedResults.NotFound();
+                }
+
+            }
+            catch (Exception)
+            {
+
+                return TypedResults.StatusCode(500);
             }
 
         }
 
         public static async Task<IResult> CreateCategory(CategoryDTO categoryDTO)
         {
-            using (var db = new Context())
+            try
             {
-                var category = new Category { Name = categoryDTO.Name };
+                using (var db = new Context())
+                {
+                    var category = new Category { Name = categoryDTO.Name };
                     
-                db.Categories.Add(category);
-                await db.SaveChangesAsync();
+                    db.Categories.Add(category);
+                    await db.SaveChangesAsync();
 
-                return TypedResults.Created($"/categories/{category.Id}", categoryDTO);
+                    return TypedResults.Created($"/categories/{category.Id}", categoryDTO);
+                }
 
             }
+            catch (Exception)
+            {
+                return TypedResults.StatusCode(500);
+            }
+
 
         }
 
 
         public static async Task<IResult> UpdateCategory(int id, CategoryDTO categoryDTO)
         {
-            using (var db = new Context())
+            try
             {
-                var category = await db.Categories.FindAsync(id);
+                using (var db = new Context())
+                {
+                    var category = await db.Categories.FindAsync(id);
 
-                if (category is null) return TypedResults.NotFound();
+                    if (category is null) return TypedResults.NotFound();
 
-                category.Name = categoryDTO.Name == "string" ? category.Name : categoryDTO.Name; ;
+                    category.Name = categoryDTO.Name == "string" ? category.Name : categoryDTO.Name; ;
 
-                await db.SaveChangesAsync();
+                    await db.SaveChangesAsync();
 
-                return TypedResults.NoContent();
+                    return TypedResults.NoContent();
+                }
             }
+            catch (Exception)
+            {
+                return TypedResults.StatusCode(500);
+            }
+
         }
 
         public static async Task<IResult> DeleteCategory(int id)
         {
-            using (var db = new Context())
+            try
             {
-                if (await db.Categories.FindAsync(id) is Category category)
+                using (var db = new Context())
                 {
-                    db.Categories.Remove(category);
-                    await db.SaveChangesAsync();
-                    return TypedResults.Ok(category);
-                }
+                    if (await db.Categories.FindAsync(id) is Category category)
+                    {
+                        db.Categories.Remove(category);
+                        await db.SaveChangesAsync();
+                        return TypedResults.Ok(category);
+                    }
 
-                return TypedResults.NotFound();
+                    return TypedResults.NotFound();
+                }   
             }
+            catch (Exception)
+            {
+                return TypedResults.StatusCode(500);
+            }
+
         }
     }
 }

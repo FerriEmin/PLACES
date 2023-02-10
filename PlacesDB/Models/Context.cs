@@ -77,6 +77,10 @@ namespace PlacesDB.Models
                 .HasMaxLength(32)
                 .IsRequired();
 
+                entity.Property(e => e.ProfileImage)
+                .HasMaxLength(255)
+                .IsRequired();
+
                 entity.Property(e => e.Email)
                 .HasMaxLength(64)
                 .IsRequired();
@@ -116,7 +120,7 @@ namespace PlacesDB.Models
                 .IsRequired();
 
                 entity.Property(e => e.Image)
-                .HasColumnType("image")
+                .HasMaxLength(255)
                 .IsRequired();
 
                 entity.Property(e => e.Created)
@@ -143,7 +147,7 @@ namespace PlacesDB.Models
                 entity.Property(e => e.Id)
                 .UseIdentityColumn();
 
-                entity.Property(e => e.Rating)
+                entity.Property(e => e.Like)
                 .IsRequired();
 
                 entity.Property(e => e.Comment)
@@ -236,6 +240,11 @@ namespace PlacesDB.Models
                 entity.Property(e => e.Name)
                 .HasMaxLength(32)
                 .IsRequired();
+
+                entity.HasOne(e => e.Country)
+                .WithMany(e => e.Cities)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
             });
         }
 

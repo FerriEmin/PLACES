@@ -22,9 +22,6 @@ namespace MauiAppTEST.ViewModel
         Task Navigation() => Shell.Current.GoToAsync(nameof(CityPage));
 
         [RelayCommand]
-        Task NavigateToDetailPage() => Shell.Current.GoToAsync(nameof(DetailPage));
-
-        [RelayCommand]
         Task NavigateToLoginPage() => Shell.Current.GoToAsync(nameof(LoginPage));
 
         [RelayCommand]
@@ -40,25 +37,25 @@ namespace MauiAppTEST.ViewModel
         Task NavigateToManageUsersPage() => Shell.Current.GoToAsync(nameof(ManageUsersPage));
 
         [RelayCommand]
+        Task NavigateToActivityPage() => Shell.Current.GoToAsync(nameof(ActivityPage));
+
+        [RelayCommand]
+        Task NavigateToMapPage() => Shell.Current.GoToAsync(nameof(MapPage));
+
+        [RelayCommand]
+        Task NavigateToActivityDetailsPage() => Shell.Current.GoToAsync(nameof(ActivityDetailsPage));
+
+        [RelayCommand]
+        Task NavigateToSettingsPage() => Shell.Current.GoToAsync(nameof(SettingsPage));
+
+        [RelayCommand]
+        Task NavigateToAddActivityPage() => Shell.Current.GoToAsync(nameof(AddActivityPage));
+
+        [RelayCommand]
+        public Task NavigateToSearchPage() => Shell.Current.GoToAsync(nameof(SearchPage));
+
+
+        [RelayCommand]
         Task Back() => Shell.Current.GoToAsync("..");
-
-        //[ObservableProperty]
-        //ObservableCollection<string> items;
-
-        //[ObservableProperty]
-        //string text;
-
-        //[RelayCommand]
-        //async Task Tap(string s)
-        //{
-        //    await Shell.Current.GoToAsync(nameof(CityPage));
-        //}
-
-        //void NavigationPages()
-        //{
-        //    Items = new ObservableCollection<string>();
-
-        //    Items.Add("MainPage");
-        //}
     }
 }

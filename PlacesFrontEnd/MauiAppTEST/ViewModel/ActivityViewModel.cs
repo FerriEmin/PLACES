@@ -1,55 +1,60 @@
-﻿using MauiAppTEST.TestData;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using MauiAppTEST.Models;
+using MauiAppTEST.Services;
+using MauiAppTEST.View;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace MauiAppTEST.ViewModel
 {
+    [QueryProperty(nameof(Country), nameof(Country))]
     public partial class ActivityViewModel : BaseViewModel
     {
-        public ObservableCollection<Activities> Activities { get; } = new();
+        public static Review rev { get; set; }
+
+        [ObservableProperty] Country country;
+        public ObservableCollection<Post> Activities { get; } = new();
 
         public ActivityViewModel()
         {
-            GetActivitiesAsync();
+            LoadActivites();
         }
-        void GetActivitiesAsync()
+
+        void LoadActivites()
         {
-            if (IsBusy)
+            var posts = PostServices.GetPosts();
+
+            foreach (var item in posts)
+                Activities.Add(item);
+        }
+
+        [RelayCommand]
+        async Task GoToActivityDetailsPageAsync(Post post)
+        {
+            if (post is null)
                 return;
 
-            try
+            float rating = default;
+            Review review = new Review();
+            var postList = PostServices.GetPosts();
+
+
+            foreach (var posts in postList)
             {
-                IsBusy = true;
-                //var cities = cityService.GetCities();
-
-                //if (cities.Count != 0)
-                //    cities.Clear();
-
-                //foreach (var city in cities)
-                //    Cities.Add(city);
-
-                List<Activities> activities = new List<Activities>()
+                if(post.Id == posts.Id)
+                foreach (var reviews in posts.Reviews)
                 {
-                new Activities(){ Name="Activity1"},
-                new Activities(){ Name="Activity2"},
-                new Activities(){ Name="Activity3"},
-                new Activities(){ Name="Activity4"},
-                 };
-
-                foreach (var activity in activities)
-                    Activities.Add(activity);
+                        review = reviews;
+                        rev = review;
+                    }
             }
-            catch (Exception ex)
+
+            await Shell.Current.GoToAsync($"{nameof(ActivityDetailsPage)}?Rating={rating}", true, new Dictionary<string, object>
             {
-                Debug.WriteLine(ex);
-                //await Shell.Current.DisplayAlert("Error!", $"unable to get monkeys: {ex.Message}", "OK");
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-
-
+                ["Post"] = post,
+                ["Review"] = review,
+            });
         }
     }
 }

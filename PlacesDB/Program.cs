@@ -7,27 +7,10 @@ namespace PlacesDB
     {
         static void Main(string[] args)
         {
-            using (var db = new Context())
-            {
-                var res = from user in db.Users
-                          select user;
-                res.ToList().ForEach(user =>
-                {
-                    Console.WriteLine("Enter Password: ");
-                    bool verified = Hasher.PasswordVerify(Console.ReadLine() ?? "null", user.Password);
-                    if (verified) 
-                    {
-                        Console.ForegroundColor = ConsoleColor.DarkGreen;
-                        Console.WriteLine("Right Password!"); 
-                    }
-                    else 
-                    {
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine("Wrong Password"); 
-                    }
-                    Console.ResetColor();
-                });
-            }
+            using var db = new Context();
+
+            var comment = db.Reviews.FirstOrDefault().Comment;
+            Console.WriteLine(comment);
         }
 
         private static void Test(int num)
@@ -69,6 +52,7 @@ namespace PlacesDB
                         LastName = lName,
                         UserGroup = 0,
                         Username = usn,
+                        ProfileImage = "",
                         Email= $"{fName}.{lName}@gmail.com",
                         Password = psw,
                         Created = DateTime.Now,

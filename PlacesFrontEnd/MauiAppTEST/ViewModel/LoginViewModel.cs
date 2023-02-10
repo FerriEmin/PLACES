@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MauiAppTEST.View;
-using MauiAppTEST.TestData;
+using MauiAppTEST.Models;
 using MauiAppTEST.Services;
 
 namespace MauiAppTEST.ViewModel
@@ -18,7 +18,7 @@ namespace MauiAppTEST.ViewModel
         async Task AuthenticateUser()
         {
             Console.WriteLine("Testar att logga in");
-            Console.WriteLine(user.UserName);
+           // Console.WriteLine(user.UserName);
             Console.WriteLine(user.FirstName);
 
             // Gör ett api-call

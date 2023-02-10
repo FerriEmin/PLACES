@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:MauiAppTEST.ViewModel"
+             xmlns:entry="clr-namespace:MauiAppTEST.CustomUI"
+             x:DataType="viewmodel:AddActivityViewModel"
+
+             x:Class="MauiAppTEST.View.AddActivityPage"
+             Shell.PresentationMode="ModalAnimated"
+             Title="Add Activity Page">
+    <VerticalStackLayout>
+
+        <VerticalStackLayout.Background>
+            <LinearGradientBrush EndPoint="0,1">
+                <GradientStop Color="#ECAE4A"
+                          Offset="0.1" />
+                <GradientStop Color="#042D97"
+                          Offset="1" />
+            </LinearGradientBrush>
+        </VerticalStackLayout.Background>
+
+        <Frame CornerRadius="20"  IsClippedToBounds="True" HeightRequest="200" WidthRequest="300" Margin="10">
+
+            <Image Source="ny.png" WidthRequest="300" HeightRequest="200" Aspect="AspectFill" />
+        </Frame>
+
+        <VerticalStackLayout Margin="30">
+            <VerticalStackLayout Margin="10">
+                <Frame CornerRadius="20" BackgroundColor="Bisque">
+                    <entry:CustomEntry 
+                        Text="CUSTOM"
+                        BackgroundColor="Bisque"
+                        Background="Bisque"
+                    />
+                </Frame>
+
+                <Frame CornerRadius="20" BackgroundColor="red">
+                    <entry:CustomEntry 
+                        Text="CUSTOM"
+                        BackgroundColor="red"
+                        Background="red"
+                    />
+                </Frame>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+
+        <Button Text="Add event"/>
+
+
+
+    </VerticalStackLayout>
+</ContentPage>

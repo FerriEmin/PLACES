@@ -51,6 +51,7 @@ namespace PlacesBackEnd.CRUD
                     UserGroup = 0,
                     FirstName = userDTO.FirstName,
                     LastName = userDTO.LastName,
+                    ProfileImage= userDTO.ProfileImage,
                     Email = userDTO.Email,
                     Username = userDTO.Username,
                     Password = Hasher.HashPassword(userDTO.Password, Hasher.GenerateSalt()),
@@ -116,9 +117,31 @@ namespace PlacesBackEnd.CRUD
             }
         }
 
+        public static async Task<IResult> UpdatePassword(UserPasswordDTO details)
+        {
+            try
+            {
+                using var db = new Context();
+                if( await db.Users.Where(x => x.Id == details.userId).FirstOrDefaultAsync() is User user)
+                {
+                    // Verify password
+                    if (!Hasher.PasswordVerify(details.currentPassword, user.Password))
+                        return TypedResults.Unauthorized();
+
+                    user.Password = Hasher.HashPassword(details.newPassword, Hasher.GenerateSalt());
+                    await db.SaveChangesAsync();
+                    return TypedResults.Ok();
+
+                }
+                return TypedResults.StatusCode(404);
+            }
+            catch (Exception)
+            {
+                return TypedResults.StatusCode(500);
+            }
+        }
 
         // Helper methods
-
         private static async Task<bool> UsernameTaken(string username)
         {
             try

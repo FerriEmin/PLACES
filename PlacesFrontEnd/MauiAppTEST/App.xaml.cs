@@ -1,7 +1,13 @@
-﻿namespace MauiAppTEST;
-
+﻿
 using MauiAppTEST.Services;
-using MauiAppTEST.TestData;
+using MauiAppTEST.Models;
+using MauiAppTEST.View;
+using MauiAppTEST.CustomUI;
+using Microsoft.Maui.Platform;
+using Microsoft.Maui.Handlers;
+
+
+namespace MauiAppTEST;
 
 public partial class App : Application
 {
@@ -11,9 +17,10 @@ public partial class App : Application
 
         GlobalService.user = new()
         {
-            UserName = "MonaLisa",
+            Username = "MonaLisa",
             FirstName = "Mona",
             LastName = "Lisa",
+            Id = 123,
             DateOfBirth = new DateTime(1980, 12, 11),
         };
 
