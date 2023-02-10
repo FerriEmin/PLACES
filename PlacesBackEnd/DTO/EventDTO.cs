@@ -1,4 +1,5 @@
-﻿using PlacesDB.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PlacesDB.Models;
 
 namespace PlacesBackEnd.DTO
 {
@@ -29,7 +30,6 @@ namespace PlacesBackEnd.DTO
                                  join c in db.Cities on l.City.Id equals c.Id
                                  join r in db.Countries on c.Country.Id equals r.Id
                                  select new { l.Name, l.Address, l.Latitude, l.Longitude, l.City }).FirstOrDefault();
-
                 var likes = comments.Where(x => x.Like == true).Count();
 
                 Title = @event.Title;
@@ -38,8 +38,8 @@ namespace PlacesBackEnd.DTO
                 Planned = @event.Planned;
                 Likes = likes;
                 Comments = comments.Select(x => (x.Username, x.Comment, x.Like)).ToList();
-
-                Location = new LocationDTO();
+                Location = new LocationDTO(new Location() { Name = locations.Name, Address = locations.Address, Latitude = locations.Latitude, Longitude = locations.Longitude, City = new City() { Name = locations.City.Name, Country = new Country() { Name = locations.City.Country.Name } } });
+                
             }
         }
     }
