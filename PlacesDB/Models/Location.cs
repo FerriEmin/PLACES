@@ -15,9 +15,9 @@ namespace PlacesDB.Models
         public decimal Longitude { get; set; }
 
         // Relations
-        public virtual Country Country { get; set; }
-        public virtual City City { get; set; }
-        public virtual ICollection<Event> Events { get; set; }
+        public virtual Country? Country { get; set; }
+        public virtual City? City { get; set; }
+        public virtual ICollection<Event>? Events { get; set; }
 
 
 

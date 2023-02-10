@@ -13,7 +13,7 @@ namespace PlacesDB.Models
         public string CountryCode { get; set; }
 
         // Relations
-        public virtual ICollection<City> Cities { get; set; }
-        public virtual ICollection<Location> Locations { get; set; }
+        public virtual ICollection<City>? Cities { get; set; }
+        public virtual ICollection<Location>? Locations { get; set; }
     }
 }

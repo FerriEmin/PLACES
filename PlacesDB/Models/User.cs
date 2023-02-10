@@ -14,12 +14,12 @@ namespace PlacesDB.Models
         public string Email { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public DateTime Created { get; set; } = DateTime.Now;
+        public DateTime? DateOfBirth { get; set; }
+        public DateTime? Created { get; set; } = DateTime.Now;
 
         // Relations
-        public virtual ICollection<Token> Tokens { get; set; }
-        public virtual ICollection<Event> Events { get; set; }
-        public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<Token>? Tokens { get; set; }
+        public virtual ICollection<Event>? Events { get; set; }
+        public virtual ICollection<Review>? Reviews { get; set; }
     }
 }
