@@ -12,7 +12,6 @@ using System.Text;
 var corsPolicy = "_myCorsPolicy";
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: corsPolicy,
@@ -51,7 +50,6 @@ builder.Services.AddSwaggerGen(options => {
                 }
             });
 });
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters()
@@ -66,7 +64,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
     };
 });
-
 builder.Services.AddAuthorization();
 
 var app = builder.Build();

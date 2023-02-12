@@ -16,34 +16,32 @@ namespace PlacesBackEnd
                 return TypedResults.Unauthorized();
 
             // Check that user exist
-            using (var db = new Context())
-            {
-                var user = await db.Users.Where(x => x.Username.Equals(credentials.Username)).FirstOrDefaultAsync();
+            using var db = new Context();
+            var user = await db.Users.Where(x => x.Username.Equals(credentials.Username)).FirstOrDefaultAsync();
 
-                if (user is null) return TypedResults.Unauthorized();
+            if (user is null) return TypedResults.Unauthorized();
 
-                // Verify password
-                if (!Hasher.PasswordVerify(credentials.Password, user.Password))
-                    return TypedResults.Unauthorized();
+            // Verify password
+            if (!Hasher.PasswordVerify(credentials.Password, user.Password))
+                return TypedResults.Unauthorized();
 
-                // Issue a JWT
-                var claims = new[] { new Claim("userId", user.Id.ToString()) };
+            // Issue a token
+            var claims = new[] { new Claim("userId", user.Id.ToString()) };
 
-                var token = new JwtSecurityToken
-                    (
-                        issuer: builder.Configuration["Jwt:Issuer"],
-                        audience: builder.Configuration["Jwt:Audience"],
-                        claims: claims,
-                        expires: DateTime.UtcNow.AddMinutes(30),
-                        notBefore: DateTime.UtcNow,
-                        signingCredentials: new SigningCredentials(
-                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
-                            SecurityAlgorithms.HmacSha256)
-                    );
+            var token = new JwtSecurityToken
+                (
+                    issuer: builder.Configuration["Jwt:Issuer"],
+                    audience: builder.Configuration["Jwt:Audience"],
+                    claims: claims,
+                    expires: DateTime.UtcNow.AddMinutes(30),
+                    notBefore: DateTime.UtcNow,
+                    signingCredentials: new SigningCredentials(
+                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+                        SecurityAlgorithms.HmacSha256)
+                );
 
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-                return TypedResults.Ok(new { token = tokenString });
-            }
+            return TypedResults.Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+
         }
 
         public static User GetUserFromIdentity(HttpContext httpContext)
