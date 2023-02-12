@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using PlacesBackEnd.DTO;
 using PlacesDB.Models;
 
@@ -6,33 +8,28 @@ namespace PlacesBackEnd.CRUD
 {
     public class ReviewCRUD
     {
-        public static async Task<IResult> CreateReview(ReviewDTO reviewDTO, int userId, int eventId)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public static async Task<IResult> CreateReview(ReviewDTO reviewDTO, int eventId, HttpContext httpContext)
         {
+            var user = Auth.GetUserFromIdentity(httpContext);
 
-            using (var db = new Context())
+            // Check that user exist
+            if (user is null) return TypedResults.NotFound(new { msg = "User not found!" });
+
+            using var db = new Context();
+            var eventRes = await db.Events.Where(x => x.Id == eventId).FirstOrDefaultAsync();
+            if (eventRes == null) return TypedResults.NotFound("No event matches that id");
+
+            await db.AddAsync(new Review()
             {
-                var userRes = await db.Users.Where(x => x.Id == userId).FirstOrDefaultAsync();
-                if (userRes == null) 
-                    return TypedResults.NotFound("U are not logged in");
+                Like = reviewDTO.Like,
+                Comment = reviewDTO.Comment,
+                Event = eventRes,
+                User = user
 
-
-                var eventRes = await db.Events.Where(x => x.Id == eventId).FirstOrDefaultAsync();
-                if (eventRes == null)
-                    return TypedResults.NotFound("No event matches that id");
-
-                await db.AddAsync(new Review()
-                {
-                    Like = reviewDTO.Like,
-                    Comment= reviewDTO.Comment,
-                    Event = eventRes,
-                    User= userRes
-                    
-                });
-                await db.SaveChangesAsync();
-
-                return TypedResults.Ok(new { message = "Created!" });
-            }
-
+            });
+            await db.SaveChangesAsync();
+            return TypedResults.Ok();
         }
 
 

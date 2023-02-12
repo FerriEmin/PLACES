@@ -2,6 +2,8 @@
 using PlacesDB.Models;
 using PlacesDB;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PlacesBackEnd.CRUD
 {
@@ -40,6 +42,7 @@ namespace PlacesBackEnd.CRUD
             }
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public static async Task<IResult> CreateCity(CityDTO cityDTO)
         {
             try
@@ -53,7 +56,7 @@ namespace PlacesBackEnd.CRUD
                     db.Cities.Add(city);
                     await db.SaveChangesAsync();
 
-                    return TypedResults.Created($"/user/{city.Id}", cityDTO);
+                    return TypedResults.Created($"/cities/{city.Id}", cityDTO);
 
                 }
             }
@@ -65,7 +68,7 @@ namespace PlacesBackEnd.CRUD
 
         }
 
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public static async Task<IResult> UpdateCity(int id, CityDTO cityDTO)
         {
             try
@@ -90,6 +93,7 @@ namespace PlacesBackEnd.CRUD
 
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public static async Task<IResult> DeleteCity(int id)
         {
             try

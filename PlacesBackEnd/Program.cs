@@ -91,7 +91,6 @@ RouteGroupBuilder auth = app.MapGroup("/auth");
 auth.MapPost("/login", async (UserLoginDTO details) => { return await Auth.Login(details, builder); });
 
 // USER ENDPOINTS
-
 RouteGroupBuilder users = app.MapGroup("/users");
 users.MapGet("/", UserCRUD.GetAllUsers).RequireAuthorization();
 users.MapGet("/{id}", UserCRUD.GetUserById);

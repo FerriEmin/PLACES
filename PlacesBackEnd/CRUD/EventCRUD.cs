@@ -1,12 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using PlacesBackEnd.DTO;
 using PlacesDB.Models;
-using PlacesDB;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Numerics;
 
 namespace PlacesBackEnd.CRUD
 {
@@ -39,8 +35,6 @@ namespace PlacesBackEnd.CRUD
 
         }
 
-
-
         public static async Task<IResult> GetEventById(int id)
         {
             try
@@ -60,139 +54,143 @@ namespace PlacesBackEnd.CRUD
             }
         }
 
-        public static async Task<IResult> CreateEvent(EventDTO eventDTO, int userId)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public static async Task<IResult> CreateEvent(EventDTO eventDTO, HttpContext httpContext)
         {
+            using (var db = new Context())
+            {
+                var user = Auth.GetUserFromIdentity(httpContext);
 
-                using (var db = new Context())
+                // Check that user exist
+                if (user is null) return TypedResults.NotFound(new { msg = "User not found!" });
+
+                Country countryToUse;
+                City cityToUse;
+
+                //Check if countryname exists in DB
+                //True: return existing country
+                //False: Create new Country and it
+
+
+                Country? countryRes = await db.Countries.FirstOrDefaultAsync(x => x.Name == eventDTO.Location.City.Country.Name);
+
+                if (countryRes == null)
                 {
-                    // Hard coded to always use this user
-                    //var user = await db.Users.Where(x => x.Id == 1).FirstOrDefaultAsync();
-
-                    var userRes = await db.Users.FirstOrDefaultAsync(x => x.Id == userId);
-                    if (userRes == null)
-                        return TypedResults.NotFound("No user found");
-
-                    Country countryToUse;
-                    City cityToUse;
-
-                    //Check if countryname exists in DB
-                    //True: return existing country
-                    //False: Create new Country and it
-
-
-                    Country? countryRes = await db.Countries.FirstOrDefaultAsync(x => x.Name == eventDTO.Location.City.Country.Name);
-
-                    if (countryRes == null)
+                    Country newCountry = new Country()
                     {
-                        Country newCountry = new Country()
-                        {
-                            Name = eventDTO.Location.City.Country.Name,
-                            CountryCode = eventDTO.Location.City.Country.CountryCode
-                        };
-
-                        var addedCountry = await db.Countries.AddAsync(newCountry);
-                        await db.SaveChangesAsync();
-                        countryToUse = addedCountry.Entity;
-                    }
-                    else
-                    {
-                        countryToUse = countryRes;
-                    }
-
-
-                    //Check if cityname exists in DB
-                    //True: return existing City
-                    //False: Create new City and return it
-                    City? cityRes = await db.Cities.FirstOrDefaultAsync(x => x.Name == eventDTO.Location.City.Name);
-
-                    if (cityRes == null)
-                    {
-                        City newCity = new City()
-                        {
-                            Name = eventDTO.Location.City.Name,
-                            Country = countryToUse
-                        };
-
-                        var addedCity = await db.Cities.AddAsync(newCity);
-                        await db.SaveChangesAsync();
-                        cityToUse = addedCity.Entity;
-                    }
-                    else
-                    {
-                        cityToUse = cityRes;
-                    }
-
-
-                    var location = new Location()
-                    {
-                        Name = eventDTO.Location.Name,
-                        Address = eventDTO.Location.Address,
-                        Latitude = eventDTO.Location.Latitude,
-                        Longitude = eventDTO.Location.Longitude,
-                        Country = countryToUse,
-                        City = cityToUse,
+                        Name = eventDTO.Location.City.Country.Name,
+                        CountryCode = eventDTO.Location.City.Country.CountryCode
                     };
 
-                    var loc = await db.Locations.AddAsync(location);
-
+                    var addedCountry = await db.Countries.AddAsync(newCountry);
                     await db.SaveChangesAsync();
-
-                    var newloc = loc.Entity;
-
-
-
-                    if (userRes == null || location == null)
-                        return TypedResults.NotFound("No user or location found");
-
-                    Category cat = new Category()
-                    {
-                        Name = "cat"
-                    };
-
-                    var category = await db.Categories.AddAsync(cat);
-                    await db.SaveChangesAsync();
-                    var newcat = category.Entity;
-
-
-                    var _event = new Event
-                    {
-                        Title = eventDTO.Title,
-                        Description = eventDTO.Description,
-                        Image = eventDTO.Image,
-                        Planned = eventDTO.Planned,
-                        Location = newloc,
-                        User = userRes,
-                        Category = newcat
-                    };
-
-                    await db.Events.AddAsync(_event);
-
-                    await db.SaveChangesAsync();
-
-                    return TypedResults.Ok();
+                    countryToUse = addedCountry.Entity;
                 }
+                else
+                {
+                    countryToUse = countryRes;
+                }
+
+
+                //Check if cityname exists in DB
+                //True: return existing City
+                //False: Create new City and return it
+                City? cityRes = await db.Cities.FirstOrDefaultAsync(x => x.Name == eventDTO.Location.City.Name);
+
+                if (cityRes == null)
+                {
+                    City newCity = new City()
+                    {
+                        Name = eventDTO.Location.City.Name,
+                        Country = countryToUse
+                    };
+
+                    var addedCity = await db.Cities.AddAsync(newCity);
+                    await db.SaveChangesAsync();
+                    cityToUse = addedCity.Entity;
+                }
+                else
+                {
+                    cityToUse = cityRes;
+                }
+
+
+                var location = new Location()
+                {
+                    Name = eventDTO.Location.Name,
+                    Address = eventDTO.Location.Address,
+                    Latitude = eventDTO.Location.Latitude,
+                    Longitude = eventDTO.Location.Longitude,
+                    Country = countryToUse,
+                    City = cityToUse,
+                };
+
+                var loc = await db.Locations.AddAsync(location);
+
+                await db.SaveChangesAsync();
+
+                var newloc = loc.Entity;
+
+
+
+                if (location == null)
+                    return TypedResults.NotFound("Location not found");
+
+                Category cat = new Category()
+                {
+                    Name = "cat"
+                };
+
+                var category = await db.Categories.AddAsync(cat);
+                await db.SaveChangesAsync();
+                var newcat = category.Entity;
+
+
+                var _event = new Event
+                {
+                    Title = eventDTO.Title,
+                    Description = eventDTO.Description,
+                    Image = eventDTO.Image,
+                    Planned = eventDTO.Planned,
+                    Location = newloc,
+                    User = user,
+                    Category = newcat
+                };
+
+                await db.Events.AddAsync(_event);
+
+                await db.SaveChangesAsync();
+
+                return TypedResults.Ok();
+            }
 
         }
 
-
-        public static async Task<IResult> UpdateEvent(int id, EventDTO eventDTO)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public static async Task<IResult> UpdateEvent(int id, EventDTO eventDTO, HttpContext httpContext)
         {
             try
             {
-                using (var db = new Context())
-                {
-                    var _event = await db.Events.FindAsync(id);
+                var user = Auth.GetUserFromIdentity(httpContext);
 
-                    if (_event is null) return TypedResults.NotFound();
+                // Check that user exist
+                if (user is null) return TypedResults.NotFound(new { msg = "User not found!" });
 
-                    _event.Title = eventDTO.Title == "string" ? _event.Title : eventDTO.Title;
-                    _event.Description = eventDTO.Description == "string" ? _event.Description : eventDTO.Description;
+                using var db = new Context();
+                var _event = await db.Events.FindAsync(id);
 
-                    await db.SaveChangesAsync();
+                if (_event is null) return TypedResults.NotFound();
 
-                    return TypedResults.NoContent();
-                }
+                // Only admins and creator of the event can edit
+                if (user.UserGroup == 0 && user.Id != _event.User.Id)
+                        return TypedResults.Unauthorized();
 
+                _event.Title = eventDTO.Title == "string" ? _event.Title : eventDTO.Title;
+                _event.Description = eventDTO.Description == "string" ? _event.Description : eventDTO.Description;
+
+                await db.SaveChangesAsync();
+
+                return TypedResults.Ok();
             }
             catch (Exception)
             {
@@ -201,28 +199,35 @@ namespace PlacesBackEnd.CRUD
 
         }
 
-        public static async Task<IResult> DeleteEvent(int id)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public static async Task<IResult> DeleteEvent(int id, HttpContext httpContext)
         {
             try
             {
-                using (var db = new Context())
-                {
-                    if (await db.Events.FindAsync(id) is Event _event)
-                    {
-                        db.Events.Remove(_event);
-                        await db.SaveChangesAsync();
-                        return TypedResults.Ok(_event);
-                    }
-                    return TypedResults.NotFound();
-                }
+                var user = Auth.GetUserFromIdentity(httpContext);
 
+                // Check that user exist
+                if (user is null) return TypedResults.NotFound(new { msg = "User not found!" });
+
+                using var db = new Context();
+                if (await db.Events.FindAsync(id) is Event _event)
+                {
+                    // Only admins and creator of the event can delete
+                    if (user.UserGroup == 0 && user.Id != _event.User.Id)
+                        return TypedResults.Unauthorized();
+
+                    db.Events.Remove(_event);
+                    await db.SaveChangesAsync();
+                    return TypedResults.Ok(_event);
+                }
+                return TypedResults.NotFound();
             }
             catch (Exception)
             {
                 return TypedResults.StatusCode(500);
             }
-
         }
+        
         // Specific handlers
         public static async Task<IResult> GetEventsByLocationId(int id)
         {

@@ -2,6 +2,8 @@
 using PlacesDB.Models;
 using PlacesDB;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PlacesBackEnd.CRUD
 {
@@ -24,7 +26,6 @@ namespace PlacesBackEnd.CRUD
 
         }
 
-
         public static async Task<IResult> GetLocationById(int id)
         {
             try
@@ -45,6 +46,7 @@ namespace PlacesBackEnd.CRUD
 
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public static async Task<IResult> CreateLocation(LocationDTO locationDTO)
         {
             try
@@ -68,11 +70,9 @@ namespace PlacesBackEnd.CRUD
             {
                 return TypedResults.StatusCode(500);
             }
-
-
         }
 
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public static async Task<IResult> UpdateLocation(int id, LocationDTO locationDTO)
         {
             try
@@ -99,6 +99,7 @@ namespace PlacesBackEnd.CRUD
             }
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public static async Task<IResult> DeleteLocation(int id)
         {
             try

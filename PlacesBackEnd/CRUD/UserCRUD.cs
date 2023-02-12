@@ -128,23 +128,27 @@ namespace PlacesBackEnd.CRUD
             }
         }
 
-        public static async Task<IResult> UpdatePassword(UserPasswordDTO details)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public static async Task<IResult> UpdatePassword(UserPasswordDTO details, HttpContext httpContext)
         {
             try
             {
+                var user = Auth.GetUserFromIdentity(httpContext);
+
+                // Check that user exist
+                if (user is null) return TypedResults.NotFound(new { msg = "User not found!" });
+
+                // Only owner of account can change password
+                if (user.Id != details.userId) return TypedResults.Unauthorized();
+
+                // Verify password
+                if (!Hasher.PasswordVerify(details.currentPassword, user.Password))
+                    return TypedResults.Unauthorized();
+
                 using var db = new Context();
-                if( await db.Users.Where(x => x.Id == details.userId).FirstOrDefaultAsync() is User user)
-                {
-                    // Verify password
-                    if (!Hasher.PasswordVerify(details.currentPassword, user.Password))
-                        return TypedResults.Unauthorized();
-
-                    user.Password = Hasher.HashPassword(details.newPassword, Hasher.GenerateSalt());
-                    await db.SaveChangesAsync();
-                    return TypedResults.Ok();
-
-                }
-                return TypedResults.StatusCode(404);
+                user.Password = Hasher.HashPassword(details.newPassword, Hasher.GenerateSalt());
+                await db.SaveChangesAsync();
+                return TypedResults.Ok();
             }
             catch (Exception)
             {
@@ -162,7 +166,6 @@ namespace PlacesBackEnd.CRUD
 
                 if (!await db.Users.Where(x => x.Username == username).AnyAsync())
                     return false;
-
             }
             catch (Exception ex) { }
 

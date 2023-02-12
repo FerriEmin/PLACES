@@ -2,6 +2,8 @@
 using PlacesDB.Models;
 using PlacesDB;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PlacesBackEnd.CRUD
 {
@@ -25,7 +27,6 @@ namespace PlacesBackEnd.CRUD
 
         }
 
-
         public static async Task<IResult> GetCategoryById(int id)
         {
             try
@@ -47,6 +48,7 @@ namespace PlacesBackEnd.CRUD
 
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public static async Task<IResult> CreateCategory(CategoryDTO categoryDTO)
         {
             try
@@ -70,7 +72,7 @@ namespace PlacesBackEnd.CRUD
 
         }
 
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public static async Task<IResult> UpdateCategory(int id, CategoryDTO categoryDTO)
         {
             try
@@ -95,6 +97,7 @@ namespace PlacesBackEnd.CRUD
 
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public static async Task<IResult> DeleteCategory(int id)
         {
             try
