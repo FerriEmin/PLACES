@@ -4,6 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using PlacesBackEnd;
 using PlacesBackEnd.CRUD;
 using PlacesBackEnd.DTO;
+using PlacesDB.Models;
+using System.Security.Claims;
 using System.Text;
 
 
@@ -64,8 +66,6 @@ app.UseHttpsRedirection();
 // Authentication Endpoints
 RouteGroupBuilder auth = app.MapGroup("/auth");
 auth.MapPost("/login", async (UserLoginDTO details) => { return await Auth.Login(details, builder); });
-auth.MapGet("/tokentest/{id}", [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)] (int id) => { TypedResults.Ok(new { msg = "Authenticated" }); });
-
 
 // USER ENDPOINTS
 RouteGroupBuilder users = app.MapGroup("/users");

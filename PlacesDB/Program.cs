@@ -7,7 +7,7 @@ namespace PlacesDB
     {
         static void Main(string[] args)
         {
-            BuildDatabase();
+            Console.WriteLine(Hasher.HashPassword("password", Hasher.GenerateSalt()));
         }
 
         private static void Test(int num)

@@ -1,7 +1,8 @@
-﻿using PlacesBackEnd.DTO;
-using PlacesDB.Models;
-using PlacesDB;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using PlacesBackEnd.DTO;
+using PlacesDB.Models;
 
 namespace PlacesBackEnd.CRUD
 {
@@ -13,8 +14,8 @@ namespace PlacesBackEnd.CRUD
             {
                 using var db = new Context();
                 return TypedResults.Ok(await db.Users.Select(x => new UserDTO(x)).ToListAsync());
-            } 
-            catch (Exception ex) 
+            }
+            catch (Exception ex)
             {
                 return TypedResults.StatusCode(500);
             }
@@ -45,13 +46,14 @@ namespace PlacesBackEnd.CRUD
                 using var db = new Context();
 
                 if (await UsernameTaken(userDTO.Username))
-                    return TypedResults.BadRequest(new {msg = "Username already taken!"});
+                    return TypedResults.BadRequest(new { msg = "Username already taken!" });
 
-                await db.AddAsync(new User() {
+                await db.AddAsync(new User()
+                {
                     UserGroup = 0,
                     FirstName = userDTO.FirstName,
                     LastName = userDTO.LastName,
-                    ProfileImage= userDTO.ProfileImage,
+                    ProfileImage = userDTO.ProfileImage,
                     Email = userDTO.Email,
                     Username = userDTO.Username,
                     Password = Hasher.HashPassword(userDTO.Password, Hasher.GenerateSalt()),
@@ -61,7 +63,7 @@ namespace PlacesBackEnd.CRUD
 
                 await db.SaveChangesAsync();
 
-                return TypedResults.Ok(new {message = "Created!"});
+                return TypedResults.Ok(new { message = "Created!" });
             }
             catch (Exception ex)
             {
@@ -69,19 +71,24 @@ namespace PlacesBackEnd.CRUD
             }
         }
 
-        public static async Task<IResult> UpdateUser(int id, UserDTO userDTO)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public static async Task<IResult> UpdateUser(int id, UserDTO userDTO, HttpContext httpContext)
         {
             try
             {
-                using var db = new Context();
-                var user = await db.Users.FindAsync(id);
+                var user = Auth.GetUserFromIdentity(httpContext);
 
                 // Check that user exist
-                if (user is null) return TypedResults.NotFound(new {msg = "User not found!"});
+                if (user is null) return TypedResults.NotFound(new { msg = "User not found!" });
+
+                // Only admin can edit any user
+                if (user.UserGroup == 0 && user.Id != id) return TypedResults.Unauthorized();
 
                 // Check username
                 if (await UsernameTaken(userDTO.Username))
                     return TypedResults.BadRequest(new { msg = "Username already taken!" });
+
+                using var db = new Context();
 
                 user.FirstName = userDTO.FirstName;
                 user.LastName = userDTO.LastName;
@@ -89,8 +96,7 @@ namespace PlacesBackEnd.CRUD
                 user.Email = userDTO.Email;
 
                 await db.SaveChangesAsync();
-
-                    return TypedResults.Ok(new { msg = "User updated!" });
+                return TypedResults.Ok(new { msg = "User updated!" });
             }
             catch (Exception ex)
             {
@@ -98,28 +104,31 @@ namespace PlacesBackEnd.CRUD
             }
         }
 
-        public static async Task<IResult> DeleteUser(int id)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public static async Task<IResult> DeleteUser(int id, HttpContext httpContext)
         {
             try
             {
+                var user = Auth.GetUserFromIdentity(httpContext);
+
+                // Check that user exist
+                if (user is null) return TypedResults.NotFound(new { msg = "User not found!" });
+
+                // Only admin can delete any user
+                if (user.UserGroup == 0 && user.Id != id) return TypedResults.Unauthorized();
+
                 using var db = new Context();
-                if (await db.Users.FindAsync(id) is User user)
-                {
-                    db.Users.Remove(user);
-                    await db.SaveChangesAsync();
-                    return TypedResults.Ok(user);
-                }
-                return TypedResults.NotFound();
+                db.Users.Remove(user);
+                await db.SaveChangesAsync();
+                return TypedResults.Ok(user);
             }
             catch (Exception ex)
             {
                 return TypedResults.StatusCode(500);
             }
         }
-
-
+        
         // Helper methods
-
         private static async Task<bool> UsernameTaken(string username)
         {
             try
@@ -131,7 +140,7 @@ namespace PlacesBackEnd.CRUD
                     return false;
 
             }
-            catch (Exception ex) {}
+            catch (Exception ex) { }
 
             return true;
         }
