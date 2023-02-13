@@ -60,9 +60,10 @@ namespace PlacesBackEnd.CRUD
             using (var db = new Context())
             {
                 var user = Auth.GetUserFromIdentity(httpContext);
+                var newUser = await db.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
 
                 // Check that user exist
-                if (user is null) return TypedResults.NotFound(new { msg = "User not found!" });
+                if (newUser is null) return TypedResults.NotFound(new { msg = "User not found!" });
 
                 Country countryToUse;
                 City cityToUse;
@@ -70,8 +71,6 @@ namespace PlacesBackEnd.CRUD
                 //Check if countryname exists in DB
                 //True: return existing country
                 //False: Create new Country and it
-
-
                 Country? countryRes = await db.Countries.FirstOrDefaultAsync(x => x.Name == eventDTO.Location.City.Country.Name);
 
                 if (countryRes == null)
@@ -131,8 +130,6 @@ namespace PlacesBackEnd.CRUD
 
                 var newloc = loc.Entity;
 
-
-
                 if (location == null)
                     return TypedResults.NotFound("Location not found");
 
@@ -153,7 +150,7 @@ namespace PlacesBackEnd.CRUD
                     Image = eventDTO.Image,
                     Planned = eventDTO.Planned,
                     Location = newloc,
-                    User = user,
+                    User = newUser,
                     Category = newcat
                 };
 
