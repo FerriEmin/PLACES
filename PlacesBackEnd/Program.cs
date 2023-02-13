@@ -97,7 +97,7 @@ auth.MapGet("/tokentest/{id}",
 
 RouteGroupBuilder users = app.MapGroup("/users");
 users.MapGet("/", UserCRUD.GetAllUsers).RequireAuthorization();
-users.MapGet("/userId", UserCRUD.GetUserById);
+users.MapGet("/userId/{id}", UserCRUD.GetUserById);
 users.MapPost("/", UserCRUD.CreateUser);
 users.MapPut("/{id}", UserCRUD.UpdateUser);
 users.MapPut("/password", UserCRUD.UpdatePassword);
@@ -117,7 +117,7 @@ RouteGroupBuilder events = app.MapGroup("/events");
 events.MapGet("/", EventCRUD.GetAllEvents);
 events.MapGet("/{id}", EventCRUD.GetEventById);
 events.MapGet("/location/{locationid}", EventCRUD.GetEventsByLocationId);
-events.MapGet("/user/{userId}", EventCRUD.GetEventsByUserId);
+events.MapGet("/user/{id}", EventCRUD.GetEventsByUserId);
 events.MapPost("/", EventCRUD.CreateEvent);
 events.MapPut("/{id}", EventCRUD.UpdateEvent);
 events.MapDelete("/{id}", EventCRUD.DeleteEvent);

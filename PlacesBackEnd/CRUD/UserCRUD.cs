@@ -23,15 +23,18 @@ namespace PlacesBackEnd.CRUD
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public static async Task<IResult> GetUserById(HttpContext httpContext, int userId)
+        public static async Task<IResult> GetUserById(int id, HttpContext httpContext)
         {
             using (var db = new Context())
             {
                 var userAuth = Auth.GetUserFromIdentity(httpContext);
-                userId = userAuth.Id;
 
-                return await db.Users.FindAsync(userId) is User user ? TypedResults.Ok(new UserDTO(user)) : TypedResults.NotFound("User not found");
+                if(userAuth.Id == id)
+                {
+                    return TypedResults.Ok(new UserDTO(userAuth));
+                }
 
+                return TypedResults.Unauthorized();
             }
 
         }
