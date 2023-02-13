@@ -109,7 +109,7 @@ cities.MapDelete("/{id}", CityCRUD.DeleteCity);
 RouteGroupBuilder events = app.MapGroup("/events");
 events.MapGet("/", EventCRUD.GetAllEvents);
 events.MapGet("/{id}", EventCRUD.GetEventById);
-events.MapGet("/location/{locationid}", EventCRUD.GetEventsByLocationId);
+events.MapGet("/location/{id}", EventCRUD.GetEventsByLocationId);
 events.MapGet("/user/{userId}", EventCRUD.GetEventsByUserId);
 events.MapPost("/", EventCRUD.CreateEvent);
 events.MapPut("/{id}", EventCRUD.UpdateEvent);
