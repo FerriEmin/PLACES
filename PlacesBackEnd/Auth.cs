@@ -14,12 +14,14 @@ namespace PlacesBackEnd
         {
             if (credentials.Username.IsNullOrEmpty() || credentials.Password.IsNullOrEmpty())
                 return TypedResults.Unauthorized();
+            
 
             // Check that user exist
             using var db = new Context();
             var user = await db.Users.Where(x => x.Username.Equals(credentials.Username)).FirstOrDefaultAsync();
 
             if (user is null) return TypedResults.Unauthorized();
+
 
             // Verify password
             if (!Hasher.PasswordVerify(credentials.Password, user.Password))
@@ -40,7 +42,7 @@ namespace PlacesBackEnd
                         SecurityAlgorithms.HmacSha256)
                 );
 
-            return TypedResults.Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+            return TypedResults.Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token), userId = user.Id });
 
         }
 
