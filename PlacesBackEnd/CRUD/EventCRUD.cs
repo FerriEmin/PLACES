@@ -35,22 +35,23 @@ namespace PlacesBackEnd.CRUD
 
         }
 
-        public static async Task<IResult> GetEventById(int id)
+        public static async Task<IResult> GetEventById(int eventId)
         {
-            try
+            using (var db = new Context())
             {
-                using (var db = new Context())
-                {
-                    return await db.Events.FindAsync(id)
-                        is Event _event
-                            ? TypedResults.Ok(new EventDTO(_event))
-                            : TypedResults.NotFound();
-                }
+                var @event = db.Events
+                    .Include(e => e.User)
+                    .Include(e => e.Category)
+                    .Include(e => e.Location)
+                    .Include(e => e.Location.City)
+                    .Include(e => e.Location.City.Country)
+                    .Include(e => e.Location.Country)
+                    .Include(e => e.Reviews).ToList().Where(x => x.Id == eventId).Select(e => new EventDTO(e)).ToList();
 
-            }
-            catch (Exception)
-            {
-                return TypedResults.StatusCode(500);
+                if (@event.Count == 0 || @event == null)
+                    return TypedResults.NotFound("No Event found");
+
+                return TypedResults.Ok(@event);
             }
         }
 
