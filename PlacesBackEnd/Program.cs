@@ -97,7 +97,7 @@ auth.MapGet("/tokentest/{id}",
 
 RouteGroupBuilder users = app.MapGroup("/users");
 users.MapGet("/", UserCRUD.GetAllUsers).RequireAuthorization();
-users.MapGet("/{id}", UserCRUD.GetUserById);
+users.MapGet("/userId", UserCRUD.GetUserById);
 users.MapPost("/", UserCRUD.CreateUser);
 users.MapPut("/{id}", UserCRUD.UpdateUser);
 users.MapPut("/password", UserCRUD.UpdatePassword);
