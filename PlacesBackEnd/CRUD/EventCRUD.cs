@@ -35,22 +35,23 @@ namespace PlacesBackEnd.CRUD
 
         }
 
-        public static async Task<IResult> GetEventById(int id)
+        public static async Task<IResult> GetEventById(int eventId)
         {
-            try
+            using (var db = new Context())
             {
-                using (var db = new Context())
-                {
-                    return await db.Events.FindAsync(id)
-                        is Event _event
-                            ? TypedResults.Ok(new EventDTO(_event))
-                            : TypedResults.NotFound();
-                }
+                var @event = db.Events
+                    .Include(e => e.User)
+                    .Include(e => e.Category)
+                    .Include(e => e.Location)
+                    .Include(e => e.Location.City)
+                    .Include(e => e.Location.City.Country)
+                    .Include(e => e.Location.Country)
+                    .Include(e => e.Reviews).ToList().Where(x => x.Id == eventId).Select(e => new EventDTO(e)).ToList();
 
-            }
-            catch (Exception)
-            {
-                return TypedResults.StatusCode(500);
+                if (@event.Count == 0 || @event == null)
+                    return TypedResults.NotFound("No Event found");
+
+                return TypedResults.Ok(@event);
             }
         }
 
@@ -60,9 +61,10 @@ namespace PlacesBackEnd.CRUD
             using (var db = new Context())
             {
                 var user = Auth.GetUserFromIdentity(httpContext);
+                var newUser = await db.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
 
                 // Check that user exist
-                if (user is null) return TypedResults.NotFound(new { msg = "User not found!" });
+                if (newUser is null) return TypedResults.NotFound(new { msg = "User not found!" });
 
                 Country countryToUse;
                 City cityToUse;
@@ -70,8 +72,6 @@ namespace PlacesBackEnd.CRUD
                 //Check if countryname exists in DB
                 //True: return existing country
                 //False: Create new Country and it
-
-
                 Country? countryRes = await db.Countries.FirstOrDefaultAsync(x => x.Name == eventDTO.Location.City.Country.Name);
 
                 if (countryRes == null)
@@ -131,8 +131,6 @@ namespace PlacesBackEnd.CRUD
 
                 var newloc = loc.Entity;
 
-
-
                 if (location == null)
                     return TypedResults.NotFound("Location not found");
 
@@ -153,7 +151,7 @@ namespace PlacesBackEnd.CRUD
                     Image = eventDTO.Image,
                     Planned = eventDTO.Planned,
                     Location = newloc,
-                    User = user,
+                    User = newUser,
                     Category = newcat
                 };
 

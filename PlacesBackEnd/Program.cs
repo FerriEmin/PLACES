@@ -4,13 +4,13 @@ using Microsoft.IdentityModel.Tokens;
 using PlacesBackEnd;
 using PlacesBackEnd.CRUD;
 using PlacesBackEnd.DTO;
-using PlacesDB.Models;
-using System.Security.Claims;
+using System.Net;
 using System.Text;
-
+using System.Security.Claims;
 
 var corsPolicy = "_myCorsPolicy";
 var builder = WebApplication.CreateBuilder(args);
+
 
 builder.Services.AddCors(options =>
 {
@@ -50,6 +50,7 @@ builder.Services.AddSwaggerGen(options => {
                 }
             });
 });
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters()
@@ -64,6 +65,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
     };
 });
+
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
@@ -86,11 +88,16 @@ app.UseHttpsRedirection();
 // Authentication Endpoints
 RouteGroupBuilder auth = app.MapGroup("/auth");
 auth.MapPost("/login", async (UserLoginDTO details) => { return await Auth.Login(details, builder); });
+auth.MapGet("/tokentest/{id}",
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme),  ]
+    (int id) => { TypedResults.Ok(new { msg = "Authenticated" }); });
+
 
 // USER ENDPOINTS
+
 RouteGroupBuilder users = app.MapGroup("/users");
 users.MapGet("/", UserCRUD.GetAllUsers).RequireAuthorization();
-users.MapGet("/{id}", UserCRUD.GetUserById);
+users.MapGet("/userId/{id}", UserCRUD.GetUserById);
 users.MapPost("/", UserCRUD.CreateUser);
 users.MapPut("/{id}", UserCRUD.UpdateUser);
 users.MapPut("/password", UserCRUD.UpdatePassword);
