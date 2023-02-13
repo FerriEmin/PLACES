@@ -4,6 +4,7 @@ namespace PlacesBackEnd.DTO
 {
     public class EventDTO
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
@@ -23,7 +24,7 @@ namespace PlacesBackEnd.DTO
 
                 //var comments = (from r in @event.Reviews select (r.User.Username, r.Comment, r.Like)).ToList();
                 //var likes = comments.Where(x => x.Like == true).Count();
-
+                Id = @event.Id;
                 Title = @event.Title;
                 Description = @event.Description;
                 Image = @event.Image;
