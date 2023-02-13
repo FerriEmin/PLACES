@@ -21,15 +21,15 @@ namespace PlacesBackEnd.DTO
             using (var db = new Context())
             {
 
-                var comments = (from r in @event.Reviews select (r.User.Username, r.Comment, r.Like)).ToList();
-                var likes = comments.Where(x => x.Like == true).Count();
+                //var comments = (from r in @event.Reviews select (r.User.Username, r.Comment, r.Like)).ToList();
+                //var likes = comments.Where(x => x.Like == true).Count();
 
                 Title = @event.Title;
                 Description = @event.Description;
                 Image = @event.Image;
+                Likes = 0;
+                Comments = new List<(string, string, bool)>();
                 Planned = @event.Planned;
-                Likes = likes;
-                Comments = comments;
                 Location = new LocationDTO(@event.Location);
             }
         }
