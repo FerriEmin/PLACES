@@ -43,15 +43,21 @@ namespace PlacesBackEnd.CRUD
 
         public static async Task<IResult> GetGroupedReviewsByUserId(int userId)
         {
+           
             using (var db = new Context())
             {
-                var reviews = db.Reviews
-                .Include(r => r.User)
-                    .Include(r => r.Event).ToList().Where(r => r.User.Id == userId).Select(r => new ReviewDTO(r)).ToList();
-                if (reviews.Count == 0 || reviews is null)
-                    return TypedResults.NotFound("No Reviews found");
-
-                return TypedResults.Ok(reviews);
+                var events = db.Events
+                        .Include(e => e.User)
+                        .Include(e => e.Category)
+                        .Include(e => e.Location)
+                        .Include(e => e.Location.City)
+                        .Include(e => e.Location.City.Country)
+                        .Include(e => e.Location.Country)
+                        .Include(e => e.Reviews)
+                        .Where(e => e.Reviews.Any(r => r.User.Id == userId))
+                        .ToList();
+                
+                return TypedResults.Ok(events);
             };
 
         }
