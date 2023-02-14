@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using PlacesBackEnd.DTO;
 using PlacesDB.Models;
@@ -22,20 +21,11 @@ namespace PlacesBackEnd.CRUD
             }
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public static async Task<IResult> GetUserById(int id, HttpContext httpContext)
+        public static async Task<IResult> GetUserById(int id)
         {
-            using (var db = new Context())
-            {
-                var userAuth = Auth.GetUserFromIdentity(httpContext);
-
-                if(userAuth.Id == id)
-                {
-                    return TypedResults.Ok(new UserDTO(userAuth));
-                }
-
-                return TypedResults.Unauthorized();
-            }
+            using var db = new Context();
+            var user = db.Users.Where(x => x.Id == id).FirstOrDefault();
+            return (user is null) ? TypedResults.NotFound() : TypedResults.Ok(new UserDTO(user));
 
         }
 

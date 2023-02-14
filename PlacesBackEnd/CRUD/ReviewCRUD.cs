@@ -11,25 +11,32 @@ namespace PlacesBackEnd.CRUD
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public static async Task<IResult> CreateReview(ReviewDTO reviewDTO, int eventId, HttpContext httpContext)
         {
-            var user = Auth.GetUserFromIdentity(httpContext);
-
-            // Check that user exist
-            if (user is null) return TypedResults.NotFound(new { msg = "User not found!" });
-
-            using var db = new Context();
-            var eventRes = await db.Events.Where(x => x.Id == eventId).FirstOrDefaultAsync();
-            if (eventRes == null) return TypedResults.NotFound("No event matches that id");
-
-            await db.AddAsync(new Review()
+            using (var db = new Context())
             {
-                Like = reviewDTO.Like,
-                Comment = reviewDTO.Comment,
-                Event = eventRes,
-                User = user
 
-            });
-            await db.SaveChangesAsync();
-            return TypedResults.Ok();
+                var user = Auth.GetUserFromIdentity(httpContext);
+                var newUser = await db.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
+
+                // Check that user exist
+                if (newUser is null) return TypedResults.NotFound(new { msg = "User not found!" });
+
+                //using var db = new Context();
+                var eventRes = await db.Events.Where(x => x.Id == eventId).FirstOrDefaultAsync();
+                if (eventRes == null) return TypedResults.NotFound("No event matches that id");
+
+                await db.AddAsync(new Review()
+                {
+                    Like = reviewDTO.Like,
+                    Comment = reviewDTO.Comment,
+                    Event = eventRes,
+                    User = newUser
+
+                });
+                await db.SaveChangesAsync();
+                return TypedResults.Ok();
+
+            }
+            
         }
 
 

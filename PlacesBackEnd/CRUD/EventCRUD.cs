@@ -245,6 +245,7 @@ namespace PlacesBackEnd.CRUD
                     {
                         listOfEvents.Add(new EventDTO()
                         {
+                            Id = item.Id,
                             Title = item.Title,
                             Description = item.Description,
                             Image = item.Image,

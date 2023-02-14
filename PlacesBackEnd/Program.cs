@@ -97,7 +97,7 @@ auth.MapGet("/tokentest/{id}",
 
 RouteGroupBuilder users = app.MapGroup("/users");
 users.MapGet("/", UserCRUD.GetAllUsers).RequireAuthorization();
-users.MapGet("/userId/{id}", UserCRUD.GetUserById);
+users.MapGet("/{id}", UserCRUD.GetUserById);
 users.MapPost("/", UserCRUD.CreateUser);
 users.MapPut("/{id}", UserCRUD.UpdateUser);
 users.MapPut("/password", UserCRUD.UpdatePassword);
@@ -116,8 +116,8 @@ cities.MapDelete("/{id}", CityCRUD.DeleteCity);
 RouteGroupBuilder events = app.MapGroup("/events");
 events.MapGet("/", EventCRUD.GetAllEvents);
 events.MapGet("/{id}", EventCRUD.GetEventById);
-events.MapGet("/location/{locationid}", EventCRUD.GetEventsByLocationId);
-events.MapGet("/user/{id}", EventCRUD.GetEventsByUserId);
+events.MapGet("/location/{id}", EventCRUD.GetEventsByLocationId);
+events.MapGet("/user/{userId}", EventCRUD.GetEventsByUserId);
 events.MapPost("/", EventCRUD.CreateEvent);
 events.MapPut("/{id}", EventCRUD.UpdateEvent);
 events.MapDelete("/{id}", EventCRUD.DeleteEvent);
@@ -144,7 +144,7 @@ locations.MapDelete("/{id}", LocationCRUD.DeleteLocation);
 
 ////// REVIEW ENDPOINTS
 RouteGroupBuilder reviews = app.MapGroup("/reviews");
-reviews.MapPost("/", ReviewCRUD.CreateReview);
+reviews.MapPost("/{eventId}", ReviewCRUD.CreateReview);
 reviews.MapGet("/{userId}", ReviewCRUD.GetGroupedReviewsByUserId);
 //////
 
