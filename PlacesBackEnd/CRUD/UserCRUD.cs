@@ -49,6 +49,8 @@ namespace PlacesBackEnd.CRUD
                 if (await UsernameTaken(userDTO.Username))
                     return TypedResults.BadRequest(new { msg = "Username already taken!" });
 
+                Console.WriteLine(userDTO.Password);
+
                 await db.AddAsync(new User()
                 {
                     UserGroup = 0,
