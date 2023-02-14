@@ -46,18 +46,48 @@ namespace PlacesBackEnd.CRUD
            
             using (var db = new Context())
             {
-                var events = db.Events
-                        .Include(e => e.User)
-                        .Include(e => e.Category)
-                        .Include(e => e.Location)
-                        .Include(e => e.Location.City)
-                        .Include(e => e.Location.City.Country)
-                        .Include(e => e.Location.Country)
-                        .Include(e => e.Reviews)
-                        .Where(e => e.Reviews.Any(r => r.User.Id == userId))
-                        .ToList();
                 
-                return TypedResults.Ok(events);
+                var userRevInEvs = await db.Events
+                    .Include(x => x.Reviews)
+                    .ThenInclude(x => x.User)
+                    .Where(x => x.Reviews.Any(y => y.User.Id == userId))
+                    .Select(x => new EventDTO()
+                    {
+                        Id = x.Id,
+                        Title = x.Title,
+                        Description = x.Description,
+                        Image = x.Image,
+                        Planned = x.Planned,
+                        Location = new LocationDTO()
+                        {
+                            Id = x.Location.Id,
+                            Name = x.Location.Name,
+                            Address = x.Location.Address,
+                            Latitude = x.Location.Latitude,
+                            Longitude = x.Location.Longitude,
+                            City = new CityDTO()
+                            {
+                                Id = x.Location.City.Id,
+                                Name = x.Location.City.Name,
+                                Country = new CountryDTO()
+                                {
+                                    Id = x.Location.City.Country.Id,
+                                    Name = x.Location.City.Country.Name
+                                }
+                            }
+                        },
+                        Comments = x.Reviews.Where(y => y.User.Id == userId).Select(y => new CommentDTO()
+                        {
+                            Username = y.User.Username,
+                            Comment = y.Comment,
+                            Liked = y.Like,
+                            Date = y.Created
+                        }).ToList()
+                    }).ToListAsync();
+
+                if (userRevInEvs is null) return TypedResults.NotFound("No reviews found for user");
+                
+                return TypedResults.Ok(userRevInEvs);
             };
 
         }

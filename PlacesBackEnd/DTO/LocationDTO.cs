@@ -13,7 +13,7 @@ namespace PlacesBackEnd.DTO
 
         public LocationDTO() { }
         public LocationDTO(Location location)
-        {   
+        {
             Id = location.Id;
             Name = location.Name;
             Address = location.Address;
