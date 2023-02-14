@@ -7,10 +7,10 @@ using PlacesBackEnd.DTO;
 using System.Net;
 using System.Text;
 using System.Security.Claims;
+using System.Reflection.Metadata.Ecma335;
 
-var corsPolicy = "_myCorsPolicy";
 var builder = WebApplication.CreateBuilder(args);
-
+var corsPolicy = "_myCorsPolicy";
 
 builder.Services.AddCors(options =>
 {
@@ -22,10 +22,6 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader();
         });
 });
-
-
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => {
     options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
@@ -65,16 +61,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
     };
 });
-
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-app.UseAuthorization();
-app.UseAuthentication();
-
-// Set cors policy
 app.UseCors(corsPolicy);
+app.UseAuthentication();
+app.UseAuthorization();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -88,9 +82,6 @@ app.UseHttpsRedirection();
 // Authentication Endpoints
 RouteGroupBuilder auth = app.MapGroup("/auth");
 auth.MapPost("/login", async (UserLoginDTO details) => { return await Auth.Login(details, builder); });
-auth.MapGet("/tokentest/{id}",
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme),  ]
-    (int id) => { TypedResults.Ok(new { msg = "Authenticated" }); });
 
 
 // USER ENDPOINTS
@@ -144,7 +135,7 @@ locations.MapDelete("/{id}", LocationCRUD.DeleteLocation);
 
 ////// REVIEW ENDPOINTS
 RouteGroupBuilder reviews = app.MapGroup("/reviews");
-reviews.MapPost("/{eventId}", ReviewCRUD.CreateReview);
+reviews.MapPost("/{id}", ReviewCRUD.CreateReview);
 reviews.MapGet("/{userId}", ReviewCRUD.GetGroupedReviewsByUserId);
 //////
 
