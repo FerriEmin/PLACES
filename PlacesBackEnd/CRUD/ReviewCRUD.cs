@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using PlacesBackEnd.DTO;
 using PlacesDB.Models;
 
@@ -11,25 +12,32 @@ namespace PlacesBackEnd.CRUD
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public static async Task<IResult> CreateReview(ReviewDTO reviewDTO, int eventId, HttpContext httpContext)
         {
-            var user = Auth.GetUserFromIdentity(httpContext);
-
-            // Check that user exist
-            if (user is null) return TypedResults.NotFound(new { msg = "User not found!" });
-
-            using var db = new Context();
-            var eventRes = await db.Events.Where(x => x.Id == eventId).FirstOrDefaultAsync();
-            if (eventRes == null) return TypedResults.NotFound("No event matches that id");
-
-            await db.AddAsync(new Review()
+            using (var db = new Context())
             {
-                Like = reviewDTO.Like,
-                Comment = reviewDTO.Comment,
-                Event = eventRes,
-                User = user
 
-            });
-            await db.SaveChangesAsync();
-            return TypedResults.Ok();
+                var user = Auth.GetUserFromIdentity(httpContext);
+                var newUser = await db.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
+
+                // Check that user exist
+                if (newUser is null) return TypedResults.NotFound(new { msg = "User not found!" });
+
+                //using var db = new Context();
+                var eventRes = await db.Events.Where(x => x.Id == eventId).FirstOrDefaultAsync();
+                if (eventRes == null) return TypedResults.NotFound("No event matches that id");
+
+                await db.AddAsync(new Review()
+                {
+                    Like = reviewDTO.Like,
+                    Comment = reviewDTO.Comment,
+                    Event = eventRes,
+                    User = newUser
+
+                });
+                await db.SaveChangesAsync();
+                return TypedResults.Ok();
+
+            }
+            
         }
 
 
@@ -37,12 +45,13 @@ namespace PlacesBackEnd.CRUD
         {
             using (var db = new Context())
             {
-                var grouped = (from e in db.Events
-                               where e.User.Id == userId
-                               join c in db.Reviews on e.Id equals c.Event.Id
-                               select new { Title = e.Title, Image = e.Image, Likes = e.Reviews.Where(x => x.Like == true).Count(), Comment = c.Comment }).ToList();
+                var reviews = db.Reviews
+                .Include(r => r.User)
+                    .Include(r => r.Event).ToList().Where(r => r.User.Id == userId).Select(r => new ReviewDTO(r)).ToList();
+                if (reviews.Count == 0 || reviews is null)
+                    return TypedResults.NotFound("No Reviews found");
 
-                return TypedResults.Ok(grouped);
+                return TypedResults.Ok(reviews);
             };
 
         }
