@@ -26,6 +26,7 @@ namespace PlacesBackEnd.DTO
                             where r.Event.Id == @event.Id
                             select new CommentDTO()
                             {
+                                ReviewId = r.Id,
                                 Username = r.User.Username,
                                 Comment = r.Comment,
                                 Liked = r.Like,

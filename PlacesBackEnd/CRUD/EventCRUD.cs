@@ -35,23 +35,19 @@ namespace PlacesBackEnd.CRUD
 
         }
 
-        public static async Task<IResult> GetEventById(int eventId)
+        public static async Task<IResult> GetEventById(int id)
         {
             using (var db = new Context())
             {
-                var @event = db.Events
-                    .Include(e => e.User)
-                    .Include(e => e.Category)
-                    .Include(e => e.Location)
-                    .Include(e => e.Location.City)
-                    .Include(e => e.Location.City.Country)
-                    .Include(e => e.Location.Country)
-                    .Include(e => e.Reviews).ToList().Where(x => x.Id == eventId).Select(e => new EventDTO(e)).ToList();
+                var ev = await db.Events
+                        .Where(x => x.Id == id)
+                        .Include(x => x.Reviews)
+                        .Include(x => x.Location.City.Country)
+                        .FirstOrDefaultAsync();
 
-                if (@event.Count == 0 || @event == null)
-                    return TypedResults.NotFound("No Event found");
+                if (ev is null) return TypedResults.NotFound("Event not found");
 
-                return TypedResults.Ok(@event);
+                return TypedResults.Ok(new EventDTO(ev));
             }
         }
 
