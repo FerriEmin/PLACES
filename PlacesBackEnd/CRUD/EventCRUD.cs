@@ -239,24 +239,22 @@ namespace PlacesBackEnd.CRUD
                         return TypedResults.NotFound();
                     }
 
-                    var events = await db.Events.Where(x => x.Location.Id == res.Id).ToListAsync();
+                    var events = await db.Events
+                        .Where(x => x.Location.Id == res.Id)
+                        .Include(x => x.Reviews)
+                        .Include(x => x.Location.City.Country)
+                        .ToListAsync();
+
                     var listOfEvents = new List<EventDTO>();
                     foreach (var item in events)
-                    {
-                        listOfEvents.Add(new EventDTO()
-                        {
-                            Id = item.Id,
-                            Title = item.Title,
-                            Description = item.Description,
-                            Image = item.Image,
-                        });
-                    }
+                        listOfEvents.Add(new EventDTO(item));
+
                     return TypedResults.Ok(listOfEvents);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                Console.WriteLine(e.Message);
                 return TypedResults.StatusCode(500);
             }
 

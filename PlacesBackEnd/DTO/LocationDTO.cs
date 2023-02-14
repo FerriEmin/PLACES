@@ -12,7 +12,14 @@ namespace PlacesBackEnd.DTO
         public CityDTO City { get; set; }
 
         public LocationDTO() { }
-        public LocationDTO(Location location) =>
-            (Id, Name, Address, Latitude, Longitude, City) = (location.Id, location.Name, location.Address, location.Latitude, location.Longitude, new CityDTO(location.City));
+        public LocationDTO(Location location)
+        {   
+            Id = location.Id;
+            Name = location.Name;
+            Address = location.Address;
+            Latitude = location.Latitude;
+            Longitude = location.Longitude;
+            City = new CityDTO(location.City);
+        }
     }
 }
