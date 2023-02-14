@@ -144,7 +144,7 @@ locations.MapDelete("/{id}", LocationCRUD.DeleteLocation);
 
 ////// REVIEW ENDPOINTS
 RouteGroupBuilder reviews = app.MapGroup("/reviews");
-reviews.MapPost("/", ReviewCRUD.CreateReview);
+reviews.MapPost("/{eventId}", ReviewCRUD.CreateReview);
 reviews.MapGet("/{userId}", ReviewCRUD.GetGroupedReviewsByUserId);
 //////
 
