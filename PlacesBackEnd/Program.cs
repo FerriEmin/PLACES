@@ -109,6 +109,7 @@ events.MapGet("/", EventCRUD.GetAllEvents);
 events.MapGet("/{id}", EventCRUD.GetEventById);
 events.MapGet("/location/{id}", EventCRUD.GetEventsByLocationId);
 events.MapGet("/user/{userId}", EventCRUD.GetEventsByUserId);
+events.MapGet("/city/{cityId}", EventCRUD.GetEventsByCity);
 events.MapPost("/", EventCRUD.CreateEvent);
 events.MapPut("/{id}", EventCRUD.UpdateEvent);
 events.MapDelete("/{id}", EventCRUD.DeleteEvent);
@@ -137,6 +138,9 @@ locations.MapDelete("/{id}", LocationCRUD.DeleteLocation);
 RouteGroupBuilder reviews = app.MapGroup("/reviews");
 reviews.MapPost("/{id}", ReviewCRUD.CreateReview);
 reviews.MapGet("/{userId}", ReviewCRUD.GetGroupedReviewsByUserId);
+reviews.MapGet("/event/{eventId}", ReviewCRUD.GetReviewsByEventId);
+reviews.MapPut("/user/{userId}", ReviewCRUD.UpdateReview);
+
 //////
 
 // Availability check

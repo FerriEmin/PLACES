@@ -70,16 +70,24 @@ namespace PlacesBackEnd.CRUD
             try
             {
                 var user = Auth.GetUserFromIdentity(httpContext);
+                Console.WriteLine("im here");
 
                 // Check that user exist
                 if (user is null) return TypedResults.NotFound(new { msg = "User not found!" });
 
                 // Only admin can edit any user
                 if (user.UserGroup == 0 && user.Id != id) return TypedResults.Unauthorized();
-
-                // Check username
-                if (await UsernameTaken(userDTO.Username))
-                    return TypedResults.BadRequest(new { msg = "Username already taken!" });
+                
+                // Check if username edited
+                if(userDTO.Username != user.Username)
+                {
+                    Console.WriteLine(userDTO.Username);
+                    Console.WriteLine(user.Username);
+                    // Check username
+                    if (await UsernameTaken(userDTO.Username))
+                        return TypedResults.BadRequest(new { msg = "Username already taken!" });
+                    Console.WriteLine("im here too");
+                }
 
                 using var db = new Context();
 
