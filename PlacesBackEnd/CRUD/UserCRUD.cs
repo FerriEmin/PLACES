@@ -92,6 +92,12 @@ namespace PlacesBackEnd.CRUD
                 toBeUpdate.Username = userDTO.Username;
                 toBeUpdate.Email = userDTO.Email;
 
+                user.FirstName = userDTO.FirstName;
+                user.LastName = userDTO.LastName;
+                user.Username = userDTO.Username;
+                user.Email = userDTO.Email;
+
+                db.Users.Update(user);
                 await db.SaveChangesAsync();
                 return TypedResults.Ok(new { msg = "User updated!" });
             }
@@ -104,25 +110,33 @@ namespace PlacesBackEnd.CRUD
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public static async Task<IResult> DeleteUser(int id, HttpContext httpContext)
         {
-            try
+               var user = Auth.GetUserFromIdentity(httpContext);
+            // Check that user exist
+            if (user is null) return TypedResults.NotFound(new { msg = "User not found!" });
+            // Only admin can delete any user
+            if (user.UserGroup == 0 && user.Id != id) return TypedResults.Unauthorized();
+            
+            
+            using var db = new Context();
+            var delUser = db.Users.Where(x => x.Id == id).FirstOrDefault();
+            var delEvents = db.Events.Where(x => x.User.Id == id).ToList();
+            var delReviews = db.Reviews.Where(x => x.User.Id == id).ToList();
+
+            foreach (var delEvent in delEvents)
             {
-                var user = Auth.GetUserFromIdentity(httpContext);
-
-                // Check that user exist
-                if (user is null) return TypedResults.NotFound(new { msg = "User not found!" });
-
-                // Only admin can delete any user
-                if (user.UserGroup == 0 && user.Id != id) return TypedResults.Unauthorized();
-
-                using var db = new Context();
-                db.Users.Remove(user);
-                await db.SaveChangesAsync();
-                return TypedResults.Ok(user);
+                var delEventReviews = db.Reviews.Where(x => x.Event.Id == delEvent.Id).ToList();
+                db.Reviews.RemoveRange(delEventReviews);
+                db.Events.Remove(delEvent);
             }
-            catch (Exception ex)
-            {
-                return TypedResults.StatusCode(500);
-            }
+
+
+
+
+            db.Users.Remove(delUser);
+            await db.SaveChangesAsync();
+            return TypedResults.Ok($"User {delUser.Username} was deleted!");
+            
+            
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -143,10 +157,9 @@ namespace PlacesBackEnd.CRUD
                     return TypedResults.BadRequest(new { msg = "Wrong password" });
 
                 using var db = new Context();
-                db.Users.Where(x => x.Id == user.Id)
-                    .FirstOrDefault()
-                    .Password = Hasher.HashPassword(details.newPassword, Hasher.GenerateSalt());
+                user.Password = Hasher.HashPassword(details.newPassword, Hasher.GenerateSalt());
 
+                db.Users.Update(user);
                 await db.SaveChangesAsync();
                 return TypedResults.Ok(new {msg = "Successfully updated password"});
             }
