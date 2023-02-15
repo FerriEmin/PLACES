@@ -51,6 +51,21 @@ namespace PlacesBackEnd.CRUD
             }
         }
 
+        public static async Task<IResult> GetEventsByCity(int cityId)
+        {
+            using (var db = new Context())
+            {
+                var events = await db.Events
+                    .Where(x => x.Location.City.Id == cityId)
+                    .Include(x => x.Location.City.Country)
+                    .ToListAsync();
+
+                if (events is null) return TypedResults.NotFound("Events not found");
+
+                return TypedResults.Ok(events.Select(x => new EventDTO(x)));
+            }
+        }
+
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public static async Task<IResult> CreateEvent(EventDTO eventDTO, HttpContext httpContext)
         {
@@ -262,10 +277,11 @@ namespace PlacesBackEnd.CRUD
             {
                 using (var db = new Context())
                 {
-                    var res = await db.Events.Where(x => x.User.Id.Equals(userId)).FirstOrDefaultAsync();
+                    
+                    var res = await db.Events.Where(x => x.User.Id.Equals(userId)).ToListAsync();
                     if (res is null)
                     { return TypedResults.NotFound("No events found"); }
-                    return TypedResults.Ok();
+                    return TypedResults.Ok(res);
                 }
 
             }

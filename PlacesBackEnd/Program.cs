@@ -118,6 +118,7 @@ events.MapGet("/", EventCRUD.GetAllEvents);
 events.MapGet("/{id}", EventCRUD.GetEventById);
 events.MapGet("/location/{id}", EventCRUD.GetEventsByLocationId);
 events.MapGet("/user/{userId}", EventCRUD.GetEventsByUserId);
+events.MapGet("/city/{cityId}", EventCRUD.GetEventsByCity);
 events.MapPost("/", EventCRUD.CreateEvent);
 events.MapPut("/{id}", EventCRUD.UpdateEvent);
 events.MapDelete("/{id}", EventCRUD.DeleteEvent);
