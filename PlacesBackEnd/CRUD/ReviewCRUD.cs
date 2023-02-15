@@ -59,7 +59,7 @@ namespace PlacesBackEnd.CRUD
 
         }
 
-        //Give me an function updates the logged in users reviews for a specific event
+        
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public static async Task<IResult> UpdateReview(ReviewDTO reviewDTO, int reviewId, HttpContext httpContext)
         {
