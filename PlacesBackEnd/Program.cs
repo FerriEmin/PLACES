@@ -146,6 +146,8 @@ locations.MapDelete("/{id}", LocationCRUD.DeleteLocation);
 RouteGroupBuilder reviews = app.MapGroup("/reviews");
 reviews.MapPost("/{eventId}", ReviewCRUD.CreateReview);
 reviews.MapGet("/{userId}", ReviewCRUD.GetGroupedReviewsByUserId);
+reviews.MapGet("/event/{eventId}", ReviewCRUD.GetReviewsByEventId);
+
 //////
 
 // Availability check

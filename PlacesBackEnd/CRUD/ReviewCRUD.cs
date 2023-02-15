@@ -40,6 +40,25 @@ namespace PlacesBackEnd.CRUD
             
         }
 
+        public static async Task<IResult> GetReviewsByEventId(int eventId, HttpContext httpContext)
+        {
+            using (var db = new Context())
+            {
+                var eventRes = await db.Events.Where(x => x.Id == eventId).FirstOrDefaultAsync();
+                if (eventRes == null) return TypedResults.NotFound("No event matches that id");
+
+                var Reviews = await db.Reviews
+                    .Where(x => x.Event.Id == eventId)
+                    .Select(r => new ReviewDTO(r))
+                    .ToListAsync();
+
+                if (Reviews is null) return TypedResults.NotFound("No reviews found for user");
+
+                return TypedResults.Ok(Reviews);
+            }
+
+        }
+
 
         public static async Task<IResult> GetGroupedReviewsByUserId(int userId)
         {
