@@ -59,6 +59,36 @@ namespace PlacesBackEnd.CRUD
 
         }
 
+        //Give me an function updates the logged in users reviews for a specific event
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public static async Task<IResult> UpdateReview(ReviewDTO reviewDTO, int reviewId, HttpContext httpContext)
+        {
+            using (var db = new Context())
+            {
+                var user = Auth.GetUserFromIdentity(httpContext);
+                var newUser = await db.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
+
+                // Check that user exist
+                if (newUser is null) return TypedResults.NotFound(new { msg = "User not found!" });
+
+                var review = await db.Reviews
+                    .Include(r=> r.User)
+                    .Include(r => r.Event)
+                    .Where(x => x.Id == reviewId).FirstOrDefaultAsync();
+                if (review == null) return TypedResults.NotFound("No review matches that id");
+
+                if (review.User.Id != newUser.Id) return TypedResults.Unauthorized();
+
+                review.Like = reviewDTO.Like;
+                review.Comment = reviewDTO.Comment;
+
+                await db.SaveChangesAsync();
+                return TypedResults.Ok();
+            }
+        }
+
+
+
 
         public static async Task<IResult> GetGroupedReviewsByUserId(int userId)
         {
