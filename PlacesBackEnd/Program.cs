@@ -91,7 +91,7 @@ users.MapGet("/", UserCRUD.GetAllUsers).RequireAuthorization();
 users.MapGet("/{id}", UserCRUD.GetUserById);
 users.MapPost("/", UserCRUD.CreateUser);
 users.MapPut("/{id}", UserCRUD.UpdateUser);
-users.MapPut("/password", UserCRUD.UpdatePassword);
+users.MapPut("/password/update", UserCRUD.UpdatePassword);
 users.MapDelete("/{id}", UserCRUD.DeleteUser);
 //////
 

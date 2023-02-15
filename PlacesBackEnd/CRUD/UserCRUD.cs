@@ -70,31 +70,27 @@ namespace PlacesBackEnd.CRUD
             try
             {
                 var user = Auth.GetUserFromIdentity(httpContext);
-                Console.WriteLine("im here");
 
                 // Check that user exist
                 if (user is null) return TypedResults.NotFound(new { msg = "User not found!" });
 
                 // Only admin can edit any user
                 if (user.UserGroup == 0 && user.Id != id) return TypedResults.Unauthorized();
-                
+
                 // Check if username edited
-                if(userDTO.Username != user.Username)
+                if (userDTO.Username != user.Username)
                 {
-                    Console.WriteLine(userDTO.Username);
-                    Console.WriteLine(user.Username);
                     // Check username
                     if (await UsernameTaken(userDTO.Username))
                         return TypedResults.BadRequest(new { msg = "Username already taken!" });
-                    Console.WriteLine("im here too");
                 }
 
                 using var db = new Context();
-
-                user.FirstName = userDTO.FirstName;
-                user.LastName = userDTO.LastName;
-                user.Username = userDTO.Username;
-                user.Email = userDTO.Email;
+                User toBeUpdate = db.Users.Where(u => u.Id == id).FirstOrDefault();
+                toBeUpdate.FirstName = userDTO.FirstName;
+                toBeUpdate.LastName = userDTO.LastName;
+                toBeUpdate.Username = userDTO.Username;
+                toBeUpdate.Email = userDTO.Email;
 
                 await db.SaveChangesAsync();
                 return TypedResults.Ok(new { msg = "User updated!" });
@@ -144,12 +140,15 @@ namespace PlacesBackEnd.CRUD
 
                 // Verify password
                 if (!Hasher.PasswordVerify(details.currentPassword, user.Password))
-                    return TypedResults.Unauthorized();
+                    return TypedResults.BadRequest(new { msg = "Wrong password" });
 
                 using var db = new Context();
-                user.Password = Hasher.HashPassword(details.newPassword, Hasher.GenerateSalt());
+                db.Users.Where(x => x.Id == user.Id)
+                    .FirstOrDefault()
+                    .Password = Hasher.HashPassword(details.newPassword, Hasher.GenerateSalt());
+
                 await db.SaveChangesAsync();
-                return TypedResults.Ok();
+                return TypedResults.Ok(new {msg = "Successfully updated password"});
             }
             catch (Exception)
             {
