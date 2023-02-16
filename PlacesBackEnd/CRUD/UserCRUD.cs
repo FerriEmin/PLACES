@@ -86,12 +86,12 @@ namespace PlacesBackEnd.CRUD
                 }
 
                 using var db = new Context();
-                User toBeUpdate = db.Users.Where(u => u.Id == id).FirstOrDefault();
-                toBeUpdate.FirstName = userDTO.FirstName;
-                toBeUpdate.LastName = userDTO.LastName;
-                toBeUpdate.Username = userDTO.Username;
-                toBeUpdate.Email = userDTO.Email;
+                user.FirstName = userDTO.FirstName;
+                user.LastName = userDTO.LastName;
+                user.Username = userDTO.Username;
+                user.Email = userDTO.Email;
 
+                db.Users.Update(user);
                 await db.SaveChangesAsync();
                 return TypedResults.Ok(new { msg = "User updated!" });
             }
@@ -121,8 +121,19 @@ namespace PlacesBackEnd.CRUD
             }
             catch (Exception ex)
             {
-                return TypedResults.StatusCode(500);
+                var delEventReviews = db.Reviews.Where(x => x.Event.Id == delEvent.Id).ToList();
+                db.Reviews.RemoveRange(delEventReviews);
+                db.Events.Remove(delEvent);
             }
+
+
+
+
+            db.Users.Remove(delUser);
+            await db.SaveChangesAsync();
+            return TypedResults.Ok($"User {delUser.Username} was deleted!");
+            
+            
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -143,10 +154,9 @@ namespace PlacesBackEnd.CRUD
                     return TypedResults.BadRequest(new { msg = "Wrong password" });
 
                 using var db = new Context();
-                db.Users.Where(x => x.Id == user.Id)
-                    .FirstOrDefault()
-                    .Password = Hasher.HashPassword(details.newPassword, Hasher.GenerateSalt());
+                user.Password = Hasher.HashPassword(details.newPassword, Hasher.GenerateSalt());
 
+                db.Users.Update(user);
                 await db.SaveChangesAsync();
                 return TypedResults.Ok(new {msg = "Successfully updated password"});
             }
