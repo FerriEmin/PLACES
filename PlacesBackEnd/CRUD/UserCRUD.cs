@@ -86,12 +86,6 @@ namespace PlacesBackEnd.CRUD
                 }
 
                 using var db = new Context();
-                User toBeUpdate = db.Users.Where(u => u.Id == id).FirstOrDefault();
-                toBeUpdate.FirstName = userDTO.FirstName;
-                toBeUpdate.LastName = userDTO.LastName;
-                toBeUpdate.Username = userDTO.Username;
-                toBeUpdate.Email = userDTO.Email;
-
                 user.FirstName = userDTO.FirstName;
                 user.LastName = userDTO.LastName;
                 user.Username = userDTO.Username;
