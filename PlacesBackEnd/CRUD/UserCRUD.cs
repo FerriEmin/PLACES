@@ -117,21 +117,12 @@ namespace PlacesBackEnd.CRUD
                 db.Events.Remove(db.Events.Include(x => x.User).Where(x => x.User.Id == oldUser.Id).FirstOrDefault());
                 db.Users.Remove(oldUser);
                 await db.SaveChangesAsync();
-                return TypedResults.Ok(user);
+                return TypedResults.Ok();
             }
             catch (Exception ex)
             {
-                var delEventReviews = db.Reviews.Where(x => x.Event.Id == delEvent.Id).ToList();
-                db.Reviews.RemoveRange(delEventReviews);
-                db.Events.Remove(delEvent);
+                return TypedResults.StatusCode(500);
             }
-
-
-
-
-            db.Users.Remove(delUser);
-            await db.SaveChangesAsync();
-            return TypedResults.Ok($"User {delUser.Username} was deleted!");
             
             
         }
