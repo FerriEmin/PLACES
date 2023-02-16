@@ -102,7 +102,7 @@ namespace PlacesBackEnd.CRUD
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public static async Task<IResult> DeleteUser(int id, HttpContext httpContext)
+        public static async Task<IResult> DeleteUser(HttpContext httpContext)
         {
             try
             {
@@ -111,11 +111,11 @@ namespace PlacesBackEnd.CRUD
                 // Check that user exist
                 if (user is null) return TypedResults.NotFound(new { msg = "User not found!" });
 
-                // Only admin can delete any user
-                if (user.UserGroup == 0 && user.Id != id) return TypedResults.Unauthorized();
-
                 using var db = new Context();
-                db.Users.Remove(user);
+                var oldUser = db.Users.Where(x => x.Id == user.Id).FirstOrDefault();
+                db.Reviews.Remove(db.Reviews.Include(x => x.User).Where(x => x.User.Id == oldUser.Id).FirstOrDefault());
+                db.Events.Remove(db.Events.Include(x => x.User).Where(x => x.User.Id == oldUser.Id).FirstOrDefault());
+                db.Users.Remove(oldUser);
                 await db.SaveChangesAsync();
                 return TypedResults.Ok(user);
             }
