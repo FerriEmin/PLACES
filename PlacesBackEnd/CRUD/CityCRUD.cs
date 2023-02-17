@@ -9,13 +9,20 @@ namespace PlacesBackEnd.CRUD
 {
     public class CityCRUD
     {
-        public static async Task<IResult> GetAllCitys()
+        public static async Task<IResult> GetAllCities()
         {
             try
             {
                 using (var db = new Context())
                 {
-                    return TypedResults.Ok(await db.Cities.Select(x => new CityDTO(x)).ToListAsync());
+
+                    var cities = db.Cities
+                        .Include(c => c.Country)
+                        .ToList()
+                        .Select(x => new CityDTO(x)).ToList();
+
+
+                    return TypedResults.Ok(cities);
                 }
             }
             catch (Exception)

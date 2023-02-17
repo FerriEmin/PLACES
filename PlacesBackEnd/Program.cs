@@ -97,7 +97,7 @@ users.MapDelete("/{id}", UserCRUD.DeleteUser);
 
 ////// CITY ENDPOINTS
 RouteGroupBuilder cities = app.MapGroup("/cities");
-cities.MapGet("/", CityCRUD.GetAllCitys);
+cities.MapGet("/", CityCRUD.GetAllCities);
 cities.MapGet("/{id}", CityCRUD.GetCityById);
 cities.MapPost("/", CityCRUD.CreateCity);
 cities.MapPut("/{id}", CityCRUD.UpdateCity);
