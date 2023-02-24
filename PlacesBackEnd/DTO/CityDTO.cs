@@ -9,6 +9,6 @@ namespace PlacesBackEnd.DTO
         public CountryDTO Country { get; set; }
 
         public CityDTO() { }
-        public CityDTO (City city) =>(Id, Name, Country) = (city.Id, city.Name, new CountryDTO(city.Country));
+        public CityDTO (City city) => (Id, Name, Country) = (city.Id, city.Name, new CountryDTO(city.Country));
     }
 }

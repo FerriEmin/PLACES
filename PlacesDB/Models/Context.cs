@@ -48,12 +48,10 @@ namespace PlacesDB.Models
                 .UseIdentityColumn();
 
                 entity.Property(e => e.Value)
-                .HasMaxLength(255)
-                .IsRequired();
+                .HasMaxLength(255);
 
                 entity.Property(e => e.Expires)
-                .HasColumnType("datetime")
-                .IsRequired();
+                .HasColumnType("datetime");
 
                 entity.HasOne(e => e.User)
                 .WithMany(e => e.Tokens);
@@ -96,12 +94,10 @@ namespace PlacesDB.Models
                 .IsRequired();
 
                 entity.Property(e => e.DateOfBirth)
-                .HasColumnType("datetime")
-                .IsRequired();
+                .HasColumnType("datetime");
 
                 entity.Property(e => e.Created)
-                .HasColumnType("datetime")
-                .IsRequired();
+                .HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Event>(entity =>
@@ -124,20 +120,16 @@ namespace PlacesDB.Models
                 .IsRequired();
 
                 entity.Property(e => e.Created)
-                .HasColumnType("datetime")
-                .IsRequired();
+                .HasColumnType("datetime");
 
                 entity.HasOne(e => e.User)
-                .WithMany(e => e.Events)
-                .IsRequired();
+                .WithMany(e => e.Events);
 
                 entity.HasOne(e => e.Category)
-                .WithMany(e => e.Events)
-                .IsRequired();
+                .WithMany(e => e.Events);
 
                 entity.HasOne(e => e.Location)
-                .WithMany(e => e.Events)
-                .IsRequired();
+                .WithMany(e => e.Events);
             });
 
             modelBuilder.Entity<Review>(entity =>
@@ -147,15 +139,13 @@ namespace PlacesDB.Models
                 entity.Property(e => e.Id)
                 .UseIdentityColumn();
 
-                entity.Property(e => e.Like)
-                .IsRequired();
+                entity.Property(e => e.Like);
 
                 entity.Property(e => e.Comment)
                 .HasMaxLength(255);
 
                 entity.Property(e => e.Created)
-                .HasColumnType("datetime")
-                .IsRequired();
+                .HasColumnType("datetime");
 
                 entity.HasOne(e => e.Event)
                 .WithMany(e => e.Reviews)
@@ -204,12 +194,10 @@ namespace PlacesDB.Models
                 .IsRequired();
 
                 entity.HasOne(e => e.Country)
-                .WithMany(e => e.Locations)
-                .IsRequired();
+                .WithMany(e => e.Locations);
 
                 entity.HasOne(e => e.City)
-                .WithMany(e => e.Locations)
-                .IsRequired();
+                .WithMany(e => e.Locations);
             });
 
             modelBuilder.Entity<Country>(entity =>

@@ -11,9 +11,9 @@ namespace PlacesDB.Models
         public int Id { get; set; }
         public bool Like { get; set; } = false;
         public string Comment { get; set; }
-        public DateTime Created { get; set; }
+        public DateTime? Created { get; set; }
 
-        public virtual Event Event { get; set; }
-        public virtual User User { get; set; }
+        public virtual Event? Event { get; set; }
+        public virtual User? User { get; set; }
     }
 }

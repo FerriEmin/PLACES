@@ -12,6 +12,6 @@ namespace PlacesDB.Models
         public string Name { get; set; }
 
         // Relations
-        public virtual ICollection<Event> Events { get; set; }
+        public virtual ICollection<Event>? Events { get; set; }
     }
 }

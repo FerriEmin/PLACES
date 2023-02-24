@@ -7,10 +7,7 @@ namespace PlacesDB
     {
         static void Main(string[] args)
         {
-            using var db = new Context();
-
-            var comment = db.Reviews.FirstOrDefault().Comment;
-            Console.WriteLine(comment);
+            Console.WriteLine(Hasher.HashPassword("password", Hasher.GenerateSalt()));
         }
 
         private static void Test(int num)

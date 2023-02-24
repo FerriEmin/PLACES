@@ -2,18 +2,27 @@
 using PlacesDB.Models;
 using PlacesDB;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PlacesBackEnd.CRUD
 {
     public class CityCRUD
     {
-        public static async Task<IResult> GetAllCitys()
+        public static async Task<IResult> GetAllCities()
         {
             try
             {
                 using (var db = new Context())
                 {
-                    return TypedResults.Ok(await db.Cities.Select(x => new CityDTO(x)).ToListAsync());
+
+                    var cities = db.Cities
+                        .Include(c => c.Country)
+                        .ToList()
+                        .Select(x => new CityDTO(x)).ToList();
+
+
+                    return TypedResults.Ok(cities);
                 }
             }
             catch (Exception)
@@ -40,6 +49,7 @@ namespace PlacesBackEnd.CRUD
             }
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public static async Task<IResult> CreateCity(CityDTO cityDTO)
         {
             try
@@ -53,7 +63,7 @@ namespace PlacesBackEnd.CRUD
                     db.Cities.Add(city);
                     await db.SaveChangesAsync();
 
-                    return TypedResults.Created($"/user/{city.Id}", cityDTO);
+                    return TypedResults.Created($"/cities/{city.Id}", cityDTO);
 
                 }
             }
@@ -65,7 +75,7 @@ namespace PlacesBackEnd.CRUD
 
         }
 
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public static async Task<IResult> UpdateCity(int id, CityDTO cityDTO)
         {
             try
@@ -90,6 +100,7 @@ namespace PlacesBackEnd.CRUD
 
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public static async Task<IResult> DeleteCity(int id)
         {
             try
