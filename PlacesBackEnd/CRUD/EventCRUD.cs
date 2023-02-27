@@ -55,14 +55,14 @@ namespace PlacesBackEnd.CRUD
         {
             using (var db = new Context())
             {
+                //get events by city id
                 var events = await db.Events
                     .Where(x => x.Location.City.Id == cityId)
-                    .Include(x => x.Location.City.Country)
                     .ToListAsync();
 
-                if (events is null) return TypedResults.NotFound("Events not found");
+                if (events == null) return TypedResults.NotFound("Events not found");
 
-                return TypedResults.Ok(events.Select(x => new EventDTO(x)));
+                return TypedResults.Ok(events);
             }
         }
 
@@ -278,10 +278,18 @@ namespace PlacesBackEnd.CRUD
                 using (var db = new Context())
                 {
                     
-                    var res = await db.Events.Where(x => x.User.Id.Equals(userId)).ToListAsync();
+                    var res = await db.Events.Where(x => x.User.Id.Equals(userId))
+                        .Include(e => e.User)
+                        .Include(e => e.Category)
+                        .Include(e => e.Location)
+                        .Include(e => e.Location.City)
+                        .Include(e => e.Location.City.Country)
+                        .Include(e => e.Location.Country)
+                        .Include(e => e.Reviews)
+                        .ToListAsync();
                     if (res is null)
                     { return TypedResults.NotFound("No events found"); }
-                    return TypedResults.Ok(res);
+                    return TypedResults.Ok(res.Select(x=>new EventDTO(x)));
                 }
 
             }
