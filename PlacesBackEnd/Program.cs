@@ -95,14 +95,6 @@ users.MapPut("/password/update", UserCRUD.UpdatePassword);
 users.MapDelete("/{id}", UserCRUD.DeleteUser);
 //////
 
-////// CITY ENDPOINTS
-RouteGroupBuilder cities = app.MapGroup("/cities");
-cities.MapGet("/", CityCRUD.GetAllCities);
-cities.MapGet("/{id}", CityCRUD.GetCityById);
-cities.MapPost("/", CityCRUD.CreateCity);
-cities.MapPut("/{id}", CityCRUD.UpdateCity);
-cities.MapDelete("/{id}", CityCRUD.DeleteCity);
-
 ////// EVENT ENDPOINTS
 RouteGroupBuilder events = app.MapGroup("/events");
 events.MapGet("/", EventCRUD.GetAllEvents);
@@ -115,33 +107,20 @@ events.MapPut("/{id}", EventCRUD.UpdateEvent);
 events.MapDelete("/{id}", EventCRUD.DeleteEvent);
 //////
 
-////// CATEGORY ENDPOINTS
-RouteGroupBuilder categories = app.MapGroup("/categories");
-categories.MapGet("/", CategoryCRUD.GetAllCategories);
-categories.MapGet("/{id}", CategoryCRUD.GetCategoryById);
-categories.MapPost("/", CategoryCRUD.CreateCategory);
-categories.MapPut("/{id}", CategoryCRUD.UpdateCategory);
-categories.MapDelete("/{id}", CategoryCRUD.DeleteCategory);
-//////
-
-////// LOCATION ENDPOINTS
-RouteGroupBuilder locations = app.MapGroup("/locations");
-locations.MapGet("/", LocationCRUD.GetAllLocations);
-locations.MapGet("/{id}", LocationCRUD.GetLocationById);
-locations.MapPost("/", LocationCRUD.CreateLocation);
-locations.MapPut("/{id}", LocationCRUD.UpdateLocation);
-locations.MapDelete("/{id}", LocationCRUD.DeleteLocation);
-//////
-
-
 ////// REVIEW ENDPOINTS
 RouteGroupBuilder reviews = app.MapGroup("/reviews");
 reviews.MapPost("/{id}", ReviewCRUD.CreateReview);
 reviews.MapGet("/{userId}", ReviewCRUD.GetGroupedReviewsByUserId);
 reviews.MapGet("/event/{eventId}", ReviewCRUD.GetReviewsByEventId);
 reviews.MapPut("/user/{userId}", ReviewCRUD.UpdateReview);
-
 //////
+
+
+////// CITY ENDPOINTS
+RouteGroupBuilder cities = app.MapGroup("/cities");
+cities.MapGet("/", CityCRUD.GetAllCities);
+cities.MapGet("/{id}", CityCRUD.GetCityById);
+
 
 // Availability check
 RouteGroupBuilder check = app.MapGroup("/check");
