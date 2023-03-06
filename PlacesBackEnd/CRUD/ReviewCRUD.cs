@@ -19,26 +19,61 @@ namespace PlacesBackEnd.CRUD
                 // Check that user exist
                 if (user is null) return TypedResults.NotFound(new { msg = "User not found!" });
 
+                //Check if event exists
                 var eventRes = db.Events
                     .Where(x => x.Id == id)
                     .Include(x => x.Reviews)
+                    .Include(x => x.User)
                     .FirstOrDefault();
 
                 if (eventRes == null) return TypedResults.NotFound("Event not found");
 
+                //Check if user already reviewed that event
 
-                var review = new Review()
+                Review? userReview = await db.Reviews
+                    .Include(r => r.User)
+                    .Include(r => r.Event)
+                    .Where(x => x.User.Id == user.Id && x.Event.Id == id).FirstOrDefaultAsync();
+
+                //Change current review if review exists
+                //Else add new review if review exists
+                if (userReview != null)
                 {
-                    Like = reviewDTO.Like,
-                    Comment = reviewDTO.Comment,
-                    Event = eventRes,
-                    User = db.Users.Where(x => x.Id == user.Id).FirstOrDefault(),
-                };
+                    if (!string.IsNullOrEmpty(reviewDTO.Comment))
+                    {
+                        userReview.Comment = reviewDTO.Comment;
+                    }
+                    else
+                    {
+                        if (userReview.Like == true)
+                        {
+                            userReview.Like = false;
+                        }
+                        else
+                        {
+                            userReview.Like = true;
+                        }
+                    }
 
-                db.Reviews.Add(review);
-                await db.SaveChangesAsync();
-                return TypedResults.Ok();
+                    
 
+                    await db.SaveChangesAsync();
+                    return TypedResults.Ok();
+                } else
+                {
+                    //Create new review if user has not already reviewed event.
+                    var review = new Review()
+                    {
+                        Like = reviewDTO.Like,
+                        Comment = reviewDTO.Comment,
+                        Event = eventRes,
+                        User = db.Users.Where(x => x.Id == user.Id).FirstOrDefault(),
+                    };
+
+                    db.Reviews.Add(review);
+                    await db.SaveChangesAsync();
+                    return TypedResults.Ok();
+                }
             }
         }
 
@@ -97,7 +132,7 @@ namespace PlacesBackEnd.CRUD
            
             using (var db = new Context())
             {
-                
+
                 var userRevInEvs = await db.Events
                     .Include(x => x.Reviews)
                     .ThenInclude(x => x.User)

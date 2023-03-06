@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using PlacesBackEnd.DTO;
@@ -297,6 +298,64 @@ namespace PlacesBackEnd.CRUD
             {
                 return TypedResults.StatusCode(500);
             }
+        }
+
+        public static async Task<IResult> GetUserReviewedEvents(int userId)
+        {
+            try
+            {
+                using (var db = new Context())
+                {
+                    var res = await db.Reviews.Where(x => x.User.Id == userId)
+                        .Include(x => x.User)
+                        .Include(x => x.Event)
+                        .Include(x => x.Event.Location)
+                        .Include(x => x.Event.Location.City)
+                        .Include(x => x.Event.Location.City.Country)
+                        .Include(x => x.Event.Location.Country)
+                        .Select(x => new EventDTO(x.Event))
+                        .ToListAsync();
+
+                    if (res == null)
+                    { return TypedResults.NotFound("No events found"); }
+                    else { return TypedResults.Ok(res); }
+                }
+
+            }
+            catch (Exception)
+            {
+                return TypedResults.StatusCode(500);
+            }
+
+        }
+
+        public static async Task<IResult> GetUserFavoriteEvents(int userId)
+        {
+            try
+            {
+                using (var db = new Context())
+                {
+                    var res = await db.Reviews.Where(x => x.User.Id == userId && x.Like == true)
+                        .Include(x => x.User)
+                        .Include(x => x.Event)
+                        .Include(x => x.Event.Location)
+                        .Include(x => x.Event.Location.City)
+                        .Include(x => x.Event.Location.City.Country)
+                        .Include(x => x.Event.Location.Country)
+                        .Select(x => new EventDTO(x.Event))
+                        .ToListAsync();
+
+                    if (res == null)
+                    { return TypedResults.NotFound("No events found"); }
+                    else { return TypedResults.Ok(res); }
+                }
+
+            }
+            catch (Exception)
+            {
+                return TypedResults.StatusCode(500);
+            }
+
         }
 
     }

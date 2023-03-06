@@ -102,6 +102,10 @@ events.MapGet("/{id}", EventCRUD.GetEventById);
 events.MapGet("/location/{id}", EventCRUD.GetEventsByLocationId);
 events.MapGet("/user/{userId}", EventCRUD.GetEventsByUserId);
 events.MapGet("/city/{cityId}", EventCRUD.GetEventsByCity);
+events.MapGet("/favorites/{userId}", EventCRUD.GetUserFavoriteEvents);
+events.MapGet("/reviewed/{userId}", EventCRUD.GetUserReviewedEvents);
+
+
 events.MapPost("/", EventCRUD.CreateEvent);
 events.MapPut("/{id}", EventCRUD.UpdateEvent);
 events.MapDelete("/{id}", EventCRUD.DeleteEvent);
