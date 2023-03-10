@@ -45,18 +45,10 @@ namespace PlacesBackEnd.CRUD
                     }
                     else
                     {
-                        if (userReview.Like == true)
-                        {
-                            userReview.Like = false;
-                        }
-                        else
-                        {
-                            userReview.Like = true;
-                        }
+                        userReview.Like = reviewDTO.Like;
                     }
 
                     
-
                     await db.SaveChangesAsync();
                     return TypedResults.Ok();
                 } else

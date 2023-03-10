@@ -57,9 +57,19 @@ namespace PlacesBackEnd.CRUD
             using (var db = new Context())
             {
                 //get events by city id
-                var events = await db.Events
-                    .Where(x => x.Location.City.Id == cityId)
-                    .ToListAsync();
+                var events = db.Events
+                    .Where(e => e.Location.City.Id == cityId)
+                    .Include(e => e.User)
+                    .Include(e => e.Category)
+                    .Include(e => e.Location)
+                    .Include(e => e.Location.City)
+                    .Include(e => e.Location.City.Country)
+                    .Include(e => e.Location.Country)
+                    .Include(e => e.Reviews)
+                    .ToList()
+                    .Select(e => new EventDTO(e))
+                    .ToList();
+                    ;
 
                 if (events == null) return TypedResults.NotFound("Events not found");
 
