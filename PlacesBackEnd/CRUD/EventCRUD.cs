@@ -42,6 +42,7 @@ namespace PlacesBackEnd.CRUD
             {
                 var ev = await db.Events
                         .Where(x => x.Id == id)
+                        .Include(e => e.User)
                         .Include(x => x.Reviews)
                         .Include(x => x.Location.City.Country)
                         .FirstOrDefaultAsync();
@@ -263,6 +264,7 @@ namespace PlacesBackEnd.CRUD
 
                     var events = await db.Events
                         .Where(x => x.Location.Id == res.Id)
+                        .Include(e => e.User)
                         .Include(x => x.Reviews)
                         .Include(x => x.Location.City.Country)
                         .ToListAsync();
@@ -323,6 +325,7 @@ namespace PlacesBackEnd.CRUD
                         .Include(x => x.Event.Location.City)
                         .Include(x => x.Event.Location.City.Country)
                         .Include(x => x.Event.Location.Country)
+                        .Include(x => x.Event.User)
                         .Select(x => new EventDTO(x.Event))
                         .ToListAsync();
 
@@ -352,6 +355,7 @@ namespace PlacesBackEnd.CRUD
                         .Include(x => x.Event.Location.City)
                         .Include(x => x.Event.Location.City.Country)
                         .Include(x => x.Event.Location.Country)
+                        .Include(x => x.Event.User)
                         .Select(x => new EventDTO(x.Event))
                         .ToListAsync();
 

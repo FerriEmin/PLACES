@@ -14,6 +14,7 @@ namespace PlacesBackEnd.DTO
         public int Likes { get; set; }
         public List<CommentDTO> Comments { get; set; }
         public LocationDTO Location { get; set; }
+        public UserDTO User { get; set; }
 
         public EventDTO()
         {
@@ -42,6 +43,8 @@ namespace PlacesBackEnd.DTO
             Comments = comments.Where(x => !x.Comment.IsNullOrEmpty()).ToList();
             Planned = @event.Planned;
             Location = new LocationDTO(@event.Location);
+            User = new UserDTO(@event.User);
+
         }
     }
 }
