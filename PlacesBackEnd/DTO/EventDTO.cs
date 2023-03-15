@@ -39,7 +39,7 @@ namespace PlacesBackEnd.DTO
             Title = @event.Title;
             Description = @event.Description;
             Image = @event.Image;
-            Likes = 0;
+            Likes = likes;
             Comments = comments.Where(x => !x.Comment.IsNullOrEmpty()).ToList();
             Planned = @event.Planned;
             Location = new LocationDTO(@event.Location);
